@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dtlive/pages/bottombar.dart';
 import 'package:dtlive/provider/generalprovider.dart';
 import 'package:dtlive/provider/homeprovider.dart';
@@ -11,12 +9,14 @@ import 'package:dtlive/widget/myimage.dart';
 import 'package:dtlive/widget/mytext.dart';
 import 'package:dtlive/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+
+import '../webservice/apiservices.dart';
 
 class OTPVerify extends StatefulWidget {
   final String mobileNumber;
@@ -40,27 +40,32 @@ class OTPVerifyState extends State<OTPVerify> {
   @override
   void initState() {
     super.initState();
-    _getDeviceToken();
+    // _getDeviceToken();
+    _sendWhatsappOTP();
     prDialog = ProgressDialog(context);
-    codeSend(false);
+    // codeSend(false);
   }
 
-  _getDeviceToken() async {
-    try {
-      if (Platform.isAndroid) {
-        strDeviceType = "1";
-        strDeviceToken = await FirebaseMessaging.instance.getToken();
-      } else {
-        strDeviceType = "2";
-        // final status = await OneSignal.shared.getDeviceState();
-        // strDeviceToken = status?.userId;
-      }
-    } catch (e) {
-      debugPrint("_getDeviceToken Exception ===> $e");
-    }
-    debugPrint("===>strDeviceToken $strDeviceToken");
-    debugPrint("===>strDeviceType $strDeviceType");
+  _sendWhatsappOTP() async {
+    await ApiService().loginWithWhatsapp(widget.mobileNumber);
   }
+
+  // _getDeviceToken() async {
+  //   try {
+  //     if (Platform.isAndroid) {
+  //       strDeviceType = "1";
+  //       strDeviceToken = await FirebaseMessaging.instance.getToken();
+  //     } else {
+  //       strDeviceType = "2";
+  //       // final status = await OneSignal.shared.getDeviceState();
+  //       // strDeviceToken = status?.userId;
+  //     }
+  //   } catch (e) {
+  //     debugPrint("_getDeviceToken Exception ===> $e");
+  //   }
+  //   debugPrint("===>strDeviceToken $strDeviceToken");
+  //   debugPrint("===>strDeviceType $strDeviceType");
+  // }
 
   @override
   void dispose() {
@@ -141,7 +146,7 @@ class OTPVerifyState extends State<OTPVerify> {
 
                 /* Enter Received OTP */
                 Pinput(
-                  length: 6,
+                  length: 4,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                   controller: pinPutController,
@@ -176,11 +181,11 @@ class OTPVerifyState extends State<OTPVerify> {
                       Utils.showSnackbar(
                           context, "info", "enterreceivedotp", true);
                     } else {
-                      if (verificationId == null || verificationId == "") {
-                        Utils.showSnackbar(
-                            context, "info", "otp_not_working", true);
-                        return;
-                      }
+                      // if (verificationId == null || verificationId == "") {
+                      //   Utils.showSnackbar(
+                      //       context, "info", "otp_not_working", true);
+                      //   return;
+                      // }
                       Utils.showProgress(context, prDialog);
                       _checkOTPAndLogin();
                     }
@@ -221,9 +226,11 @@ class OTPVerifyState extends State<OTPVerify> {
                 InkWell(
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
-                    if (!codeResended) {
-                      codeSend(true);
-                    }
+                    _sendWhatsappOTP();
+
+                    // if (!codeResended) {
+                    //   codeSend(true);
+                    // }
                   },
                   child: Container(
                     constraints: const BoxConstraints(minWidth: 70),
@@ -249,11 +256,11 @@ class OTPVerifyState extends State<OTPVerify> {
     );
   }
 
-  codeSend(bool isResend) async {
-    codeResended = isResend;
-    await phoneSignIn(phoneNumber: widget.mobileNumber.toString());
-    prDialog.hide();
-  }
+  // codeSend(bool isResend) async {
+  //   codeResended = isResend;
+  // await phoneSignIn(phoneNumber: widget.mobileNumber.toString());
+  //   prDialog.hide();
+  // }
 
   Future<void> phoneSignIn({required String phoneNumber}) async {
     await _auth.verifyPhoneNumber(
@@ -302,51 +309,66 @@ class OTPVerifyState extends State<OTPVerify> {
   }
 
   _checkOTPAndLogin() async {
-    bool error = false;
-    UserCredential? userCredential;
+    // bool error = false;
+    // UserCredential? userCredential;
 
     debugPrint("_checkOTPAndLogin verificationId =====> $verificationId");
     debugPrint("_checkOTPAndLogin smsCode =====> ${pinPutController.text}");
 
     // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential? phoneAuthCredential = PhoneAuthProvider.credential(
-      verificationId: verificationId ?? "",
-      smsCode: pinPutController.text.toString(),
-    );
+    // PhoneAuthCredential? phoneAuthCredential = PhoneAuthProvider.credential(
+    //   verificationId: verificationId ?? "",
+    //   smsCode: pinPutController.text.toString(),
+    // );
 
-    debugPrint(
-        "phoneAuthCredential.smsCode        =====> ${phoneAuthCredential.smsCode}");
-    debugPrint(
-        "phoneAuthCredential.verificationId =====> ${phoneAuthCredential.verificationId}");
-    try {
-      userCredential = await _auth.signInWithCredential(phoneAuthCredential);
-      debugPrint(
-          "_checkOTPAndLogin userCredential =====> ${userCredential.user?.phoneNumber ?? ""}");
-    } on FirebaseAuthException catch (e) {
-      await prDialog.hide();
-      debugPrint("_checkOTPAndLogin error Code =====> ${e.code}");
-      if (e.code == 'invalid-verification-code' ||
-          e.code == 'invalid-verification-id') {
+    // debugPrint(
+    //     "phoneAuthCredential.smsCode        =====> ${phoneAuthCredential.smsCode}");
+    // debugPrint(
+    //     "phoneAuthCredential.verificationId =====> ${phoneAuthCredential.verificationId}");
+
+    await ApiService()
+        .verifyLoginWithWhatsapp(widget.mobileNumber, pinPutController.text)
+        .then((value) async {
+      if (value) {
+        _login(widget.mobileNumber.toString());
+      } else {
+        await prDialog.hide();
         if (!mounted) return;
         Utils.showSnackbar(context, "info", "otp_invalid", true);
         return;
-      } else if (e.code == 'session-expired') {
-        if (!mounted) return;
-        Utils.showSnackbar(context, "fail", "otp_session_expired", true);
-        return;
-      } else {
-        error = true;
       }
-    }
-    debugPrint(
-        "Firebase Verification Complated & phoneNumber => ${userCredential?.user?.phoneNumber} and isError => $error");
-    if (!error && userCredential != null) {
-      _login(widget.mobileNumber.toString());
-    } else {
-      await prDialog.hide();
-      if (!mounted) return;
-      Utils.showSnackbar(context, "fail", "otp_login_fail", true);
-    }
+    });
+
+    // try {
+    //   userCredential = await _auth.signInWithCredential(phoneAuthCredential);
+    //   debugPrint(
+    //       "_checkOTPAndLogin userCredential =====> ${userCredential.user?.phoneNumber ?? ""}");
+    // } on FirebaseAuthException catch (e) {
+    //   await prDialog.hide();
+    //   debugPrint("_checkOTPAndLogin error Code =====> ${e.code}");
+    //   if (e.code == 'invalid-verification-code' ||
+    //       e.code == 'invalid-verification-id') {
+    //     if (!mounted) return;
+    //     Utils.showSnackbar(context, "info", "otp_invalid", true);
+    //     return;
+    //   } else if (e.code == 'session-expired') {
+    //     if (!mounted) return;
+    //     Utils.showSnackbar(context, "fail", "otp_session_expired", true);
+    //     return;
+    //   } else {
+    //     error = true;
+    //   }
+    // }
+    // debugPrint(
+    //     "Firebase Verification Complated & phoneNumber => ${userCredential?.user?.phoneNumber} and isError => $error");
+
+    // if (!error && userCredential != null) {
+    //   _login(widget.mobileNumber.toString());
+    // } else {
+    //   await prDialog.hide();
+    //   if (!mounted) return;
+    //   Utils.showSnackbar(context, "fail", "otp_login_fail", true);
+    // }
   }
 
   _login(String mobile) async {

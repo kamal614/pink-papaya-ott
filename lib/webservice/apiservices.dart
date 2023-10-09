@@ -139,6 +139,50 @@ class ApiService {
     return loginModel;
   }
 
+  // whatsapp login API
+  Future<bool> loginWithWhatsapp(mobile) async {
+    debugPrint("mobile :==> $mobile");
+
+    String doctorLogin = "sendotp";
+    Response response = await dio.post(
+      '$baseUrl$doctorLogin',
+      options: optHeaders,
+      data: {
+        'mobile': mobile,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // verify whatsapp login API
+  Future<bool> verifyLoginWithWhatsapp(String mobile, String otp) async {
+    debugPrint("mobile :==> $mobile");
+
+    String doctorLogin = "verifyotp?mobile=$mobile&token=$otp";
+    try {
+      Response response = await dio.post(
+        '$baseUrl$doctorLogin',
+        options: optHeaders,
+        data: {'mobile': mobile, 'token': otp},
+      );
+
+      if (response.statusCode == 200) {
+        return true; // Authentication successful
+      } else {
+        return false; // Authentication failed for some other reason
+      }
+    } catch (e) {
+      // Handle DioException or other exceptions here
+      print("Error: $e");
+      return false; // Authentication failed due to an error
+    }
+  }
+
   // forgot_password API
   Future<SuccessModel> forgotPassword(email) async {
     debugPrint("email :==> $email");
