@@ -1,5 +1,5 @@
 import 'dart:io';
-
+ 
 import 'package:dio/dio.dart';
 import 'package:dtlive/model/avatarmodel.dart';
 import 'package:dtlive/model/castdetailmodel.dart';
@@ -29,16 +29,16 @@ import 'package:dtlive/model/watchlistmodel.dart';
 import 'package:dtlive/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
+ 
 class ApiService {
   String baseUrl = Constant.baseurl;
-
+ 
   late Dio dio;
-
+ 
   Options optHeaders = Options(headers: <String, dynamic>{
     'Content-Type': 'application/json',
   });
-
+ 
   ApiService() {
     dio = Dio();
     dio.interceptors.add(
@@ -51,7 +51,7 @@ class ApiService {
       ),
     );
   }
-
+ 
   // general_setting API
   Future<GeneralSettingModel> genaralSetting() async {
     GeneralSettingModel generalSettingModel;
@@ -63,7 +63,7 @@ class ApiService {
     generalSettingModel = GeneralSettingModel.fromJson(response.data);
     return generalSettingModel;
   }
-
+ 
   // get_pages API
   Future<PagesModel> getPages() async {
     PagesModel pagesModel;
@@ -75,7 +75,7 @@ class ApiService {
     pagesModel = PagesModel.fromJson(response.data);
     return pagesModel;
   }
-
+ 
   // get_social_link API
   Future<SocialLinkModel> getSocialLink() async {
     SocialLinkModel socialLinkModel;
@@ -87,7 +87,7 @@ class ApiService {
     socialLinkModel = SocialLinkModel.fromJson(response.data);
     return socialLinkModel;
   }
-
+ 
   /* type => 1-Facebook, 2-Google, 4-Google */
   // login API
   Future<LoginRegisterModel> loginWithSocial(
@@ -96,7 +96,7 @@ class ApiService {
     debugPrint("name :==> $name");
     debugPrint("type :==> $type");
     debugPrint("profileImg :==> $profileImg");
-
+ 
     LoginRegisterModel loginModel;
     String gmailLogin = "login";
     Response response = await dio.post(
@@ -114,16 +114,16 @@ class ApiService {
             : "",
       }),
     );
-
+ 
     loginModel = LoginRegisterModel.fromJson(response.data);
     return loginModel;
   }
-
+ 
   /* type => 3-OTP */
   // login API
   Future<LoginRegisterModel> loginWithOTP(mobile) async {
     debugPrint("mobile :==> $mobile");
-
+ 
     LoginRegisterModel loginModel;
     String doctorLogin = "login";
     Response response = await dio.post(
@@ -134,15 +134,59 @@ class ApiService {
         'mobile': mobile,
       },
     );
-
+ 
     loginModel = LoginRegisterModel.fromJson(response.data);
     return loginModel;
   }
-
+ 
+  // whatsapp login API
+  Future<bool> loginWithWhatsapp(mobile) async {
+    debugPrint("mobile :==> $mobile");
+ 
+    String doctorLogin = "sendotp";
+    Response response = await dio.post(
+      '$baseUrl$doctorLogin',
+      options: optHeaders,
+      data: {
+        'mobile': mobile,
+      },
+    );
+ 
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+ 
+  // verify whatsapp login API
+  Future<bool> verifyLoginWithWhatsapp(String mobile, String otp) async {
+    debugPrint("mobile :==> $mobile");
+ 
+    String doctorLogin = "verifyotp?mobile=$mobile&token=$otp";
+    try {
+      Response response = await dio.post(
+        '$baseUrl$doctorLogin',
+        options: optHeaders,
+        data: {'mobile': mobile, 'token': otp},
+      );
+ 
+      if (response.statusCode == 200) {
+        return true; // Authentication successful
+      } else {
+        return false; // Authentication failed for some other reason
+      }
+    } catch (e) {
+      // Handle DioException or other exceptions here
+      print("Error: $e");
+      return false; // Authentication failed due to an error
+    }
+  }
+ 
   // forgot_password API
   Future<SuccessModel> forgotPassword(email) async {
     debugPrint("email :==> $email");
-
+ 
     SuccessModel successModel;
     String doctorLogin = "forgot_password";
     Response response = await dio.post(
@@ -152,16 +196,16 @@ class ApiService {
         'email': email,
       },
     );
-
+ 
     successModel = successModelFromJson(response.data.toString());
     return successModel;
   }
-
+ 
   // tv_login API
   Future<LoginRegisterModel> tvLogin(uniqueCode) async {
     debugPrint("tvLogin userID :======> ${Constant.userID}");
     debugPrint("tvLogin uniqueCode :==> $uniqueCode");
-
+ 
     LoginRegisterModel loginModel;
     String tvLoginAPI = "tv_login";
     Response response = await dio.post(
@@ -172,15 +216,15 @@ class ApiService {
         'unique_code': uniqueCode,
       },
     );
-
+ 
     loginModel = LoginRegisterModel.fromJson(response.data);
     return loginModel;
   }
-
+ 
   // get_profile API
   Future<ProfileModel> profile() async {
     debugPrint("profile userID :==> ${Constant.userID}");
-
+ 
     ProfileModel profileModel;
     String doctorLogin = "get_profile";
     Response response = await dio.post(
@@ -190,16 +234,16 @@ class ApiService {
         'id': Constant.userID,
       },
     );
-
+ 
     profileModel = ProfileModel.fromJson(response.data);
     return profileModel;
   }
-
+ 
   // update_profile API
   Future<SuccessModel> updateProfile(name) async {
     debugPrint("updateProfile userID :==> ${Constant.userID}");
     debugPrint("updateProfile name :==> $name");
-
+ 
     SuccessModel successModel;
     String doctorLogin = "update_profile";
     Response response = await dio.post(
@@ -210,11 +254,11 @@ class ApiService {
         'name': name,
       },
     );
-
+ 
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // image_upload API
   Future<SuccessModel> imageUpload(File? profileImg) async {
     debugPrint("ProfileImg Filename :==> ${profileImg?.path.split('/').last}");
@@ -236,11 +280,11 @@ class ApiService {
       }),
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
-
+ 
     uploadImgModel = SuccessModel.fromJson(response.data);
     return uploadImgModel;
   }
-
+ 
   // get_avatar API
   Future<AvatarModel> getAvatar() async {
     AvatarModel avatarModel;
@@ -253,7 +297,7 @@ class ApiService {
     avatarModel = AvatarModel.fromJson(response.data);
     return avatarModel;
   }
-
+ 
   /* type => 1-movies, 2-news, 3-sport, 4-tv show */
   // get_type API
   Future<SectionTypeModel> sectionType() async {
@@ -266,7 +310,7 @@ class ApiService {
     sectionTypeModel = SectionTypeModel.fromJson(response.data);
     return sectionTypeModel;
   }
-
+ 
   // get_banner API
   Future<SectionBannerModel> sectionBanner(typeId, isHomePage) async {
     debugPrint('sectionBanner typeId ==>>> $typeId');
@@ -285,7 +329,7 @@ class ApiService {
     sectionBannerModel = SectionBannerModel.fromJson(response.data);
     return sectionBannerModel;
   }
-
+ 
   // section_list API
   Future<SectionListModel> sectionList(typeId, isHomePage) async {
     SectionListModel sectionListModel;
@@ -302,7 +346,7 @@ class ApiService {
     sectionListModel = SectionListModel.fromJson(response.data);
     return sectionListModel;
   }
-
+ 
   // section_detail API
   Future<SectionDetailModel> sectionDetails(
       typeId, videoType, videoId, upcomingType) async {
@@ -322,7 +366,7 @@ class ApiService {
     sectionDetailModel = SectionDetailModel.fromJson(response.data);
     return sectionDetailModel;
   }
-
+ 
   // video_view API
   Future<SuccessModel> videoView(videoId, videoType, otherId) async {
     debugPrint('videoView videoId ====>>> $videoId');
@@ -343,7 +387,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // add_remove_bookmark API
   Future<SuccessModel> addRemoveBookmark(typeId, videoType, videoId) async {
     SuccessModel successModel;
@@ -361,7 +405,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // add_continue_watching API
   Future<SuccessModel> addContinueWatching(videoId, videoType, stopTime) async {
     SuccessModel successModel;
@@ -379,7 +423,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // remove_continue_watching API
   /* user_id, video_id, video_type
      * Show :=> ("video_id" = Episode's ID)  AND  ("video_type" = "2")
@@ -399,7 +443,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // add_remove_download API
   /* user_id, video_id, video_type, type_id, other_id
      * Show :=> ("video_id" = Session's ID)  AND  ("other_id" = Show's ID)
@@ -422,7 +466,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // get_video_by_session_id API
   Future<EpisodeBySeasonModel> episodeBySeason(seasonId, showId) async {
     EpisodeBySeasonModel episodeBySeasonModel;
@@ -439,7 +483,7 @@ class ApiService {
     episodeBySeasonModel = EpisodeBySeasonModel.fromJson(response.data);
     return episodeBySeasonModel;
   }
-
+ 
   // cast_detail API
   Future<CastDetailModel> getCastDetails(castId) async {
     CastDetailModel castDetailModel;
@@ -454,7 +498,7 @@ class ApiService {
     castDetailModel = CastDetailModel.fromJson(response.data);
     return castDetailModel;
   }
-
+ 
   // get_category API
   Future<GenresModel> genres() async {
     GenresModel genresModel;
@@ -466,7 +510,7 @@ class ApiService {
     genresModel = GenresModel.fromJson(response.data);
     return genresModel;
   }
-
+ 
   // get_language API
   Future<LangaugeModel> language() async {
     LangaugeModel langaugeModel;
@@ -478,7 +522,7 @@ class ApiService {
     langaugeModel = LangaugeModel.fromJson(response.data);
     return langaugeModel;
   }
-
+ 
   // search_video API
   Future<SearchModel> searchVideo(searchText) async {
     debugPrint('searchVideo searchText ==>>> $searchText');
@@ -495,7 +539,7 @@ class ApiService {
     searchModel = SearchModel.fromJson(response.data);
     return searchModel;
   }
-
+ 
   // channel_section_list API
   Future<ChannelSectionModel> channelSectionList() async {
     ChannelSectionModel channelSectionModel;
@@ -510,7 +554,7 @@ class ApiService {
     channelSectionModel = ChannelSectionModel.fromJson(response.data);
     return channelSectionModel;
   }
-
+ 
   // rent_video_list API
   Future<RentModel> rentVideoList() async {
     RentModel rentModel;
@@ -525,7 +569,7 @@ class ApiService {
     rentModel = RentModel.fromJson(response.data);
     return rentModel;
   }
-
+ 
   // user_rent_video_list API
   Future<RentModel> userRentVideoList() async {
     RentModel rentModel;
@@ -540,7 +584,7 @@ class ApiService {
     rentModel = RentModel.fromJson(response.data);
     return rentModel;
   }
-
+ 
   // video_by_category API
   Future<VideoByIdModel> videoByCategory(categoryID, typeId) async {
     debugPrint('videoByCategory categoryID ==>>> $categoryID');
@@ -559,7 +603,7 @@ class ApiService {
     videoByIdModel = VideoByIdModel.fromJson(response.data);
     return videoByIdModel;
   }
-
+ 
   // video_by_language API
   Future<VideoByIdModel> videoByLanguage(languageID, typeId) async {
     debugPrint('videoByLanguage languageID ==>>> $languageID');
@@ -578,7 +622,7 @@ class ApiService {
     videoByIdModel = VideoByIdModel.fromJson(response.data);
     return videoByIdModel;
   }
-
+ 
   // get_package API
   Future<SubscriptionModel> subscriptionPackage() async {
     debugPrint('subscriptionPackage userID ==>>> ${Constant.userID}');
@@ -594,11 +638,11 @@ class ApiService {
     subscriptionModel = SubscriptionModel.fromJson(response.data);
     return subscriptionModel;
   }
-
+ 
   // get_bookmark_video API
   Future<WatchlistModel> watchlist() async {
     debugPrint("watchlist userID :==> ${Constant.userID}");
-
+ 
     WatchlistModel watchlistModel;
     String getBookmarkVideo = "get_bookmark_video";
     debugPrint("getBookmarkVideo API :==> $baseUrl$getBookmarkVideo");
@@ -609,11 +653,11 @@ class ApiService {
         'user_id': Constant.userID,
       },
     );
-
+ 
     watchlistModel = WatchlistModel.fromJson(response.data);
     return watchlistModel;
   }
-
+ 
   // get_payment_option API
   Future<PaymentOptionModel> getPaymentOption() async {
     PaymentOptionModel paymentOptionModel;
@@ -623,11 +667,11 @@ class ApiService {
       '$baseUrl$paymentOption',
       options: optHeaders,
     );
-
+ 
     paymentOptionModel = PaymentOptionModel.fromJson(response.data);
     return paymentOptionModel;
   }
-
+ 
   // apply_coupon API
   Future<CouponModel> applyPackageCoupon(couponCode, packageId) async {
     CouponModel couponModel;
@@ -643,11 +687,11 @@ class ApiService {
         'package_id': packageId,
       },
     );
-
+ 
     couponModel = CouponModel.fromJson(response.data);
     return couponModel;
   }
-
+ 
   // apply_coupon API
   Future<CouponModel> applyRentCoupon(
       couponCode, videoId, typeId, videoType, price) async {
@@ -667,11 +711,11 @@ class ApiService {
         'price': price,
       },
     );
-
+ 
     couponModel = CouponModel.fromJson(response.data);
     return couponModel;
   }
-
+ 
   // get_payment_token API
   Future<PayTmModel> getPaytmToken(merchantID, orderId, custmoreID, channelID,
       txnAmount, website, callbackURL, industryTypeID) async {
@@ -692,11 +736,11 @@ class ApiService {
         'INDUSTRY_TYPE_ID': industryTypeID,
       },
     );
-
+ 
     payTmModel = PayTmModel.fromJson(response.data);
     return payTmModel;
   }
-
+ 
   // add_transaction API
   Future<SuccessModel> addTransaction(packageId, description, amount, paymentId,
       currencyCode, couponCode) async {
@@ -725,7 +769,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // add_rent_transaction API
   Future<SuccessModel> addRentTransaction(
       videoId, price, typeId, videoType, couponCode) async {
@@ -752,7 +796,7 @@ class ApiService {
     successModel = SuccessModel.fromJson(response.data);
     return successModel;
   }
-
+ 
   // subscription_list API
   Future<HistoryModel> subscriptionList() async {
     HistoryModel historyModel;
