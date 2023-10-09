@@ -233,7 +233,7 @@ class HomeState extends State<Home> {
             sliver: SliverAppBar(
               automaticallyImplyLeading: false,
               backgroundColor: appBgColor,
-              toolbarHeight: 65,
+              // toolbarHeight: 65,
               title: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -246,7 +246,7 @@ class HomeState extends State<Home> {
                     await getTabData(0, homeProvider.sectionTypeModel.result);
                   },
                   child:
-                      MyImage(width: 80, height: 80, imagePath: "appicon.png"),
+                      MyImage(width: 80, height: 60, imagePath: "appicon.png"),
                 ),
               ), // This is the title in the app bar.
               pinned: false,
