@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -47,32 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCJ7G3BQmwI6koeECdtn5Wl21BceZk_oyQ',
-    appId: '1:346606981660:web:455544c2a46ec6152fc5d9',
-    messagingSenderId: '346606981660',
-    projectId: 'primevideoapp-43bf6',
-    authDomain: 'primevideoapp-43bf6.firebaseapp.com',
-    storageBucket: 'primevideoapp-43bf6.appspot.com',
+    apiKey: 'AIzaSyDyugNhMh9OLugoGGdwEWgdSCZ_RS7EIO4',
+    appId: '1:663533434843:web:c6ae9531d361de38fe99fe',
+    messagingSenderId: '663533434843',
+    projectId: 'mitwatv-3c8bf',
+    authDomain: 'mitwatv-3c8bf.firebaseapp.com',
+    storageBucket: 'mitwatv-3c8bf.appspot.com',
+    measurementId: 'G-8V44NX4CJH',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBt2kWDmwynM9rdN6tuvGaEJyvgERjm5bQ',
-    appId: '1:346606981660:android:200f87933ac5b8d02fc5d9',
-    messagingSenderId: '346606981660',
-    projectId: 'primevideoapp-43bf6',
-    storageBucket: 'primevideoapp-43bf6.appspot.com',
+    apiKey: 'AIzaSyAI_Wj-P_Lfo-vRIIpl5wIG48yZdB_werw',
+    appId: '1:663533434843:android:025c021a2250cc0afe99fe',
+    messagingSenderId: '663533434843',
+    projectId: 'mitwatv-3c8bf',
+    storageBucket: 'mitwatv-3c8bf.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB0KoOQEiQixmNx7PJfO6hjhuXhxxvYCds',
-    appId: '1:346606981660:ios:ceb6dbea2605e8d82fc5d9',
-    messagingSenderId: '346606981660',
-    projectId: 'primevideoapp-43bf6',
-    storageBucket: 'primevideoapp-43bf6.appspot.com',
-    androidClientId:
-        '346606981660-150eiiccap50sdco81aaj0av5lgn59us.apps.googleusercontent.com',
-    iosClientId:
-        '346606981660-rcf3siicukjvl2nlqtafb26ufs6mumc5.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBeHiYJJtmhC-s7OO5zAAcRoQXh7EvCkN4',
+    appId: '1:663533434843:ios:4b839fe5a9fc09f1fe99fe',
+    messagingSenderId: '663533434843',
+    projectId: 'mitwatv-3c8bf',
+    storageBucket: 'mitwatv-3c8bf.appspot.com',
+    androidClientId: '663533434843-9g2v2lca9fntsitgi8okom2t6hj2e5il.apps.googleusercontent.com',
+    iosClientId: '663533434843-aqnt2cv02epkfn98n59ajeaur73gr2iv.apps.googleusercontent.com',
+    iosBundleId: 'com.release.mitwatvapp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBeHiYJJtmhC-s7OO5zAAcRoQXh7EvCkN4',
+    appId: '1:663533434843:ios:4b839fe5a9fc09f1fe99fe',
+    messagingSenderId: '663533434843',
+    projectId: 'mitwatv-3c8bf',
+    storageBucket: 'mitwatv-3c8bf.appspot.com',
+    androidClientId: '663533434843-9g2v2lca9fntsitgi8okom2t6hj2e5il.apps.googleusercontent.com',
+    iosClientId: '663533434843-aqnt2cv02epkfn98n59ajeaur73gr2iv.apps.googleusercontent.com',
     iosBundleId: 'com.release.mitwatvapp',
   );
 }
