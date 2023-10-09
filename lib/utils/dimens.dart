@@ -9,10 +9,14 @@ class Dimens {
   static double homeTabHeight = 55;
 
   static double cardRadius = 4;
-  static double widthPort = 100;
-  static double heightPort = 150;
-  static double widthLand = 150;
-  static double heightLand = 100;
+// changes ----
+  static double widthPort = 230;
+  static double heightPort = 320;
+// changes ----
+  static double widthLand = 300;
+  static double heightLand = 170;
+
+
   static double widthSquare = 150;
   static double heightSquare = 150;
 
@@ -25,7 +29,7 @@ class Dimens {
 
   static double widthCast = 110;
   static double heightCast = 165;
-  static double widthCastWeb = 160;
+  static double widthCastWeb = 80;
   static double heightCastWeb = 220;
 
   static double widthLangGen = 120;

@@ -614,7 +614,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
         alignment: Alignment.center,
         child: FittedBox(
           child: Container(
-            constraints: const BoxConstraints(maxHeight: 35, minWidth: 100),
+            constraints: const BoxConstraints(maxHeight: 40, minWidth: 100),
             decoration: Utils.setBackground(
               homeProvider.selectedIndex != -1
                   ? ((typeDropDownList[homeProvider.selectedIndex].id ?? 0) ==

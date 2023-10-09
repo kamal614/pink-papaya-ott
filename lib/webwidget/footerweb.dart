@@ -76,8 +76,8 @@ class _FooterWebState extends State<FooterWeb> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 90,
-                height: 35,
+                width: 150,
+                height: 80,
                 alignment: Alignment.centerLeft,
                 child: MyImage(
                   fit: BoxFit.fill,
