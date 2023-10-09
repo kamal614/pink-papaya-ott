@@ -5,51 +5,57 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
-  - better_player (0.0.1):
-    - Cache (~> 6.0.0)
-    - Flutter
-    - GCDWebServer
-    - HLSCachingReverseProxyServer
-    - PINCache
-  - Cache (6.0.0)
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
   - device_info_plus (0.0.1):
     - Flutter
-  - FBAEMKit (16.0.1):
-    - FBSDKCoreKit_Basics (= 16.0.1)
-  - FBSDKCoreKit (16.0.1):
-    - FBAEMKit (= 16.0.1)
-    - FBSDKCoreKit_Basics (= 16.0.1)
-  - FBSDKCoreKit_Basics (16.0.1)
-  - FBSDKLoginKit (16.0.1):
-    - FBSDKCoreKit (= 16.0.1)
-  - Firebase/Auth (10.10.0):
+  - Firebase/Auth (10.12.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.10.0)
-  - Firebase/CoreOnly (10.10.0):
-    - FirebaseCore (= 10.10.0)
-  - firebase_auth (4.6.3):
-    - Firebase/Auth (= 10.10.0)
+    - FirebaseAuth (~> 10.12.0)
+  - Firebase/CoreOnly (10.12.0):
+    - FirebaseCore (= 10.12.0)
+  - Firebase/Messaging (10.12.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.12.0)
+  - firebase_auth (4.9.0):
+    - Firebase/Auth (= 10.12.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.14.0):
-    - Firebase/CoreOnly (= 10.10.0)
+  - firebase_core (2.15.1):
+    - Firebase/CoreOnly (= 10.12.0)
+    - Flutter
+  - firebase_messaging (14.6.7):
+    - Firebase/Messaging (= 10.12.0)
+    - firebase_core
     - Flutter
   - FirebaseAppCheckInterop (10.16.0)
-  - FirebaseAuth (10.10.0):
+  - FirebaseAuth (10.12.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
-  - FirebaseCore (10.10.0):
+  - FirebaseCore (10.12.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
   - FirebaseCoreInternal (10.16.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseInstallations (10.16.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.12.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - Flutter (1.0.0)
   - flutter_downloader (0.0.1):
     - Flutter
@@ -60,11 +66,6 @@ PODS:
   - flutter_inappwebview/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 5.0)
-  - flutter_local_notifications (0.0.1):
-    - Flutter
-  - flutter_login_facebook (1.8.0):
-    - FBSDKLoginKit (= 16.0.1)
-    - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
   - flutter_share (0.0.1):
@@ -75,16 +76,45 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - GCDWebServer (3.5.4):
-    - GCDWebServer/Core (= 3.5.4)
-  - GCDWebServer/Core (3.5.4)
+  - Google-Mobile-Ads-SDK (10.4.0):
+    - GoogleAppMeasurement (< 11.0, >= 7.0)
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - google_mobile_ads (1.0.0):
+    - Flutter
+    - Google-Mobile-Ads-SDK (~> 10.4.0)
+    - webview_flutter_wkwebview
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 6.2)
+  - GoogleAppMeasurement (10.16.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.16.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.16.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.16.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.16.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleDataTransport (9.2.5):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
   - GoogleSignIn (6.2.4):
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
+  - GoogleUserMessagingPlatform (2.1.0)
   - GoogleUtilities/AppDelegateSwizzler (7.11.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -93,6 +123,8 @@ PODS:
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.11.5):
     - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.11.5):
+    - GoogleUtilities/Logger
   - GoogleUtilities/Network (7.11.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
@@ -100,31 +132,63 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.11.5)"
   - GoogleUtilities/Reachability (7.11.5):
     - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.11.5):
+    - GoogleUtilities/Logger
   - GTMAppAuth (1.3.1):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.3.0)
-  - HLSCachingReverseProxyServer (0.1.0):
-    - GCDWebServer (~> 3.5)
-    - PINCache (>= 3.0.1-beta.3)
   - image_picker_ios (0.0.1):
     - Flutter
-  - in_app_purchase_storekit (0.0.1):
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - onesignal_flutter (5.0.0):
     - Flutter
-    - FlutterMacOS
-  - onesignal_flutter (3.5.1):
-    - Flutter
-    - OneSignalXCFramework (= 3.12.4)
-  - OneSignalXCFramework (3.12.4):
-    - OneSignalXCFramework/OneSignalCore (= 3.12.4)
-    - OneSignalXCFramework/OneSignalExtension (= 3.12.4)
-    - OneSignalXCFramework/OneSignalOutcomes (= 3.12.4)
-  - OneSignalXCFramework/OneSignalCore (3.12.4)
-  - OneSignalXCFramework/OneSignalExtension (3.12.4):
+    - OneSignalXCFramework (= 5.0.1)
+  - OneSignalXCFramework (5.0.1):
+    - OneSignalXCFramework/OneSignalComplete (= 5.0.1)
+  - OneSignalXCFramework/OneSignal (5.0.1):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalExtension
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalOutcomes
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalComplete (5.0.1):
+    - OneSignalXCFramework/OneSignal
+    - OneSignalXCFramework/OneSignalInAppMessages
+    - OneSignalXCFramework/OneSignalLocation
+  - OneSignalXCFramework/OneSignalCore (5.0.1)
+  - OneSignalXCFramework/OneSignalExtension (5.0.1):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOutcomes (3.12.4):
+  - OneSignalXCFramework/OneSignalInAppMessages (5.0.1):
     - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalOutcomes
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalLocation (5.0.1):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalNotifications (5.0.1):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalExtension
+    - OneSignalXCFramework/OneSignalOutcomes
+  - OneSignalXCFramework/OneSignalOSCore (5.0.1):
+    - OneSignalXCFramework/OneSignalCore
+  - OneSignalXCFramework/OneSignalOutcomes (5.0.1):
+    - OneSignalXCFramework/OneSignalCore
+  - OneSignalXCFramework/OneSignalUser (5.0.1):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalOutcomes
   - OrderedSet (5.0.0)
   - package_info_plus (0.4.5):
     - Flutter
@@ -133,16 +197,54 @@ PODS:
     - FlutterMacOS
   - paytm_allinonesdk (1.2.1):
     - Flutter
+  - payu_checkoutpro_flutter (1.0.1):
+    - Flutter
+    - PayUIndia-CheckoutPro (~> 6.0)
+  - PayUIndia-Analytics (3.0.0):
+    - PayUIndia-NetworkReachability (~> 1.0)
+  - PayUIndia-AssetLibrary (3.3.1)
+  - PayUIndia-CardScanner (1.0.0)
+  - PayUIndia-CheckoutPro (6.0.1):
+    - PayUIndia-Analytics (= 3.0)
+    - PayUIndia-AssetLibrary (~> 3.3)
+    - PayUIndia-CardScanner (~> 1.0)
+    - PayUIndia-CheckoutProBase (~> 6.0)
+    - PayUIndia-CommonUI (~> 1.0)
+    - PayUIndia-CrashReporter (~> 2.1)
+    - PayUIndia-Custom-Browser (~> 10.0)
+    - PayUIndia-NativeOtpAssist (~> 2.2)
+    - PayUIndia-NetworkReachability (~> 1.0)
+    - PayUIndia-PayUParams (~> 4.9)
+    - PayUIndia-PG-SDK (~> 9.3)
+    - PayUIndia-UPICore (~> 7.1)
+  - PayUIndia-CheckoutProBase (6.0.1):
+    - PayUIndia-PayUParams (~> 4.9)
+  - PayUIndia-CommonUI (1.2.0):
+    - PayUIndia-Analytics (= 3.0)
+  - PayUIndia-CrashReporter (2.1.0)
+  - PayUIndia-Custom-Browser (10.1.0):
+    - PayUIndia-Analytics (= 3.0)
+    - PayUIndia-CommonUI (~> 1.1)
+  - PayUIndia-Logger (4.0.0)
+  - PayUIndia-NativeOtpAssist (2.2.1):
+    - PayUIndia-Analytics (~> 3.0)
+    - PayUIndia-CommonUI (~> 1.0)
+    - PayUIndia-CrashReporter (~> 2.1)
+    - PayUIndia-NetworkReachability (~> 1.0)
+    - PayUIndia-PayUParams (~> 4.9)
+  - PayUIndia-Networking (4.1.0):
+    - PayUIndia-Logger (= 4.0.0)
+  - PayUIndia-NetworkReachability (1.0.1)
+  - PayUIndia-PayUParams (4.9.0)
+  - PayUIndia-PG-SDK (9.3.0):
+    - PayUIndia-CrashReporter (~> 2.1)
+    - PayUIndia-NetworkReachability (~> 1.0)
+    - PayUIndia-PayUParams (~> 4.9)
+  - PayUIndia-UPICore (7.1.1):
+    - PayUIndia-Networking (~> 4.0)
+    - PayUIndia-PayUParams (~> 4.5)
   - permission_handler_apple (9.1.1):
     - Flutter
-  - PINCache (3.0.3):
-    - PINCache/Arc-exception-safe (= 3.0.3)
-    - PINCache/Core (= 3.0.3)
-  - PINCache/Arc-exception-safe (3.0.3):
-    - PINCache/Core
-  - PINCache/Core (3.0.3):
-    - PINOperation (~> 1.2.1)
-  - PINOperation (1.2.2)
   - PromisesObjC (2.3.1)
   - razorpay-pod (1.3.4)
   - razorpay_web (1.1.10):
@@ -168,42 +270,42 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - Stripe (23.7.1):
-    - StripeApplePay (= 23.7.1)
-    - StripeCore (= 23.7.1)
-    - StripePayments (= 23.7.1)
-    - StripePaymentsUI (= 23.7.1)
-    - StripeUICore (= 23.7.1)
+  - Stripe (23.12.0):
+    - StripeApplePay (= 23.12.0)
+    - StripeCore (= 23.12.0)
+    - StripePayments (= 23.12.0)
+    - StripePaymentsUI (= 23.12.0)
+    - StripeUICore (= 23.12.0)
   - stripe_ios (0.0.1):
     - Flutter
-    - Stripe (~> 23.7.0)
-    - StripeApplePay (~> 23.7.0)
-    - StripeFinancialConnections (~> 23.7.0)
-    - StripePayments (~> 23.7.0)
-    - StripePaymentSheet (~> 23.7.0)
-    - StripePaymentsUI (~> 23.7.0)
-  - StripeApplePay (23.7.1):
-    - StripeCore (= 23.7.1)
-  - StripeCore (23.7.1)
-  - StripeFinancialConnections (23.7.1):
-    - StripeCore (= 23.7.1)
-    - StripeUICore (= 23.7.1)
-  - StripePayments (23.7.1):
-    - StripeCore (= 23.7.1)
-    - StripePayments/Stripe3DS2 (= 23.7.1)
-  - StripePayments/Stripe3DS2 (23.7.1):
-    - StripeCore (= 23.7.1)
-  - StripePaymentSheet (23.7.1):
-    - StripeApplePay (= 23.7.1)
-    - StripeCore (= 23.7.1)
-    - StripePayments (= 23.7.1)
-    - StripePaymentsUI (= 23.7.1)
-  - StripePaymentsUI (23.7.1):
-    - StripeCore (= 23.7.1)
-    - StripePayments (= 23.7.1)
-    - StripeUICore (= 23.7.1)
-  - StripeUICore (23.7.1):
-    - StripeCore (= 23.7.1)
+    - Stripe (~> 23.12.0)
+    - StripeApplePay (~> 23.12.0)
+    - StripeFinancialConnections (~> 23.12.0)
+    - StripePayments (~> 23.12.0)
+    - StripePaymentSheet (~> 23.12.0)
+    - StripePaymentsUI (~> 23.12.0)
+  - StripeApplePay (23.12.0):
+    - StripeCore (= 23.12.0)
+  - StripeCore (23.12.0)
+  - StripeFinancialConnections (23.12.0):
+    - StripeCore (= 23.12.0)
+    - StripeUICore (= 23.12.0)
+  - StripePayments (23.12.0):
+    - StripeCore (= 23.12.0)
+    - StripePayments/Stripe3DS2 (= 23.12.0)
+  - StripePayments/Stripe3DS2 (23.12.0):
+    - StripeCore (= 23.12.0)
+  - StripePaymentSheet (23.12.0):
+    - StripeApplePay (= 23.12.0)
+    - StripeCore (= 23.12.0)
+    - StripePayments (= 23.12.0)
+    - StripePaymentsUI (= 23.12.0)
+  - StripePaymentsUI (23.12.0):
+    - StripeCore (= 23.12.0)
+    - StripePayments (= 23.12.0)
+    - StripeUICore (= 23.12.0)
+  - StripeUICore (23.12.0):
+    - StripeCore (= 23.12.0)
   - Toast (4.0.0)
   - Try (2.1.1)
   - url_launcher_ios (0.0.1):
@@ -216,27 +318,26 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - better_player (from `.symlinks/plugins/better_player/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
-  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
-  - flutter_login_facebook (from `.symlinks/plugins/flutter_login_facebook/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_share (from `.symlinks/plugins/flutter_share/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
-  - OneSignalXCFramework (< 4.0, >= 3.4.3)
+  - OneSignalXCFramework (< 6.0, >= 5.0.0)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - paytm_allinonesdk (from `.symlinks/plugins/paytm_allinonesdk/ios`)
+  - payu_checkoutpro_flutter (from `.symlinks/plugins/payu_checkoutpro_flutter/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - razorpay_web (from `.symlinks/plugins/razorpay_web/ios`)
   - screen_protector (from `.symlinks/plugins/screen_protector/ios`)
@@ -255,27 +356,40 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
-    - Cache
-    - FBAEMKit
-    - FBSDKCoreKit
-    - FBSDKCoreKit_Basics
-    - FBSDKLoginKit
     - Firebase
     - FirebaseAppCheckInterop
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreInternal
+    - FirebaseInstallations
+    - FirebaseMessaging
     - FMDB
-    - GCDWebServer
+    - Google-Mobile-Ads-SDK
+    - GoogleAppMeasurement
+    - GoogleDataTransport
     - GoogleSignIn
+    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
-    - HLSCachingReverseProxyServer
+    - nanopb
     - OneSignalXCFramework
     - OrderedSet
-    - PINCache
-    - PINOperation
+    - PayUIndia-Analytics
+    - PayUIndia-AssetLibrary
+    - PayUIndia-CardScanner
+    - PayUIndia-CheckoutPro
+    - PayUIndia-CheckoutProBase
+    - PayUIndia-CommonUI
+    - PayUIndia-CrashReporter
+    - PayUIndia-Custom-Browser
+    - PayUIndia-Logger
+    - PayUIndia-NativeOtpAssist
+    - PayUIndia-Networking
+    - PayUIndia-NetworkReachability
+    - PayUIndia-PayUParams
+    - PayUIndia-PG-SDK
+    - PayUIndia-UPICore
     - PromisesObjC
     - razorpay-pod
     - ReachabilitySwift
@@ -292,8 +406,6 @@ SPEC REPOS:
     - Try
 
 EXTERNAL SOURCES:
-  better_player:
-    :path: ".symlinks/plugins/better_player/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
   device_info_plus:
@@ -302,28 +414,26 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
   flutter_downloader:
     :path: ".symlinks/plugins/flutter_downloader/ios"
   flutter_inappwebview:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
-  flutter_local_notifications:
-    :path: ".symlinks/plugins/flutter_local_notifications/ios"
-  flutter_login_facebook:
-    :path: ".symlinks/plugins/flutter_login_facebook/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_share:
     :path: ".symlinks/plugins/flutter_share/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  google_mobile_ads:
+    :path: ".symlinks/plugins/google_mobile_ads/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  in_app_purchase_storekit:
-    :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
   package_info_plus:
@@ -332,6 +442,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   paytm_allinonesdk:
     :path: ".symlinks/plugins/paytm_allinonesdk/ios"
+  payu_checkoutpro_flutter:
+    :path: ".symlinks/plugins/payu_checkoutpro_flutter/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   razorpay_web:
@@ -363,48 +475,60 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
-  better_player: 2406bfe8175203c7a46fa15f9d778d73b12e1646
-  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
-  FBAEMKit: daac7466b918752f020345be5c7d9787f98cfc07
-  FBSDKCoreKit: 2cb033464b2134af0138f87d20b859eb3f9be359
-  FBSDKCoreKit_Basics: d37280da2e65872f0e931d15f45d97ea324fec37
-  FBSDKLoginKit: c47a3b90920702487b10b647c63520dc2676dad9
-  Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
-  firebase_auth: 9905bc3d82328b5050a8b7cb410a959f150b6549
-  firebase_core: 85b6664038311940ad60584eaabc73103c61f5de
+  Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
+  firebase_auth: 097a2440d40bed75f4dfe4cb91b4d98349509b47
+  firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
+  firebase_messaging: 0b4f7997f491343b90d9300af54fe55c72135833
   FirebaseAppCheckInterop: 82358cff9f33452dd44259e88eea5e562500b1cb
-  FirebaseAuth: 5ddbe23ebc4e647469261f5c59cd12a04f37c8e6
-  FirebaseCore: d027ff503d37edb78db98429b11f580a24a7df2a
+  FirebaseAuth: a66c1e14ec58f41d154a4b41ce1a23ea00ad4805
+  FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
   FirebaseCoreInternal: 26233f705cc4531236818a07ac84d20c333e505a
+  FirebaseInstallations: b822f91a61f7d1ba763e5ccc9d4f2e6f2ed3b3ee
+  FirebaseMessaging: bb2c4f6422a753038fe137d90ae7c1af57251316
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_downloader: b7301ae057deadd4b1650dc7c05375f10ff12c39
-  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
-  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
-  flutter_login_facebook: 4fb924b72110c7e1a7f785e6f4fd14a0083bf349
+  flutter_inappwebview: acd4fc0f012cefd09015000c241137d82f01ba62
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_share: 4be0208963c60b537e6255ed2ce1faae61cd9ac2
-  fluttertoast: fafc4fa4d01a6a9e4f772ecd190ffa525e9e2d9c
+  fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
+  Google-Mobile-Ads-SDK: 32fe7836431a06a29f7734ae092b600137c8108d
+  google_mobile_ads: 53b1f0d74445963e5810e34ac38dfb27aabe278e
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
+  GoogleAppMeasurement: 079d7632810e9d9704a99932547ba1554acc4342
+  GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
+  GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
-  in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
-  onesignal_flutter: b8ac01bc3ebe47e798d7d775455c3a9b5b84f1c5
-  OneSignalXCFramework: 087934ab0d4d7445fcf1c015c7c782359e26c020
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  onesignal_flutter: 33912d40612d20a6b34cd77e3d783f61843493fc
+  OneSignalXCFramework: 8429bc2456554da1b09b17135621087152ad05a0
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   paytm_allinonesdk: 40f4db5d33dc7960b4e87cd8e643f8cafdfca180
+  payu_checkoutpro_flutter: 537ba3aa2d63b65b1a611550eb147124653d1074
+  PayUIndia-Analytics: a23768b29283ef781783f38a99c1cf2235020d58
+  PayUIndia-AssetLibrary: b833dab5ae241e2eb2f98f325791c1018337ab95
+  PayUIndia-CardScanner: 42a10e1112f1bc954fdb407dd6de472fbf31fa27
+  PayUIndia-CheckoutPro: 91693a14c873a23e775695d5b0bd745fba7ad1e0
+  PayUIndia-CheckoutProBase: d782ba8c5048edb14d965933cb6b14ab5598252e
+  PayUIndia-CommonUI: 474ece97366ff21dbc6aa7566443ad5a9cf897d4
+  PayUIndia-CrashReporter: 597caf134e85f9b3bde7d2045cae2def1b86c544
+  PayUIndia-Custom-Browser: 1b6e603c571320692930375a249926602919ee50
+  PayUIndia-Logger: e353d9dd576bac593e428dfbadedf337cbb48b78
+  PayUIndia-NativeOtpAssist: a8acd1c15358eb931f94b3ea2f9c08ea6fec32b7
+  PayUIndia-Networking: 10487dda397cc9b221361a862b2c8ab3510c4408
+  PayUIndia-NetworkReachability: 99e69781b3be99d7b713075ab7b73e6d73a153e4
+  PayUIndia-PayUParams: a78c869ad7684a264c0f2be27c4e5dc7f9e806ce
+  PayUIndia-PG-SDK: c25283160df7cb0fc551f44f5ea9acb7b972ad63
+  PayUIndia-UPICore: 5b1e5e4acbfff3fc5fa253c9219b7e1deb89bd41
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
-  PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
-  PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   razorpay-pod: df3aa440969489d242c40ec606db9a0c7095743f
   razorpay_web: 4338051683c7e262b1defcf27c29d121ad7049d4
@@ -417,15 +541,15 @@ SPEC CHECKSUMS:
   social_share: 702a5e3842addd22db515aa9e1e00a4b80a0296d
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  Stripe: fbe3d1d61cba70ac7a920c6097222ba9525352c4
-  stripe_ios: 8e0be46c31e1758756e5fdc1613f751d4d945ae0
-  StripeApplePay: 06e3899c9db102567804b77c41cec2861b5e2c39
-  StripeCore: 9b331e5f9d4067ef7296718c680a73ad6f2d1066
-  StripeFinancialConnections: 7d8116c4dcd3b034f13a181b4d96e6991b594cfc
-  StripePayments: 46fbd561312cb300c93dd855b9c896285c8eb1fb
-  StripePaymentSheet: 016fd1c6053efff1f348fc6f44babecacda9d0af
-  StripePaymentsUI: cb06c01d3c9efde91ebce218f9e4e94e902dd676
-  StripeUICore: a9db3f2a82c932d5ca58dd8fc4ac0a6b72f1ccee
+  Stripe: 15fad81ffb8d553d77ff504a6d50d47b9028bed0
+  stripe_ios: 872ce75ce051b4070d061a185c8b7b67323c9f30
+  StripeApplePay: 871274acfa7a96650ea8a697c288c54b8288fb6e
+  StripeCore: 7b08fd286e8f8f5336eb725bc7ed1d2a4705cdc4
+  StripeFinancialConnections: 561831507db3d383be3933a3979f1b9d287a15e7
+  StripePayments: 081e01e73762852ccf3e662202d5dd4107634058
+  StripePaymentSheet: ec04397e9223c86a87be8b348cdbcf2075dd7a16
+  StripePaymentsUI: 3dae7fed9b148b2749dff622ece45f9b441b88ce
+  StripeUICore: 4a76fa59cab679e1b2fe1ad37d6b08c5bf2ada54
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
@@ -433,6 +557,6 @@ SPEC CHECKSUMS:
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
 
-PODFILE CHECKSUM: 0d520eff7fceb6733c0076a09d72e275f08c0896
+PODFILE CHECKSUM: 406db0397faf54437fd291e5c71dfd111db2e569
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.13.0

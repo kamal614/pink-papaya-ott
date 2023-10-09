@@ -210,3 +210,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 }
+
+
+//TO BUILD APK
+//flutter build appbundle --target-platform android-arm,android-arm64,android-x64
