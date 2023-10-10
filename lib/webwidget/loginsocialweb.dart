@@ -52,8 +52,8 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 80,
-                  height: 30,
+                  width: 100,
+                  height: 50,
                   alignment: Alignment.centerLeft,
                   child: MyImage(
                     fit: BoxFit.contain,
@@ -79,20 +79,31 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
                 ),
               ],
             ),
-            const SizedBox(height: 30),
-            MyText(
-              color: white,
-              text: "welcomeback",
-              fontsizeNormal: 16,
-              fontsizeWeb: 18,
-              multilanguage: true,
-              fontweight: FontWeight.bold,
-              maxline: 1,
-              overflow: TextOverflow.ellipsis,
-              textalign: TextAlign.start,
-              fontstyle: FontStyle.normal,
-            ),
-            const SizedBox(height: 7),
+            const SizedBox(height: 25),
+
+            Row(
+              children: [
+                Text("Login with WhatsApp" ,style: TextStyle(color:white ,fontSize: 21),),
+               SizedBox(width: 10,)
+ ,                SizedBox(
+                  height: 23,
+                  width: 23,
+                  child: Image.asset('assets/images/logos_whatsapp-icon.png' ,height: 23 ,width: 23,)) 
+              ],
+            ) ,
+            // MyText(
+            //   color: white,
+            //   text: "",
+            //   fontsizeNormal: 16,
+            //   fontsizeWeb: 18,
+            //   multilanguage: true,
+            //   fontweight: FontWeight.bold,
+            //   maxline: 1,
+            //   overflow: TextOverflow.ellipsis,
+            //   textalign: TextAlign.start,
+            //   fontstyle: FontStyle.normal,
+            // ),
+            const SizedBox(height: 10),
             MyText(
               color: otherColor,
               text: "login_with_mobile_note",
