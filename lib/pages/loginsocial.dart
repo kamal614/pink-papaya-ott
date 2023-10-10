@@ -138,18 +138,29 @@ class LoginSocialState extends State<LoginSocial> {
                 ),
               ),
               const SizedBox(height: 25),
-              MyText(
-                color: white,
-                text: "welcomeback",
-                fontsizeNormal: 20,
-                fontsizeWeb: 25,
-                multilanguage: true,
-                fontweight: FontWeight.bold,
-                maxline: 1,
-                overflow: TextOverflow.ellipsis,
-                textalign: TextAlign.center,
-                fontstyle: FontStyle.normal,
-              ),
+                Row(
+              children: [
+                Text("Login with WhatsApp" ,style: TextStyle(color:white ,fontSize: 21),),
+               SizedBox(width: 10,)
+ ,                SizedBox(
+                  height: 23,
+                  width: 23,
+                  child: Image.asset('assets/images/logos_whatsapp-icon.png' ,height: 23 ,width: 23,)) ,
+              ],
+            ) ,
+            
+              // MyText(
+              //   color: white,
+              //   text: "welcomeback",
+              //   fontsizeNormal: 20,
+              //   fontsizeWeb: 25,
+              //   multilanguage: true,
+              //   fontweight: FontWeight.bold,
+              //   maxline: 1,
+              //   overflow: TextOverflow.ellipsis,
+              //   textalign: TextAlign.center,
+              //   fontstyle: FontStyle.normal,
+              // ),
               const SizedBox(height: 7),
               MyText(
                 color: otherColor,
