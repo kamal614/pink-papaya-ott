@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:dtlive/provider/generalprovider.dart';
@@ -12,6 +11,7 @@ import 'package:dtlive/utils/utils.dart';
 import 'package:dtlive/widget/myimage.dart';
 import 'package:dtlive/widget/mytext.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,6 +26,8 @@ class LoginSocialWeb extends StatefulWidget {
 }
 
 class _LoginSocialWebState extends State<LoginSocialWeb> {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
   SharedPre sharedPref = SharedPre();
   final numberController = TextEditingController();
   String? mobileNumber, email, userName, strType;
@@ -250,7 +252,8 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
             InkWell(
               onTap: () {
                 debugPrint("Clicked on : ====> loginWith Google");
-                _gmailLogin();
+                // _gmailLogin();
+                signInWithGoogle();
               },
               focusColor: colorPrimary,
               borderRadius: BorderRadius.circular(18),
@@ -300,54 +303,83 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
     );
   }
 
-  /* Google(Gmail) Login */
-  Future<void> _gmailLogin() async {
-    final googleUser = await GoogleSignIn().signIn().onError(
-        (error, stackTrace) async => await GoogleSignIn().signInSilently());
-    if (googleUser == null) return;
+  Future<User?> signInWithGoogle() async {
+    // Initialize Firebase
+    await Firebase.initializeApp();
+    User? user;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    // The `GoogleAuthProvider` can only be
+    // used while running on the web
+    GoogleAuthProvider authProvider = GoogleAuthProvider();
 
-    GoogleSignInAccount user = googleUser;
-
-    debugPrint('GoogleSignIn ===> id : ${user.id}');
-    debugPrint('GoogleSignIn ===> email : ${user.email}');
-    debugPrint('GoogleSignIn ===> displayName : ${user.displayName}');
-    debugPrint('GoogleSignIn ===> photoUrl : ${user.photoUrl}');
-
-    UserCredential userCredential;
     try {
-      GoogleSignInAuthentication googleSignInAuthentication =
-          await user.authentication;
-      AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
+      final UserCredential userCredential =
+          await auth.signInWithPopup(authProvider);
+      user = userCredential.user;
+    } catch (e) {
+      print(e);
+    }
 
-      userCredential = await _auth.signInWithCredential(credential);
-      assert(await userCredential.user?.getIdToken() != null);
-      debugPrint("User Name: ${userCredential.user?.displayName}");
-      debugPrint("User Email ${userCredential.user?.email}");
-      debugPrint("User photoUrl ${userCredential.user?.photoURL}");
-      debugPrint("uid ===> ${userCredential.user?.uid}");
-      String firebasedid = userCredential.user?.uid ?? "";
-      debugPrint('firebasedid :===> $firebasedid');
+    if (user != null) {
+      // print("name: $name");
+      // print("userEmail: $userEmail");
+      // print("imageUrl: $imageUrl");
 
       /* Save PhotoUrl in File */
-      mProfileImg =
-          await Utils.saveImageInStorage(userCredential.user?.photoURL ?? "");
-      debugPrint('mProfileImg :===> $mProfileImg');
-
-      checkAndNavigate(user.email, user.displayName ?? "", "2");
-    } on FirebaseAuthException catch (e) {
-      debugPrint('===>Exp${e.code.toString()}');
-      debugPrint('===>Exp${e.message.toString()}');
-      if (e.code.toString() == "user-not-found") {
-        // registerFirebaseUser(user.email, user.displayName ?? "", "2");
-      } else if (e.code == 'wrong-password') {
-        debugPrint('Wrong password provided.');
-        Utils.showToast('Wrong password provided.');
-      } else {}
+      mProfileImg = await Utils.saveImageInStorage(user.photoURL ?? "");
+      checkAndNavigate(user.email!, user.displayName ?? "", "2");
     }
+    return user;
   }
+
+  /* Google(Gmail) Login */
+  // Future<void> _gmailLogin() async {
+  //   final googleUser = await GoogleSignIn().signIn().onError(
+  //       (error, stackTrace) async => await GoogleSignIn().signInSilently());
+  //   if (googleUser == null) return;
+
+  //   GoogleSignInAccount user = googleUser;
+
+  //   debugPrint('GoogleSignIn ===> id : ${user.id}');
+  //   debugPrint('GoogleSignIn ===> email : ${user.email}');
+  //   debugPrint('GoogleSignIn ===> displayName : ${user.displayName}');
+  //   debugPrint('GoogleSignIn ===> photoUrl : ${user.photoUrl}');
+
+  //   UserCredential userCredential;
+  //   try {
+  //     GoogleSignInAuthentication googleSignInAuthentication =
+  //         await user.authentication;
+  //     AuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleSignInAuthentication.accessToken,
+  //       idToken: googleSignInAuthentication.idToken,
+  //     );
+
+  //     userCredential = await _auth.signInWithCredential(credential);
+  //     assert(await userCredential.user?.getIdToken() != null);
+  //     debugPrint("User Name: ${userCredential.user?.displayName}");
+  //     debugPrint("User Email ${userCredential.user?.email}");
+  //     debugPrint("User photoUrl ${userCredential.user?.photoURL}");
+  //     debugPrint("uid ===> ${userCredential.user?.uid}");
+  //     String firebasedid = userCredential.user?.uid ?? "";
+  //     debugPrint('firebasedid :===> $firebasedid');
+
+  //     /* Save PhotoUrl in File */
+  //     mProfileImg =
+  //         await Utils.saveImageInStorage(userCredential.user?.photoURL ?? "");
+  //     debugPrint('mProfileImg :===> $mProfileImg');
+
+  //     checkAndNavigate(user.email, user.displayName ?? "", "2");
+  //   } on FirebaseAuthException catch (e) {
+  //     debugPrint('===>Exp${e.code.toString()}');
+  //     debugPrint('===>Exp${e.message.toString()}');
+  //     if (e.code.toString() == "user-not-found") {
+  //       // registerFirebaseUser(user.email, user.displayName ?? "", "2");
+  //     } else if (e.code == 'wrong-password') {
+  //       debugPrint('Wrong password provided.');
+  //       Utils.showToast('Wrong password provided.');
+  //     } else {}
+  //   }
+  // }
 
   void checkAndNavigate(String mail, String displayName, String type) async {
     email = mail;
