@@ -63,18 +63,18 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBeHiYJJtmhC-s7OO5zAAcRoQXh7EvCkN4',
-    appId: '1:663533434843:ios:4b839fe5a9fc09f1fe99fe',
+    appId: '1:663533434843:ios:af599ff579d70338fe99fe',
     messagingSenderId: '663533434843',
     projectId: 'mitwatv-3c8bf',
     storageBucket: 'mitwatv-3c8bf.appspot.com',
     androidClientId: '663533434843-9g2v2lca9fntsitgi8okom2t6hj2e5il.apps.googleusercontent.com',
-    iosClientId: '663533434843-aqnt2cv02epkfn98n59ajeaur73gr2iv.apps.googleusercontent.com',
-    iosBundleId: 'com.release.mitwatvapp',
+    iosClientId: '663533434843-bmd78mrv0udr6qosqk59n6qp3rin561g.apps.googleusercontent.com',
+    iosBundleId: 'com.divinetechs.dtliveapp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBeHiYJJtmhC-s7OO5zAAcRoQXh7EvCkN4',
-    appId: '1:663533434843:ios:4b839fe5a9fc09f1fe99fe',
+    appId: '1:663533434843:ios:e5b910f9ca5fac16fe99fe',
     messagingSenderId: '663533434843',
     projectId: 'mitwatv-3c8bf',
     storageBucket: 'mitwatv-3c8bf.appspot.com',
