@@ -231,6 +231,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                           Expanded(
                             child: Container(
                               width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(top: 120),
                               constraints: const BoxConstraints(minHeight: 0),
                               padding: const EdgeInsets.fromLTRB(
                                   0, kIsWeb ? 20 : 0, 10, 8),

@@ -605,7 +605,7 @@ class HomeState extends State<Home> {
   }
 
   Widget _webHomeBanner(List<banner.Result>? sectionBannerList) {
-    if ((sectionBannerList?.length ?? 0) > 0) {
+    if ((sectionBannerList?.length ?? 0) > 0) { 
       return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: Dimens.homeWebBanner,
@@ -700,7 +700,7 @@ class HomeState extends State<Home> {
                               alignment: Alignment.centerLeft,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   MyText(
                                     color: white,
@@ -750,7 +750,8 @@ class HomeState extends State<Home> {
                                       fontstyle: FontStyle.normal,
                                     ),
                                   ),
-                                ],
+                                
+                                 ],
                               ),
                             ),
                             const Expanded(child: SizedBox()),
@@ -765,6 +766,9 @@ class HomeState extends State<Home> {
           },
         ),
       );
+   
+   
+   
     } else {
       return const SizedBox.shrink();
     }

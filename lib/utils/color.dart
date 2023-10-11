@@ -6,7 +6,7 @@ const colorAccent = Color(0xffFA3457);
 
 const complimentryColor = Color(0xffFA3457);
 const primaryLight = Color(0xffB52980);
-const primaryDark = Color(0xff591941);
+const primaryDark =Color(0xBF99236D);
 const primaryTras75 = Color(0xBF99236D);
 const primaryTras50 = Color(0xBF99246E);
 const primaryTras25 = Color(0x40bafa34);

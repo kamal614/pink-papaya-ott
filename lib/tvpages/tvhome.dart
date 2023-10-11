@@ -272,7 +272,8 @@ class TVHomeState extends State<TVHome> {
                             useSafeArea: true,
                             padding: const EdgeInsets.only(left: 10, right: 10),
                             decoration: Utils.setBackground(lightBlack, 5),
-                            elevation: 8,
+                            //decoration: BoxDecoration(color: Colors.transparent),
+                            elevation: 9 ,
                           ),
                           menuItemStyleData: MenuItemStyleData(
                             overlayColor: MaterialStateProperty.resolveWith(
@@ -318,7 +319,7 @@ class TVHomeState extends State<TVHome> {
               },
               child: Container(
                 padding: const EdgeInsets.all(3.0),
-                child: MyImage(width: 68, height: 68, imagePath: "appicon.png"),
+                child: MyImage(width: 75, height: 75, imagePath: "appicon.png"),
               ),
             ),
           ),
@@ -498,7 +499,7 @@ class TVHomeState extends State<TVHome> {
               ),
             ),
           ),
-
+SizedBox(width: 10,) ,
           /* Channels */
           Material(
             type: MaterialType.transparency,
@@ -520,9 +521,9 @@ class TVHomeState extends State<TVHome> {
                       text: bottomView3,
                       maxline: 1,
                       overflow: TextOverflow.ellipsis,
-                      fontsizeNormal: 14,
-                      fontweight: FontWeight.w600,
-                      fontsizeWeb: 14,
+                      fontsizeNormal: 12,
+                      fontweight: FontWeight.w400,
+                      fontsizeWeb: 12,
                       textalign: TextAlign.center,
                       fontstyle: FontStyle.normal,
                     );
@@ -553,9 +554,9 @@ class TVHomeState extends State<TVHome> {
                       text: bottomView4,
                       maxline: 1,
                       overflow: TextOverflow.ellipsis,
-                      fontsizeNormal: 14,
-                      fontweight: FontWeight.w600,
-                      fontsizeWeb: 14,
+                      fontsizeNormal: 12,
+                      fontweight: FontWeight.w400,
+                      fontsizeWeb: 12,
                       textalign: TextAlign.center,
                       fontstyle: FontStyle.normal,
                     );
@@ -585,9 +586,9 @@ class TVHomeState extends State<TVHome> {
                             : white,
                         multilanguage: false,
                         text: myProfile,
-                        fontsizeNormal: 14,
-                        fontweight: FontWeight.w600,
-                        fontsizeWeb: 14,
+                        fontsizeNormal: 12,
+                        fontweight: FontWeight.w400,
+                        fontsizeWeb: 12,
                         maxline: 1,
                         overflow: TextOverflow.ellipsis,
                         textalign: TextAlign.center,
@@ -614,9 +615,9 @@ class TVHomeState extends State<TVHome> {
                             : white,
                         multilanguage: true,
                         text: "login",
-                        fontsizeNormal: 14,
-                        fontweight: FontWeight.w600,
-                        fontsizeWeb: 14,
+                        fontsizeNormal: 12,
+                        fontweight: FontWeight.w500,
+                        fontsizeWeb: 12,
                         maxline: 1,
                         overflow: TextOverflow.ellipsis,
                         textalign: TextAlign.center,
@@ -685,13 +686,13 @@ class TVHomeState extends State<TVHome> {
               type: MaterialType.transparency,
               child: InkWell(
                 autofocus: true,
-                focusColor: kIsWeb
-                    ? homeProvider.selectedIndex == index
-                        ? colorPrimary
-                        : transparentColor
-                    : (homeProvider.selectedIndex == index
-                        ? colorPrimary
-                        : white.withOpacity(0.5)),
+                // focusColor: kIsWeb
+                //     ? homeProvider.selectedIndex == index
+                //         ? colorPrimary
+                //         : transparentColor
+                //     : (homeProvider.selectedIndex == index
+                //         ? colorPrimary
+                //         : white.withOpacity(0.5)),
                 borderRadius: BorderRadius.circular(25),
                 onTap: () async {
                   debugPrint("index ===========> $index");
@@ -700,34 +701,46 @@ class TVHomeState extends State<TVHome> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(2.0),
-                  child: Container(
-                    constraints: const BoxConstraints(maxHeight: 32),
-                    decoration: Utils.setBackground(
-                      homeProvider.selectedIndex == index
-                          ? white
-                          : transparentColor,
-                      20,
-                    ),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.fromLTRB(13, 0, 13, 0),
-                    child: MyText(
-                      color:
-                          homeProvider.selectedIndex == index ? black : white,
-                      multilanguage: false,
-                      text: index == 0
-                          ? "Home"
-                          : index > 0
-                              ? (sectionTypeList?[index - 1].name.toString() ??
-                                  "")
-                              : "",
-                      fontsizeNormal: 12,
-                      fontweight: FontWeight.w700,
-                      fontsizeWeb: 14,
-                      maxline: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textalign: TextAlign.center,
-                      fontstyle: FontStyle.normal,
-                    ),
+                  child: Column(
+                    children: [
+                      Container(
+                        constraints: const BoxConstraints(maxHeight: 32),
+                        // decoration: Utils.setBackground(
+                        //   homeProvider.selectedIndex == index
+                        //       ? white
+                        //       : transparentColor,
+                        //   20,
+                        // ),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.fromLTRB(13, 0, 13, 0),
+                        child: MyText(
+                          color:
+                              homeProvider.selectedIndex == index ? primaryLight : white,
+                          multilanguage: false,
+                          text: index == 0
+                              ? "Home"
+                              : index > 0
+                                  ? (sectionTypeList?[index - 1].name.toString() ??
+                                      "")
+                                  : "",
+                          fontsizeNormal: 11,
+                          fontweight: FontWeight.w400,
+                          fontsizeWeb: 13,
+                          maxline: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textalign: TextAlign.center,
+                          fontstyle: FontStyle.normal,
+                        ),
+                      ),
+
+                       homeProvider.selectedIndex == index? Container(
+                        width: 50,
+                        height: 2,
+                        color: colorPrimary,
+                       ):SizedBox() ,
+                 
+                   
+                    ],
                   ),
                 ),
               ),
@@ -737,6 +750,8 @@ class TVHomeState extends State<TVHome> {
       },
     );
   }
+
+
 
   List<DropdownMenuItem<type.Result>>? _buildWebDropDownItems() {
     List<type.Result>? typeDropDownList = [];
@@ -961,7 +976,7 @@ class TVHomeState extends State<TVHome> {
                         width: MediaQuery.of(context).size.width,
                         height: Dimens.homeWebBanner,
                         alignment: Alignment.centerLeft,
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -969,7 +984,7 @@ class TVHomeState extends State<TVHome> {
                               lightBlack,
                               lightBlack,
                               lightBlack,
-                              lightBlack,
+                              lightBlack ,
                               transparentColor,
                               transparentColor,
                               transparentColor,
@@ -993,11 +1008,12 @@ class TVHomeState extends State<TVHome> {
                               constraints: const BoxConstraints(minHeight: 0),
                               padding:
                                   const EdgeInsets.fromLTRB(35, 50, 55, 35),
-                              alignment: Alignment.centerLeft,
+                              alignment: Alignment.bottomLeft,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(height: 120,) ,
                                   MyText(
                                     color: white,
                                     text: sectionBannerList?[index].name ?? "",
@@ -1027,26 +1043,26 @@ class TVHomeState extends State<TVHome> {
                                   ),
                                   const SizedBox(height: 8),
                                   Expanded(
-                                    child: MyText(
-                                      color: whiteLight,
-                                      text: sectionBannerList?[index]
-                                              .description ??
-                                          "",
-                                      textalign: TextAlign.start,
-                                      fontsizeNormal: 14,
-                                      fontweight: FontWeight.w600,
-                                      fontsizeWeb: 15,
-                                      multilanguage: false,
-                                      maxline:
-                                          (MediaQuery.of(context).size.width <
-                                                  1000)
-                                              ? 2
-                                              : 5,
-                                      overflow: TextOverflow.ellipsis,
-                                      fontstyle: FontStyle.normal,
-                                    ),
+                                  child: MyText(
+                                  color: whiteLight,
+                                  text: sectionBannerList?[index]
+                                  .description ??
+                                  "",
+                                  textalign: TextAlign.start,
+                                  fontsizeNormal: 14,
+                                  fontweight: FontWeight.w600,
+                                  fontsizeWeb: 15,
+                                  multilanguage: false,
+                                  maxline:
+                                  (MediaQuery.of(context).size.width <
+                                  1000)
+                                  ? 2
+                                  : 5,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontstyle: FontStyle.normal,
                                   ),
-                                ],
+                                  ),
+                                                                ],
                               ),
                             ),
                             const Expanded(child: SizedBox()),

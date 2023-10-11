@@ -83,7 +83,20 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
 
             Row(
               children: [
-                Text("Login with WhatsApp" ,style: TextStyle(color:white ,fontSize: 21),),
+
+              MyText(
+              color: otherColor,
+              text: "login_whatsapp",
+              fontsizeNormal: 13,
+              fontsizeWeb: 14,
+              multilanguage: true,
+              fontweight: FontWeight.w700,
+              maxline: 2,
+              overflow: TextOverflow.ellipsis,
+              textalign: TextAlign.start,
+              fontstyle: FontStyle.normal,
+            ),
+               
                SizedBox(width: 10,)
  ,                SizedBox(
                   height: 23,
@@ -199,7 +212,7 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [
-                        primaryLight,
+                        colorPrimary,
                         primaryDark,
                       ],
                       begin: FractionalOffset(0.0, 0.0),

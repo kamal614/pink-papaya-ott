@@ -201,6 +201,8 @@ class TVShowDetailsState extends State<TVShowDetails> {
           child: Column(
             children: [
               /* Poster */
+
+            
               Container(
                 constraints: BoxConstraints(
                   minHeight: Dimens.detailWebPoster,
@@ -240,6 +242,8 @@ class TVShowDetailsState extends State<TVShowDetails> {
                                 ),
                               ),
 
+                           
+                          
                             /* Small Poster, Main title, ReleaseYear, Duration, Age Restriction, Video Quality */
                             Expanded(
                               child: Container(
@@ -251,6 +255,8 @@ class TVShowDetailsState extends State<TVShowDetails> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
+
+                                   
                                     MyText(
                                       color: white,
                                       text: showDetailsProvider
@@ -586,6 +592,9 @@ class TVShowDetailsState extends State<TVShowDetails> {
                                       },
                                     ),
 
+
+
+
                                     /* Season Title */
                                     if (widget.videoType != 5)
                                       const SizedBox(height: 10),
@@ -827,7 +836,7 @@ class TVShowDetailsState extends State<TVShowDetails> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+            
 
               /* Included Features buttons */
               Container(
