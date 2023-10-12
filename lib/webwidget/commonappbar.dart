@@ -36,6 +36,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
   late SearchProvider searchProvider;
   int? videoId, videoType, typeId;
   String? langCatName, mSearchText;
+  bool isSearchEnable = false;
 
   _onItemTapped(String page) async {
     debugPrint("_onItemTapped page -----------------> $page");
@@ -162,10 +163,12 @@ class _CommonAppBarState extends State<CommonAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return 
+    
+    Container(
       width: MediaQuery.of(context).size.width,
       height: Dimens.homeTabHeight,
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
       color: black.withOpacity(0.75),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,7 +179,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
                   constraints: const BoxConstraints(
                     minWidth: 25,
                   ),
-                  padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 5, 10),
                   child: Consumer<HomeProvider>(
                     builder: (context, homeProvider, child) {
                       return DropdownButtonHideUnderline(
@@ -216,14 +219,15 @@ class _CommonAppBarState extends State<CommonAppBar> {
                               }
                             }
                           },
-                          dropdownStyleData: DropdownStyleData(
+                       dropdownStyleData: DropdownStyleData(
                             width: 180,
                             useSafeArea: true,
                             padding: const EdgeInsets.only(left: 10, right: 10),
                             decoration: Utils.setBackground(lightBlack, 5),
-                            elevation: 8,
+                            //decoration: BoxDecoration(color: Colors.transparent),
+                            elevation: 9 ,
                           ),
-                          menuItemStyleData: MenuItemStyleData(
+                         menuItemStyleData: MenuItemStyleData(
                             overlayColor: MaterialStateProperty.resolveWith(
                               (states) {
                                 if (states.contains(MaterialState.focused)) {
@@ -256,276 +260,482 @@ class _CommonAppBarState extends State<CommonAppBar> {
               : const SizedBox.shrink(),
 
           /* App Icon */
-          InkWell(
-            splashColor: transparentColor,
-            highlightColor: transparentColor,
-            focusColor: white,
-            borderRadius: BorderRadius.circular(8),
-            onTap: () async {
-              if (kIsWeb || Constant.isTV) _onItemTapped("");
-              await getTabData(0, homeProvider.sectionTypeModel.result);
-            },
-            child: MyImage(
-              width: 68,
-              height: 68,
-              imagePath: "appicon.png",
+          Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              focusColor: white.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(8),
+              onTap: () async {
+                if (Constant.isTV) _onItemTapped("");
+                await getTabData(0, homeProvider.sectionTypeModel.result);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(3.0),
+                child: MyImage(width: 80, height: 80, imagePath: "appicon.png"),
+              ),
             ),
           ),
 
+
           /* Types */
-          (MediaQuery.of(context).size.width >= 800)
-              ? Expanded(
-                  child: tabTitle(homeProvider.sectionTypeModel.result),
-                )
+           (MediaQuery.of(context).size.width >= 800)
+              ? Expanded(child: tabTitle(homeProvider.sectionTypeModel.result))
               : const Expanded(child: SizedBox.shrink()),
-          const SizedBox(width: 10),
+          const SizedBox(width: 5),
 
           /* Feature buttons */
           /* Search */
-          Container(
-            height: 25,
-            constraints: const BoxConstraints(minWidth: 60, maxWidth: 130),
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: transparentColor,
-              border: Border.all(
-                color: colorPrimary,
-                width: 0.5,
-              ),
+          Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              focusColor: white.withOpacity(0.5),
               borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    alignment: Alignment.center,
-                    child: TextField(
-                      onChanged: (value) async {
-                        debugPrint("value ====> $value");
-                        if (value.isNotEmpty) {
-                          mSearchText = value;
-                          debugPrint("mSearchText ====> $mSearchText");
-                          _onItemTapped("search");
-                          await searchProvider.setLoading(true);
-                          await searchProvider.getSearchVideo(mSearchText);
-                        }
-                      },
-                      textInputAction: TextInputAction.done,
-                      obscureText: false,
-                      controller: searchController,
-                      keyboardType: TextInputType.text,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        color: white,
-                        fontSize: 14,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        filled: true,
-                        isCollapsed: true,
-                        fillColor: transparentColor,
-                        hintStyle: TextStyle(
-                          color: otherColor,
-                          fontSize: 13,
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.w500,
+              onTap: () {
+                debugPrint("isSearchEnable ====> $isSearchEnable");
+                if (!isSearchEnable) {
+                  FocusScope.of(context).requestFocus();
+                } else {
+                  FocusScope.of(context).unfocus();
+                }
+                setState(() {
+                  isSearchEnable = !isSearchEnable;
+                });
+              },
+              child: Container(
+                height: 25,
+                constraints: const BoxConstraints(minWidth: 60, maxWidth: 130),
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                decoration: BoxDecoration(
+                  color: transparentColor,
+                  border: Border.all(
+                    color: colorPrimary,
+                    width: 0.7,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        alignment: Alignment.center,
+                        child: TextField(
+                          enabled: isSearchEnable,
+                          onChanged: (value) async {
+                            debugPrint("value ====> $value");
+                            if (value.isNotEmpty) {
+                              mSearchText = value;
+                              debugPrint("mSearchText ====> $mSearchText");
+                              _onItemTapped("search");
+                              await searchProvider.setLoading(true);
+                              await searchProvider.getSearchVideo(mSearchText);
+                            }
+                          },
+                          textInputAction: TextInputAction.done,
+                          obscureText: false,
+                          controller: searchController,
+                          keyboardType: TextInputType.text,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            color: white,
+                            fontSize: 14,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onSubmitted: (value) {
+                            if (isSearchEnable) {
+                              isSearchEnable = false;
+                              FocusScope.of(context).unfocus();
+                            }
+                          },
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            filled: true,
+                            isCollapsed: true,
+                            fillColor: transparentColor,
+                            hintStyle: TextStyle(
+                              color: otherColor,
+                              fontSize: 13,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            hintText: searchHint2,
+                          ),
                         ),
-                        hintText: searchHint2,
                       ),
                     ),
-                  ),
+                    Consumer<SearchProvider>(
+                      builder: (context, searchProvider, child) {
+                        if (searchController.text.toString().isNotEmpty) {
+                          return Material(
+                            type: MaterialType.transparency,
+                            child: InkWell(
+                              focusColor: white.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(5),
+                              onTap: () async {
+                                debugPrint("Click on Clear!");
+                                _onItemTapped("");
+                                searchController.clear();
+                                if (isSearchEnable) {
+                                  isSearchEnable = false;
+                                  FocusScope.of(context).unfocus();
+                                }
+                                await searchProvider.clearProvider();
+                                await searchProvider.notifyProvider();
+                                setState(() {});
+                              },
+                              child: Container(
+                                constraints: const BoxConstraints(
+                                  minWidth: 25,
+                                  maxWidth: 25,
+                                ),
+                                padding: const EdgeInsets.all(5),
+                                alignment: Alignment.center,
+                                child: MyImage(
+                                  height: 23,
+                                  color: white,
+                                  fit: BoxFit.contain,
+                                  imagePath: "ic_close.png",
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Material(
+                            type: MaterialType.transparency,
+                            child: InkWell(
+                              focusColor: white.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(5),
+                              onTap: () async {
+                                debugPrint("Click on Search!");
+                                if (searchController.text
+                                    .toString()
+                                    .isNotEmpty) {
+                                  if (isSearchEnable) {
+                                    isSearchEnable = false;
+                                    FocusScope.of(context).unfocus();
+                                  }
+                                  mSearchText =
+                                      searchController.text.toString();
+                                  debugPrint("mSearchText ====> $mSearchText");
+                                  _onItemTapped("search");
+                                  await searchProvider.setLoading(true);
+                                  await searchProvider
+                                      .getSearchVideo(mSearchText);
+                                  setState(() {});
+                                }
+                              },
+                              child: Container(
+                                constraints: const BoxConstraints(
+                                  minWidth: 25,
+                                  maxWidth: 25,
+                                ),
+                                padding: const EdgeInsets.all(5),
+                                alignment: Alignment.center,
+                                child: MyImage(
+                                  height: 23,
+                                  color: white,
+                                  fit: BoxFit.contain,
+                                  imagePath: "ic_find.png",
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                Consumer<SearchProvider>(
-                  builder: (context, searchProvider, child) {
-                    if (searchController.text.toString().isNotEmpty) {
-                      return InkWell(
-                        focusColor: white,
-                        borderRadius: BorderRadius.circular(5),
-                        onTap: () async {
-                          debugPrint("Click on Clear!");
-                          _onItemTapped("");
-                          searchController.clear();
-                          await searchProvider.clearProvider();
-                          await searchProvider.notifyProvider();
-                        },
-                        child: Container(
-                          constraints: const BoxConstraints(
-                            minWidth: 25,
-                            maxWidth: 25,
-                          ),
-                          padding: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          child: MyImage(
-                            height: 23,
-                            color: white,
-                            fit: BoxFit.contain,
-                            imagePath: "ic_close.png",
-                          ),
-                        ),
-                      );
-                    } else {
-                      return InkWell(
-                        focusColor: white,
-                        borderRadius: BorderRadius.circular(5),
-                        onTap: () async {
-                          debugPrint("Click on Search!");
-                          if (searchController.text.toString().isNotEmpty) {
-                            mSearchText = searchController.text.toString();
-                            debugPrint("mSearchText ====> $mSearchText");
-                            _onItemTapped("search");
-                            await searchProvider.setLoading(true);
-                            await searchProvider.getSearchVideo(mSearchText);
-                          }
-                        },
-                        child: Container(
-                          constraints: const BoxConstraints(
-                            minWidth: 25,
-                            maxWidth: 25,
-                          ),
-                          padding: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          child: MyImage(
-                            height: 23,
-                            color: white,
-                            fit: BoxFit.contain,
-                            imagePath: "ic_find.png",
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          /* Channels */
-          InkWell(
-            focusColor: white,
-            onTap: () async {
-              _onItemTapped("channel");
-            },
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Consumer<HomeProvider>(
-                builder: (context, homeProvider, child) {
-                  return MyText(
-                    color: homeProvider.currentPage == "channel"
-                        ? colorPrimary
-                        : white,
-                    multilanguage: false,
-                    text: bottomView3,
-                    maxline: 1,
-                    overflow: TextOverflow.ellipsis,
-                    fontsizeNormal: 14,
-                    fontweight: FontWeight.w600,
-                    fontsizeWeb: 14,
-                    textalign: TextAlign.center,
-                    fontstyle: FontStyle.normal,
-                  );
-                },
               ),
             ),
           ),
+           SizedBox(width: 10,) ,
+         
 
+         
+          /* Channels */
+          // InkWell(
+          //   focusColor: white,
+          //   onTap: () async {
+          //     _onItemTapped("channel");
+          //   },
+          //   borderRadius: BorderRadius.circular(8),
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8),
+          //     child: Consumer<HomeProvider>(
+          //       builder: (context, homeProvider, child) {
+          //         return MyText(
+          //           color: homeProvider.currentPage == "channel"
+          //               ? colorPrimary
+          //               : white,
+          //           multilanguage: false,
+          //           text: bottomView3,
+          //           maxline: 1,
+          //           overflow: TextOverflow.ellipsis,
+          //           fontsizeNormal: 14,
+          //           fontweight: FontWeight.w600,
+          //           fontsizeWeb: 14,
+          //           textalign: TextAlign.center,
+          //           fontstyle: FontStyle.normal,
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              focusColor: white.withOpacity(0.5),
+              onTap: () async {
+                _onItemTapped("channel");
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
+                    return MyText(
+                      color: homeProvider.currentPage == "channel"
+                          ? colorPrimary
+                          : white,
+                      multilanguage: false,
+                      text: bottomView3,
+                      maxline: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fontsizeNormal: 12,
+                      fontweight: FontWeight.w400,
+                      fontsizeWeb: 12,
+                      textalign: TextAlign.center,
+                      fontstyle: FontStyle.normal,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
           /* Rent */
-          InkWell(
-            focusColor: white,
-            onTap: () async {
-              _onItemTapped("store");
-            },
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Consumer<HomeProvider>(
-                builder: (context, homeProvider, child) {
-                  return MyText(
-                    color: homeProvider.currentPage == "store"
-                        ? colorPrimary
-                        : white,
-                    multilanguage: false,
-                    text: bottomView4,
-                    maxline: 1,
-                    overflow: TextOverflow.ellipsis,
-                    fontsizeNormal: 14,
-                    fontweight: FontWeight.w600,
-                    fontsizeWeb: 14,
-                    textalign: TextAlign.center,
-                    fontstyle: FontStyle.normal,
-                  );
-                },
+          // InkWell(
+          //   focusColor: white,
+          //   onTap: () async {
+          //     _onItemTapped("store");
+          //   },
+          //   borderRadius: BorderRadius.circular(8),
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8),
+          //     child: Consumer<HomeProvider>(
+          //       builder: (context, homeProvider, child) {
+          //         return MyText(
+          //           color: homeProvider.currentPage == "store"
+          //               ? colorPrimary
+          //               : white,
+          //           multilanguage: false,
+          //           text: bottomView4,
+          //           maxline: 1,
+          //           overflow: TextOverflow.ellipsis,
+          //           fontsizeNormal: 14,
+          //           fontweight: FontWeight.w600,
+          //           fontsizeWeb: 14,
+          //           textalign: TextAlign.center,
+          //           fontstyle: FontStyle.normal,
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+
+ Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              focusColor: white.withOpacity(0.5),
+              onTap: () async {
+                _onItemTapped("store");
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
+                    return MyText(
+                      color: homeProvider.currentPage == "store"
+                          ? colorPrimary
+                          : white,
+                      multilanguage: false,
+                      text: bottomView4,
+                      maxline: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fontsizeNormal: 12,
+                      fontweight: FontWeight.w400,
+                      fontsizeWeb: 12,
+                      textalign: TextAlign.center,
+                      fontstyle: FontStyle.normal,
+                    );
+                  },
+                ),
               ),
             ),
           ),
 
           /* Login / MyProfile */
-          InkWell(
-            focusColor: white,
-            onTap: () async {
+          // InkWell(
+          //   focusColor: white,
+          //   onTap: () async {
+          //     if (Constant.userID != null) {
+          //       Utils.buildWebAlertDialog(context, "profile", "");
+          //     } else {
+          //       Utils.buildWebAlertDialog(context, "login", "")
+          //           .then((value) => _getData());
+          //     }
+          //   },
+          //   borderRadius: BorderRadius.circular(8),
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8),
+          //     child: Consumer<HomeProvider>(
+          //       builder: (context, homeProvider, child) {
+          //         return MyText(
+          //           color: (homeProvider.currentPage == "login" ||
+          //                   homeProvider.currentPage == "setting")
+          //               ? colorPrimary
+          //               : white,
+          //           multilanguage: Constant.userID != null ? false : true,
+          //           text: Constant.userID != null ? myProfile : "login",
+          //           fontsizeNormal: 14,
+          //           fontweight: FontWeight.w600,
+          //           fontsizeWeb: 14,
+          //           maxline: 1,
+          //           overflow: TextOverflow.ellipsis,
+          //           textalign: TextAlign.center,
+          //           fontstyle: FontStyle.normal,
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+ Consumer<HomeProvider>(
+            builder: (context, homeProvider, child) {
               if (Constant.userID != null) {
-                Utils.buildWebAlertDialog(context, "profile", "");
+                return Material(
+                  type: MaterialType.transparency,
+                  child: InkWell(
+                    focusColor: white.withOpacity(0.5),
+                    onTap: () {
+                      Utils.buildWebAlertDialog(context, "profile", "");
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: MyText(
+                        color: (homeProvider.currentPage == "profile")
+                            ? colorPrimary
+                            : white,
+                        multilanguage: false,
+                        text: myProfile,
+                        fontsizeNormal: 12,
+                        fontweight: FontWeight.w400,
+                        fontsizeWeb: 12,
+                        maxline: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textalign: TextAlign.center,
+                        fontstyle: FontStyle.normal,
+                      ),
+                    ),
+                  ),
+                );
               } else {
-                Utils.buildWebAlertDialog(context, "login", "")
-                    .then((value) => _getData());
+                return Material(
+                  type: MaterialType.transparency,
+                  child: InkWell(
+                    focusColor: white.withOpacity(0.5),
+                    onTap: () async {
+                      Utils.buildWebAlertDialog(context, "login", "")
+                          .then((value) => _getData());
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: MyText(
+                        color: (homeProvider.currentPage == "login")
+                            ? colorPrimary
+                            : white,
+                        multilanguage: true,
+                        text: "login",
+                        fontsizeNormal: 12,
+                        fontweight: FontWeight.w500,
+                        fontsizeWeb: 12,
+                        maxline: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textalign: TextAlign.center,
+                        fontstyle: FontStyle.normal,
+                      ),
+                    ),
+                  ),
+                );
               }
             },
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Consumer<HomeProvider>(
-                builder: (context, homeProvider, child) {
-                  return MyText(
-                    color: (homeProvider.currentPage == "login" ||
-                            homeProvider.currentPage == "setting")
-                        ? colorPrimary
-                        : white,
-                    multilanguage: Constant.userID != null ? false : true,
-                    text: Constant.userID != null ? myProfile : "login",
-                    fontsizeNormal: 14,
-                    fontweight: FontWeight.w600,
-                    fontsizeWeb: 14,
-                    maxline: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textalign: TextAlign.center,
-                    fontstyle: FontStyle.normal,
-                  );
-                },
-              ),
-            ),
           ),
 
           /* Logout */
-          Consumer<HomeProvider>(
+          // Consumer<HomeProvider>(
+          //   builder: (context, homeProvider, child) {
+          //     if (Constant.userID != null) {
+          //       return InkWell(
+          //         focusColor: white,
+          //         onTap: () async {
+          //           if (Constant.userID != null) {
+          //             _buildLogoutDialog();
+          //           }
+          //         },
+          //         borderRadius: BorderRadius.circular(8),
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(8),
+          //           child: MyText(
+          //             color: white,
+          //             multilanguage: true,
+          //             text: "sign_out",
+          //             fontsizeNormal: 14,
+          //             fontweight: FontWeight.w600,
+          //             fontsizeWeb: 14,
+          //             maxline: 1,
+          //             overflow: TextOverflow.ellipsis,
+          //             textalign: TextAlign.center,
+          //             fontstyle: FontStyle.normal,
+          //           ),
+          //         ),
+          //       );
+          //     } else {
+          //       return const SizedBox.shrink();
+          //     }
+          //   },
+          // ),
+       Consumer<HomeProvider>(
             builder: (context, homeProvider, child) {
               if (Constant.userID != null) {
-                return InkWell(
-                  focusColor: white,
-                  onTap: () async {
-                    if (Constant.userID != null) {
-                      _buildLogoutDialog();
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: MyText(
-                      color: white,
-                      multilanguage: true,
-                      text: "sign_out",
-                      fontsizeNormal: 14,
-                      fontweight: FontWeight.w600,
-                      fontsizeWeb: 14,
-                      maxline: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textalign: TextAlign.center,
-                      fontstyle: FontStyle.normal,
+                return Material(
+                  type: MaterialType.transparency,
+                  child: InkWell(
+                    focusColor: white.withOpacity(0.5),
+                    onTap: () async {
+                      if (Constant.userID != null) {
+                        _buildLogoutDialog();
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: MyText(
+                        color: white,
+                        multilanguage: true,
+                        text: "sign_out",
+                        fontsizeNormal: 14,
+                        fontweight: FontWeight.w600,
+                        fontsizeWeb: 14,
+                        maxline: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textalign: TextAlign.center,
+                        fontstyle: FontStyle.normal,
+                      ),
                     ),
                   ),
                 );
@@ -534,10 +744,14 @@ class _CommonAppBarState extends State<CommonAppBar> {
               }
             },
           ),
+       
         ],
       ),
     );
+ 
   }
+
+
 
   Widget tabTitle(List<type.Result>? sectionTypeList) {
     return ListView.separated(
@@ -545,44 +759,71 @@ class _CommonAppBarState extends State<CommonAppBar> {
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       physics: const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      padding: const EdgeInsets.fromLTRB(13, 5, 13, 5),
+      padding: const EdgeInsets.fromLTRB(2, 3, 13, 0),
       separatorBuilder: (context, index) => const SizedBox(width: 5),
       itemBuilder: (BuildContext context, int index) {
         return Consumer<HomeProvider>(
           builder: (context, homeProvider, child) {
-            return InkWell(
-              focusColor: white,
-              borderRadius: BorderRadius.circular(25),
-              onTap: () async {
-                debugPrint("index ===========> $index");
-                if (kIsWeb || Constant.isTV) _onItemTapped("");
-                await getTabData(index, homeProvider.sectionTypeModel.result);
-              },
-              child: Container(
-                constraints: const BoxConstraints(maxHeight: 32),
-                decoration: Utils.setBackground(
-                  homeProvider.selectedIndex == index
-                      ? white
-                      : transparentColor,
-                  20,
-                ),
-                alignment: Alignment.center,
-                padding: const EdgeInsets.fromLTRB(13, 0, 13, 0),
-                child: MyText(
-                  color: homeProvider.selectedIndex == index ? black : white,
-                  multilanguage: false,
-                  text: index == 0
-                      ? "Home"
-                      : index > 0
-                          ? (sectionTypeList?[index - 1].name.toString() ?? "")
-                          : "",
-                  fontsizeNormal: 12,
-                  fontweight: FontWeight.w700,
-                  fontsizeWeb: 14,
-                  maxline: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textalign: TextAlign.center,
-                  fontstyle: FontStyle.normal,
+            return Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                autofocus: true,
+                // focusColor: kIsWeb
+                //     ? homeProvider.selectedIndex == index
+                //         ? colorPrimary
+                //         : transparentColor
+                //     : (homeProvider.selectedIndex == index
+                //         ? colorPrimary
+                //         : white.withOpacity(0.5)),
+                borderRadius: BorderRadius.circular(25),
+                onTap: () async {
+                  debugPrint("index ===========> $index");
+                  _onItemTapped("");
+                  await getTabData(index, homeProvider.sectionTypeModel.result);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        constraints: const BoxConstraints(maxHeight: 32),
+                        // decoration: Utils.setBackground(
+                        //   homeProvider.selectedIndex == index
+                        //       ? white
+                        //       : transparentColor,
+                        //   20,
+                        // ),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 13, 0),
+                        child: MyText(
+                          color:
+                              homeProvider.selectedIndex == index ? primaryLight : white,
+                          multilanguage: false,
+                          text: index == 0
+                              ? "Home"
+                              : index > 0
+                                  ? (sectionTypeList?[index - 1].name.toString() ??
+                                      "")
+                                  : "",
+                          fontsizeNormal: 11,
+                          fontweight: FontWeight.w400,
+                          fontsizeWeb: 13,
+                          maxline: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textalign: TextAlign.center,
+                          fontstyle: FontStyle.normal,
+                        ),
+                      ),
+
+                       homeProvider.selectedIndex == index? Container(
+                        width: 50,
+                        height: 2,
+                        color: colorPrimary,
+                       ):SizedBox() ,
+                 
+                   
+                    ],
+                  ),
                 ),
               ),
             );
@@ -592,7 +833,119 @@ class _CommonAppBarState extends State<CommonAppBar> {
     );
   }
 
-  List<DropdownMenuItem<type.Result>>? _buildWebDropDownItems() {
+
+
+  // Widget tabTitle(List<type.Result>? sectionTypeList) {
+  //   return ListView.separated(
+  //     itemCount: (sectionTypeList?.length ?? 0) + 1,
+  //     shrinkWrap: true,
+  //     scrollDirection: Axis.horizontal,
+  //     physics: const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+  //     padding: const EdgeInsets.fromLTRB(13, 5, 13, 5),
+  //     separatorBuilder: (context, index) => const SizedBox(width: 5),
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return Consumer<HomeProvider>(
+  //         builder: (context, homeProvider, child) {
+  //           return InkWell(
+  //             focusColor: white,
+  //             borderRadius: BorderRadius.circular(25),
+  //             onTap: () async {
+  //               debugPrint("index ===========> $index");
+  //               if (kIsWeb || Constant.isTV) _onItemTapped("");
+  //               await getTabData(index, homeProvider.sectionTypeModel.result);
+  //             },
+  //             child: Container(
+  //               constraints: const BoxConstraints(maxHeight: 32),
+  //               decoration: Utils.setBackground(
+  //                 homeProvider.selectedIndex == index
+  //                     ? white
+  //                     : transparentColor,
+  //                 20,
+  //               ),
+  //               alignment: Alignment.center,
+  //               padding: const EdgeInsets.fromLTRB(13, 0, 13, 0),
+  //               child: MyText(
+  //                 color: homeProvider.selectedIndex == index ? black : white,
+  //                 multilanguage: false,
+  //                 text: index == 0
+  //                     ? "Home"
+  //                     : index > 0
+  //                         ? (sectionTypeList?[index - 1].name.toString() ?? "")
+  //                         : "",
+  //                 fontsizeNormal: 12,
+  //                 fontweight: FontWeight.w700,
+  //                 fontsizeWeb: 14,
+  //                 maxline: 1,
+  //                 overflow: TextOverflow.ellipsis,
+  //                 textalign: TextAlign.center,
+  //                 fontstyle: FontStyle.normal,
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+
+
+  // List<DropdownMenuItem<type.Result>>? _buildWebDropDownItems() {
+  //   List<type.Result>? typeDropDownList = [];
+  //   for (var i = 0;
+  //       i < (homeProvider.sectionTypeModel.result?.length ?? 0) + 1;
+  //       i++) {
+  //     if (i == 0) {
+  //       type.Result typeHomeResult = type.Result();
+  //       typeHomeResult.id = 0;
+  //       typeHomeResult.name = "Home";
+  //       typeDropDownList.insert(i, typeHomeResult);
+  //     } else {
+  //       typeDropDownList.insert(i,
+  //           (homeProvider.sectionTypeModel.result?[(i - 1)] ?? type.Result()));
+  //     }
+  //   }
+  //   return typeDropDownList
+  //       .map<DropdownMenuItem<type.Result>>((type.Result value) {
+  //     return DropdownMenuItem<type.Result>(
+  //       value: value,
+  //       alignment: Alignment.center,
+  //       child: FittedBox(
+  //         child: Container(
+  //           constraints: const BoxConstraints(maxHeight: 40, minWidth: 100),
+  //           decoration: Utils.setBackground(
+  //             homeProvider.selectedIndex != -1
+  //                 ? ((typeDropDownList[homeProvider.selectedIndex].id ?? 0) ==
+  //                         (value.id ?? 0)
+  //                     ? white
+  //                     : transparentColor)
+  //                 : transparentColor,
+  //             20,
+  //           ),
+  //           alignment: Alignment.center,
+  //           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+  //           child: MyText(
+  //             color: homeProvider.selectedIndex != -1
+  //                 ? ((typeDropDownList[homeProvider.selectedIndex].id ?? 0) ==
+  //                         (value.id ?? 0)
+  //                     ? black
+  //                     : white)
+  //                 : white,
+  //             multilanguage: false,
+  //             text: (value.name.toString()),
+  //             fontsizeNormal: 14,
+  //             fontweight: FontWeight.w600,
+  //             fontsizeWeb: 15,
+  //             maxline: 1,
+  //             overflow: TextOverflow.ellipsis,
+  //             textalign: TextAlign.center,
+  //             fontstyle: FontStyle.normal,
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }).toList();
+  // }
+   List<DropdownMenuItem<type.Result>>? _buildWebDropDownItems() {
     List<type.Result>? typeDropDownList = [];
     for (var i = 0;
         i < (homeProvider.sectionTypeModel.result?.length ?? 0) + 1;
@@ -614,7 +967,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
         alignment: Alignment.center,
         child: FittedBox(
           child: Container(
-            constraints: const BoxConstraints(maxHeight: 40, minWidth: 100),
+            constraints: const BoxConstraints(maxHeight: 35, minWidth: 100),
             decoration: Utils.setBackground(
               homeProvider.selectedIndex != -1
                   ? ((typeDropDownList[homeProvider.selectedIndex].id ?? 0) ==
@@ -648,6 +1001,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
       );
     }).toList();
   }
+
 
   Future<void> _buildLogoutDialog() async {
     return showDialog<void>(

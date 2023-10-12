@@ -240,6 +240,8 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
               ),
             ),
             const SizedBox(height: 25),
+          
+          
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

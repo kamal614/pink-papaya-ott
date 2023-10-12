@@ -14,6 +14,7 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 import '../pages/bottombar.dart';
+import '../tvpages/tvhome.dart';
 import '../webservice/apiservices.dart';
 
 
@@ -186,6 +187,7 @@ class _OTPVerifyWebState extends State<OTPVerifyWeb> {
                       // }
                      // Utils.showProgress(context, prDialog);
                       _checkOTPAndLogin();
+                    
                     }
                   },
                   child: Container(
@@ -433,7 +435,7 @@ _login(String mobile) async {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => const Bottombar()),
+              builder: (BuildContext context) =>  TVHome(pageName: "")),
           (Route<dynamic> route) => false,
         );
       } else {

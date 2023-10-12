@@ -24,6 +24,8 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:provider/provider.dart';
 
+import '../tvpages/tvhome.dart';
+
 class LoginSocial extends StatefulWidget {
   const LoginSocial({Key? key}) : super(key: key);
 
@@ -620,7 +622,7 @@ class LoginSocialState extends State<LoginSocial> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => const Bottombar()),
+              builder: (BuildContext context) => TVHome(pageName: "")),
           (Route<dynamic> route) => false,
         );
       } else {

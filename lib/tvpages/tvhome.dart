@@ -216,7 +216,7 @@ class TVHomeState extends State<TVHome> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: Dimens.homeTabHeight,
-      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+      padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
       color: black.withOpacity(0.75),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -499,7 +499,9 @@ class TVHomeState extends State<TVHome> {
               ),
             ),
           ),
-SizedBox(width: 10,) ,
+         
+         
+           SizedBox(width: 10,) ,
           /* Channels */
           Material(
             type: MaterialType.transparency,
@@ -809,6 +811,7 @@ SizedBox(width: 10,) ,
       );
     }).toList();
   }
+
 
   Widget tabItem(List<type.Result>? sectionTypeList) {
     return Container(

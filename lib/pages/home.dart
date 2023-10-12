@@ -695,12 +695,13 @@ class HomeState extends State<Home> {
                               width: MediaQuery.of(context).size.width *
                                   (1.0 - Dimens.webBannerImgPr),
                               constraints: const BoxConstraints(minHeight: 0),
+                              margin: EdgeInsets.only(top: 120),
                               padding:
                                   const EdgeInsets.fromLTRB(35, 50, 55, 35),
                               alignment: Alignment.centerLeft,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   MyText(
                                     color: white,
