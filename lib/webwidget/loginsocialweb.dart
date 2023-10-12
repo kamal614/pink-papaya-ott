@@ -32,7 +32,6 @@ class _LoginSocialWebState extends State<LoginSocialWeb> {
   final numberController = TextEditingController();
   String? mobileNumber, email, userName, strType;
   File? mProfileImg;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {

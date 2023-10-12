@@ -138,17 +138,26 @@ class LoginSocialState extends State<LoginSocial> {
                 ),
               ),
               const SizedBox(height: 25),
-                Row(
-              children: [
-                Text("Login with WhatsApp" ,style: TextStyle(color:white ,fontSize: 21),),
-               SizedBox(width: 10,)
- ,                SizedBox(
-                  height: 23,
-                  width: 23,
-                  child: Image.asset('assets/images/logos_whatsapp-icon.png' ,height: 23 ,width: 23,)) ,
-              ],
-            ) ,
-            
+              Row(
+                children: [
+                  Text(
+                    "Login with WhatsApp",
+                    style: TextStyle(color: white, fontSize: 21),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                      height: 23,
+                      width: 23,
+                      child: Image.asset(
+                        'assets/images/logos_whatsapp-icon.png',
+                        height: 23,
+                        width: 23,
+                      )),
+                ],
+              ),
+
               // MyText(
               //   color: white,
               //   text: "welcomeback",
