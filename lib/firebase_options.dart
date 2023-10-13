@@ -44,46 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-      apiKey: "AIzaSyDyugNhMh9OLugoGGdwEWgdSCZ_RS7EIO4",
-      authDomain: "mitwatv-3c8bf.firebaseapp.com",
-      projectId: "mitwatv-3c8bf",
-      storageBucket: "mitwatv-3c8bf.appspot.com",
-      messagingSenderId: "663533434843",
-      appId: "1:663533434843:web:c6ae9531d361de38fe99fe",
-      measurementId: "G-8V44NX4CJH");
+    apiKey: 'AIzaSyAjU_mrzeTli_g4V98zMeb_3uMD4Nu60XY',
+    appId: '1:589578730909:web:16d9ecd67d9f10e8890374',
+    messagingSenderId: '589578730909',
+    projectId: 'pinkpapaya-6e06c',
+    authDomain: 'pinkpapaya-6e06c.firebaseapp.com',
+    storageBucket: 'pinkpapaya-6e06c.appspot.com',
+    measurementId: 'G-EWRNEY7HZ5',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAI_Wj-P_Lfo-vRIIpl5wIG48yZdB_werw',
-    appId: '1:663533434843:android:025c021a2250cc0afe99fe',
-    messagingSenderId: '663533434843',
-    projectId: 'mitwatv-3c8bf',
-    storageBucket: 'mitwatv-3c8bf.appspot.com',
+    apiKey: 'AIzaSyByGqyfPtxdZt6zVkfgZeBLmMLlgedl2ro',
+    appId: '1:589578730909:android:6db7daa589046706890374',
+    messagingSenderId: '589578730909',
+    projectId: 'pinkpapaya-6e06c',
+    storageBucket: 'pinkpapaya-6e06c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBeHiYJJtmhC-s7OO5zAAcRoQXh7EvCkN4',
-    appId: '1:663533434843:ios:a970e3070013e276fe99fe',
-    messagingSenderId: '663533434843',
-    projectId: 'mitwatv-3c8bf',
-    storageBucket: 'mitwatv-3c8bf.appspot.com',
-    androidClientId:
-        '663533434843-9g2v2lca9fntsitgi8okom2t6hj2e5il.apps.googleusercontent.com',
-    iosClientId:
-        '663533434843-mkmepm2adcbuptvla3uvb61r1ifce1fv.apps.googleusercontent.com',
-    // iosBundleId: 'com.ott.mitwaapp',
-    iosBundleId: 'com.release.mitwatv',
+    apiKey: 'AIzaSyDqBrfD5X8rjSnIPW7SmsIdQxeKKuKmdSE',
+    appId: '1:589578730909:ios:c30c8dcb7df7d6ff890374',
+    messagingSenderId: '589578730909',
+    projectId: 'pinkpapaya-6e06c',
+    storageBucket: 'pinkpapaya-6e06c.appspot.com',
+    iosBundleId: 'com.ott.mitwaapp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBeHiYJJtmhC-s7OO5zAAcRoQXh7EvCkN4',
-    appId: '1:663533434843:ios:e5b910f9ca5fac16fe99fe',
-    messagingSenderId: '663533434843',
-    projectId: 'mitwatv-3c8bf',
-    storageBucket: 'mitwatv-3c8bf.appspot.com',
-    androidClientId:
-        '663533434843-9g2v2lca9fntsitgi8okom2t6hj2e5il.apps.googleusercontent.com',
-    iosClientId:
-        '663533434843-aqnt2cv02epkfn98n59ajeaur73gr2iv.apps.googleusercontent.com',
-    iosBundleId: 'com.release.mitwatvapp',
+    apiKey: 'AIzaSyDqBrfD5X8rjSnIPW7SmsIdQxeKKuKmdSE',
+    appId: '1:589578730909:ios:e74641dbc1d2d5b9890374',
+    messagingSenderId: '589578730909',
+    projectId: 'pinkpapaya-6e06c',
+    storageBucket: 'pinkpapaya-6e06c.appspot.com',
+    iosBundleId: 'com.ott.pinkpapayaapp',
   );
 }

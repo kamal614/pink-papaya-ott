@@ -294,80 +294,80 @@ class LoginSocialState extends State<LoginSocial> {
               const SizedBox(height: 10),
 
               /* Or */
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 1,
-                    color: colorAccent,
-                  ),
-                  const SizedBox(width: 15),
-                  MyText(
-                    color: otherColor,
-                    text: "or",
-                    multilanguage: true,
-                    fontsizeNormal: 14,
-                    fontsizeWeb: 16,
-                    fontweight: FontWeight.w500,
-                    maxline: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textalign: TextAlign.center,
-                    fontstyle: FontStyle.normal,
-                  ),
-                  const SizedBox(width: 15),
-                  Container(
-                    width: 80,
-                    height: 1,
-                    color: colorAccent,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 25),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       width: 80,
+              //       height: 1,
+              //       color: colorAccent,
+              //     ),
+              //     const SizedBox(width: 15),
+              //     MyText(
+              //       color: otherColor,
+              //       text: "or",
+              //       multilanguage: true,
+              //       fontsizeNormal: 14,
+              //       fontsizeWeb: 16,
+              //       fontweight: FontWeight.w500,
+              //       maxline: 1,
+              //       overflow: TextOverflow.ellipsis,
+              //       textalign: TextAlign.center,
+              //       fontstyle: FontStyle.normal,
+              //     ),
+              //     const SizedBox(width: 15),
+              //     Container(
+              //       width: 80,
+              //       height: 1,
+              //       color: colorAccent,
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 25),
 
               /* Google Login Button */
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 52,
-                padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                margin: const EdgeInsets.only(bottom: 15),
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(26),
-                ),
-                alignment: Alignment.center,
-                child: InkWell(
-                  onTap: () {
-                    debugPrint("Clicked on : ====> loginWith Google");
-                    _gmailLogin();
-                  },
-                  borderRadius: BorderRadius.circular(26),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MyImage(
-                        width: 30,
-                        height: 30,
-                        imagePath: "ic_google.png",
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(width: 30),
-                      MyText(
-                        color: black,
-                        text: "loginwithgoogle",
-                        fontsizeNormal: 14,
-                        fontsizeWeb: 16,
-                        multilanguage: true,
-                        fontweight: FontWeight.w600,
-                        maxline: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textalign: TextAlign.center,
-                        fontstyle: FontStyle.normal,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width,
+              //   height: 52,
+              //   padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+              //   margin: const EdgeInsets.only(bottom: 15),
+              //   decoration: BoxDecoration(
+              //     color: white,
+              //     borderRadius: BorderRadius.circular(26),
+              //   ),
+              //   alignment: Alignment.center,
+              //   child: InkWell(
+              //     onTap: () {
+              //       debugPrint("Clicked on : ====> loginWith Google");
+              //       _gmailLogin();
+              //     },
+              //     borderRadius: BorderRadius.circular(26),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         MyImage(
+              //           width: 30,
+              //           height: 30,
+              //           imagePath: "ic_google.png",
+              //           fit: BoxFit.contain,
+              //         ),
+              //         const SizedBox(width: 30),
+              //         MyText(
+              //           color: black,
+              //           text: "loginwithgoogle",
+              //           fontsizeNormal: 14,
+              //           fontsizeWeb: 16,
+              //           multilanguage: true,
+              //           fontweight: FontWeight.w600,
+              //           maxline: 1,
+              //           overflow: TextOverflow.ellipsis,
+              //           textalign: TextAlign.center,
+              //           fontstyle: FontStyle.normal,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
               /* Apple Login Button */
               if (Platform.isIOS)

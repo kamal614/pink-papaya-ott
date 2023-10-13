@@ -264,14 +264,14 @@ class HomeState extends State<Home> {
                   ? Stack(
                       children: [
                         tabItem(homeProvider.sectionTypeModel.result),
-                        Container(
+                                               Container(
                           width: MediaQuery.of(context).size.width,
                           height: Dimens.homeTabHeight,
                           padding: const EdgeInsets.only(top: 8, bottom: 8),
                           color: black.withOpacity(0.8),
                           child: tabTitle(homeProvider.sectionTypeModel.result),
                         ),
-                      ],
+                                              ],
                     )
                   : const NoData(title: '', subTitle: '')
               : const NoData(title: '', subTitle: ''),
@@ -332,17 +332,20 @@ class HomeState extends State<Home> {
                   });
                 },
                 child: Container(
-                  constraints: const BoxConstraints(maxHeight: 35),
-                  decoration: Utils.setBackground(
-                    homeProvider.selectedIndex == index
-                        ? white
-                        : transparentColor,
-                    20,
-                  ),
+                  constraints: const BoxConstraints(maxHeight: 40),
+                  // decoration: Utils.setBackground(
+                  //   homeProvider.selectedIndex == index
+                  //       ? primaryLight
+                  //       : transparentColor,
+                  //   20,
+                  // ),
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.fromLTRB(13, 0, 13, 0),
+                  
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: MyText(
-                    color: homeProvider.selectedIndex == index ? black : white,
+                    color: homeProvider.selectedIndex == index
+                        ? primaryLight
+                        : white,
                     multilanguage: false,
                     text: index == 0
                         ? "Home"
@@ -351,7 +354,7 @@ class HomeState extends State<Home> {
                                 "")
                             : "",
                     fontsizeNormal: 12,
-                    fontweight: FontWeight.w700,
+                    fontweight: FontWeight.w600,
                     fontsizeWeb: 14,
                     maxline: 1,
                     overflow: TextOverflow.ellipsis,
