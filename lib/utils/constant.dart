@@ -6,7 +6,7 @@ class Constant {
   static const String baseurl = 'https://pink.ottpeople.in/public/api/';
 
   static String appName = "Pink Papaya";
-  static String appPackageName = "com.release.mitwatv";
+  static String appPackageName = "com.ott.pinkpapaya";
   static String appleAppId = "6449380090";
 
   /* OneSignal App ID */
