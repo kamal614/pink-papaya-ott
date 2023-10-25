@@ -14,11 +14,11 @@ class Dimens {
   static double heightPort = 320;
 // changes ----
   static double widthLand = 300;
-  static double heightLand = 170;
+  static double heightLand = 240;
 
 
-  static double widthSquare = 150;
-  static double heightSquare = 150;
+  static double widthSquare = 180;
+  static double heightSquare = 300;
 
   static double widthContiPort = 115;
   static double heightContiPort = 155;
@@ -38,10 +38,10 @@ class Dimens {
   static double heightWatchlist = 100;
 
   static double homeBanner = 250;
-  static double homeWebBanner = 600;
+  static double homeWebBanner = 420;
   static double webBannerImgPr = 0.59; // Should be less than 1.0
   static double detailPoster = 250;
-  static double detailWebPoster = 600;
+  static double detailWebPoster = 420;
   static double detailTabs = 50;
   static double featureSize = 50;
   static double featureIconSize = 20;

@@ -4,6 +4,11 @@ const colorPrimary = Color(0xffF57E20);
 const colorPrimaryDark = Color(0xff0e0e16);
 const colorAccent = Color(0xffFA3457);
 
+
+
+const colorGraidentLeft = Color(0xffF9D1A0);
+const colorGraidentRight = Color(0xffFFFFFF);
+
 const complimentryColor = Color(0xffF57E20);
 const primaryLight = Color(0xffFF8B2F);
 const primaryDark =Color(0xBFE36908);

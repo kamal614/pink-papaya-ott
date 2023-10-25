@@ -1,23 +1,26 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:dtlive/utils/color.dart';
-import 'package:dtlive/utils/constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
+
+import 'package:dtlive/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// ignore: must_be_immutable
-class MyText extends StatelessWidget {
+class MyTextwo extends StatelessWidget {
   String text;
   double? fontsizeNormal, fontsizeWeb;
-  var maxline, fontstyle, fontweight, textalign, multilanguage;
-  Color color;
-  var overflow;
+  int? maxline;
+   Color color;
+  FontStyle? fontstyle;
+  FontWeight? fontweight;
+  TextAlign? textalign;
+  bool? multilanguage;
+  TextOverflow? overflow;
 
-  MyText({
+  MyTextwo({
     Key? key,
     required this.color,
     required this.text,
@@ -32,7 +35,6 @@ class MyText extends StatelessWidget {
   }) : super(key: key);
 
   static getAdaptiveTextSize(BuildContext context, dynamic value) {
-    // 720 is medium screen height
     if (kIsWeb || Constant.isTV) {
       return (value / 650) *
           min(MediaQuery.of(context).size.height,
@@ -41,6 +43,10 @@ class MyText extends StatelessWidget {
       return (value / 720 * MediaQuery.of(context).size.height);
     }
   }
+
+  final Shader linearGradient = LinearGradient(
+  colors: <Color>[colorGraidentLeft,colorGraidentRight],
+).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +57,17 @@ class MyText extends StatelessWidget {
         overflow: overflow,
         maxLines: maxline,
         style: GoogleFonts.outfit(
-          fontSize: getAdaptiveTextSize(context,
-              (kIsWeb || Constant.isTV) ? fontsizeWeb : fontsizeNormal),
-          fontStyle: fontstyle,
-          color: color,
-          fontWeight: fontweight,
+          textStyle: TextStyle(
+            foreground: Paint()..shader = linearGradient,
+            fontSize: getAdaptiveTextSize(
+              context,
+              (kIsWeb || Constant.isTV) ? fontsizeWeb : fontsizeNormal,
+            ),
+            fontStyle: fontstyle,
+            fontWeight: fontweight,
+
+           
+          ),
         ),
       );
     } else {
@@ -65,17 +77,18 @@ class MyText extends StatelessWidget {
         overflow: overflow,
         maxLines: maxline,
         style: GoogleFonts.outfit(
-          fontSize: getAdaptiveTextSize(context,
-              (kIsWeb || Constant.isTV) ? fontsizeWeb : fontsizeNormal),
-          fontStyle: fontstyle,
-          color: color,
-          fontWeight: fontweight,
+          textStyle: TextStyle(
+            foreground: Paint()..shader = linearGradient ,
+            fontSize: getAdaptiveTextSize(
+              context,
+              (kIsWeb || Constant.isTV) ? fontsizeWeb : fontsizeNormal,
+            ),
+            fontStyle: fontstyle,
+            fontWeight: fontweight,
+           
+          ),
         ),
       );
     }
   }
 }
-
-
-
-

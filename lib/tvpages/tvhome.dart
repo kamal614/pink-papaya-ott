@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -28,9 +29,11 @@ import 'package:dtlive/widget/myimage.dart';
 import 'package:dtlive/widget/mytext.dart';
 import 'package:dtlive/utils/utils.dart';
 import 'package:dtlive/widget/mynetworkimg.dart';
+import 'package:dtlive/widget/mytextgraident.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -73,6 +76,19 @@ class TVHomeState extends State<TVHome> {
       currentPage = page;
     });
   }
+
+  String formatDuration(int milliseconds) {
+  if (milliseconds == null || milliseconds <= 0) {
+    return "0:00";
+  }
+  
+  int seconds = (milliseconds / 1000).truncate();
+  int minutes = seconds ~/ 60;
+  seconds %= 60;
+  
+  String formattedDuration = '$minutes:${seconds.toString().padLeft(2, '0')}';
+  return formattedDuration;
+}
 
   @override
   void initState() {
@@ -273,7 +289,7 @@ class TVHomeState extends State<TVHome> {
                             padding: const EdgeInsets.only(left: 10, right: 10),
                             decoration: Utils.setBackground(lightBlack, 5),
                             //decoration: BoxDecoration(color: Colors.transparent),
-                            elevation: 9 ,
+                            elevation: 9,
                           ),
                           menuItemStyleData: MenuItemStyleData(
                             overlayColor: MaterialStateProperty.resolveWith(
@@ -318,7 +334,8 @@ class TVHomeState extends State<TVHome> {
                 await getTabData(0, homeProvider.sectionTypeModel.result);
               },
               child: Container(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.only(
+                    left: 15, right: 5, top: 3, bottom: 3),
                 child: MyImage(width: 75, height: 75, imagePath: "appicon.png"),
               ),
             ),
@@ -350,13 +367,13 @@ class TVHomeState extends State<TVHome> {
               },
               child: Container(
                 height: 25,
-                constraints: const BoxConstraints(minWidth: 60, maxWidth: 130),
+                constraints: const BoxConstraints(minWidth: 80, maxWidth: 150),
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 decoration: BoxDecoration(
                   color: transparentColor,
                   border: Border.all(
                     color: colorPrimary,
-                    width: 0.7,
+                    width: 0.5,
                   ),
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -499,9 +516,9 @@ class TVHomeState extends State<TVHome> {
               ),
             ),
           ),
-         
-         
-           SizedBox(width: 10,) ,
+          SizedBox(
+            width: 10,
+          ),
           /* Channels */
           Material(
             type: MaterialType.transparency,
@@ -515,19 +532,26 @@ class TVHomeState extends State<TVHome> {
                 padding: const EdgeInsets.all(8),
                 child: Consumer<HomeProvider>(
                   builder: (context, homeProvider, child) {
-                    return MyText(
-                      color: homeProvider.currentPage == "channel"
+                    // return MyText(
+                    //   color: homeProvider.currentPage == "channel"
+                    //       ? colorPrimary
+                    //       : white,
+                    //   multilanguage: false,
+                    //   text: bottomView3,
+                    //   maxline: 1,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   fontsizeNormal: 12,
+                    //   fontweight: FontWeight.w400,
+                    //   fontsizeWeb: 12,
+                    //   textalign: TextAlign.center,
+                    //   fontstyle: FontStyle.normal,
+                    // );
+                    return Icon(
+                      Icons.tv,
+                      size: 20,
+                      color: (homeProvider.currentPage == "login")
                           ? colorPrimary
                           : white,
-                      multilanguage: false,
-                      text: bottomView3,
-                      maxline: 1,
-                      overflow: TextOverflow.ellipsis,
-                      fontsizeNormal: 12,
-                      fontweight: FontWeight.w400,
-                      fontsizeWeb: 12,
-                      textalign: TextAlign.center,
-                      fontstyle: FontStyle.normal,
                     );
                   },
                 ),
@@ -548,19 +572,27 @@ class TVHomeState extends State<TVHome> {
                 padding: const EdgeInsets.all(8),
                 child: Consumer<HomeProvider>(
                   builder: (context, homeProvider, child) {
-                    return MyText(
-                      color: homeProvider.currentPage == "store"
+                    // return MyText(
+                    //   color: homeProvider.currentPage == "store"
+                    //       ? colorPrimary
+                    //       : white,
+                    //   multilanguage: false,
+                    //   text: bottomView4,
+                    //   maxline: 1,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   fontsizeNormal: 12,
+                    //   fontweight: FontWeight.w400,
+                    //   fontsizeWeb: 12,
+                    //   textalign: TextAlign.center,
+                    //   fontstyle: FontStyle.normal,
+                    // );
+
+                    return Icon(
+                      Icons.store_sharp,
+                      size: 20,
+                      color: (homeProvider.currentPage == "login")
                           ? colorPrimary
                           : white,
-                      multilanguage: false,
-                      text: bottomView4,
-                      maxline: 1,
-                      overflow: TextOverflow.ellipsis,
-                      fontsizeNormal: 12,
-                      fontweight: FontWeight.w400,
-                      fontsizeWeb: 12,
-                      textalign: TextAlign.center,
-                      fontstyle: FontStyle.normal,
                     );
                   },
                 ),
@@ -582,19 +614,12 @@ class TVHomeState extends State<TVHome> {
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      child: MyText(
-                        color: (homeProvider.currentPage == "profile")
+                      child: Icon(
+                        Icons.person,
+                        size: 20,
+                        color: (homeProvider.currentPage == "login")
                             ? colorPrimary
                             : white,
-                        multilanguage: false,
-                        text: myProfile,
-                        fontsizeNormal: 12,
-                        fontweight: FontWeight.w400,
-                        fontsizeWeb: 12,
-                        maxline: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textalign: TextAlign.center,
-                        fontstyle: FontStyle.normal,
                       ),
                     ),
                   ),
@@ -611,19 +636,26 @@ class TVHomeState extends State<TVHome> {
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      child: MyText(
+                      // child: MyText(
+                      //   color: (homeProvider.currentPage == "login")
+                      //       ? colorPrimary
+                      //       : white,
+                      //   multilanguage: true,
+                      //   text: "login",
+                      //   fontsizeNormal: 12,
+                      //   fontweight: FontWeight.w500,
+                      //   fontsizeWeb: 12,
+                      //   maxline: 1,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   textalign: TextAlign.center,
+                      //   fontstyle: FontStyle.normal,
+                      // ),
+                      child: Icon(
+                        Icons.person,
+                        size: 20,
                         color: (homeProvider.currentPage == "login")
                             ? colorPrimary
                             : white,
-                        multilanguage: true,
-                        text: "login",
-                        fontsizeNormal: 12,
-                        fontweight: FontWeight.w500,
-                        fontsizeWeb: 12,
-                        maxline: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textalign: TextAlign.center,
-                        fontstyle: FontStyle.normal,
                       ),
                     ),
                   ),
@@ -648,17 +680,24 @@ class TVHomeState extends State<TVHome> {
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      child: MyText(
-                        color: white,
-                        multilanguage: true,
-                        text: "sign_out",
-                        fontsizeNormal: 14,
-                        fontweight: FontWeight.w600,
-                        fontsizeWeb: 14,
-                        maxline: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textalign: TextAlign.center,
-                        fontstyle: FontStyle.normal,
+                      // child: MyText(
+                      //   color: white,
+                      //   multilanguage: true,
+                      //   text: "sign_out",
+                      //   fontsizeNormal: 14,
+                      //   fontweight: FontWeight.w600,
+                      //   fontsizeWeb: 14,
+                      //   maxline: 1,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   textalign: TextAlign.center,
+                      //   fontstyle: FontStyle.normal,
+                      // ),
+                      child: Icon(
+                        Icons.logout_outlined,
+                        size: 20,
+                        color: (homeProvider.currentPage == "login")
+                            ? colorPrimary
+                            : white,
                       ),
                     ),
                   ),
@@ -716,13 +755,16 @@ class TVHomeState extends State<TVHome> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.fromLTRB(13, 0, 13, 0),
                         child: MyText(
-                          color:
-                              homeProvider.selectedIndex == index ? primaryLight : white,
+                          color: homeProvider.selectedIndex == index
+                              ? primaryLight
+                              : white,
                           multilanguage: false,
                           text: index == 0
                               ? "Home"
                               : index > 0
-                                  ? (sectionTypeList?[index - 1].name.toString() ??
+                                  ? (sectionTypeList?[index - 1]
+                                          .name
+                                          .toString() ??
                                       "")
                                   : "",
                           fontsizeNormal: 11,
@@ -734,14 +776,13 @@ class TVHomeState extends State<TVHome> {
                           fontstyle: FontStyle.normal,
                         ),
                       ),
-
-                       homeProvider.selectedIndex == index? Container(
-                        width: 50,
-                        height: 2,
-                        color: colorPrimary,
-                       ):SizedBox() ,
-                 
-                   
+                      homeProvider.selectedIndex == index
+                          ? Container(
+                              width: 50,
+                              height: 2,
+                              color: colorPrimary,
+                            )
+                          : SizedBox(),
                     ],
                   ),
                 ),
@@ -752,8 +793,6 @@ class TVHomeState extends State<TVHome> {
       },
     );
   }
-
-
 
   List<DropdownMenuItem<type.Result>>? _buildWebDropDownItems() {
     List<type.Result>? typeDropDownList = [];
@@ -811,7 +850,6 @@ class TVHomeState extends State<TVHome> {
       );
     }).toList();
   }
-
 
   Widget tabItem(List<type.Result>? sectionTypeList) {
     return Container(
@@ -979,7 +1017,7 @@ class TVHomeState extends State<TVHome> {
                         width: MediaQuery.of(context).size.width,
                         height: Dimens.homeWebBanner,
                         alignment: Alignment.centerLeft,
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -987,7 +1025,7 @@ class TVHomeState extends State<TVHome> {
                               lightBlack,
                               lightBlack,
                               lightBlack,
-                              lightBlack ,
+                              lightBlack,
                               transparentColor,
                               transparentColor,
                               transparentColor,
@@ -1014,9 +1052,11 @@ class TVHomeState extends State<TVHome> {
                               alignment: Alignment.bottomLeft,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 120,) ,
+                                  SizedBox(
+                                    height: 45,
+                                  ),
                                   MyText(
                                     color: white,
                                     text: sectionBannerList?[index].name ?? "",
@@ -1029,43 +1069,43 @@ class TVHomeState extends State<TVHome> {
                                     overflow: TextOverflow.ellipsis,
                                     fontstyle: FontStyle.normal,
                                   ),
-                                  const SizedBox(height: 12),
+                                  const SizedBox(height: 13),
                                   MyText(
-                                    color: whiteLight,
+                                    color: primaryLight,
                                     text: sectionBannerList?[index]
                                             .categoryName ??
                                         "",
                                     textalign: TextAlign.start,
                                     fontsizeNormal: 14,
-                                    fontweight: FontWeight.w600,
-                                    fontsizeWeb: 15,
+                                    fontweight: FontWeight.w400,
+                                    fontsizeWeb: 14,
                                     multilanguage: false,
                                     maxline: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    fontstyle: FontStyle.normal,
+                                    //fontstyle: FontStyle.normal,
                                   ),
                                   const SizedBox(height: 8),
                                   Expanded(
-                                  child: MyText(
-                                  color: whiteLight,
-                                  text: sectionBannerList?[index]
-                                  .description ??
-                                  "",
-                                  textalign: TextAlign.start,
-                                  fontsizeNormal: 14,
-                                  fontweight: FontWeight.w600,
-                                  fontsizeWeb: 15,
-                                  multilanguage: false,
-                                  maxline:
-                                  (MediaQuery.of(context).size.width <
-                                  1000)
-                                  ? 2
-                                  : 5,
-                                  overflow: TextOverflow.ellipsis,
-                                  fontstyle: FontStyle.normal,
+                                    child: MyText(
+                                      color: whiteLight,
+                                      text: sectionBannerList?[index]
+                                              .description ??
+                                          "",
+                                      textalign: TextAlign.start,
+                                      fontsizeNormal: 13,
+                                      fontweight: FontWeight.w400,
+                                      fontsizeWeb: 13,
+                                      multilanguage: false,
+                                      maxline:
+                                          (MediaQuery.of(context).size.width <
+                                                  1000)
+                                              ? 2
+                                              : 5,
+                                      overflow: TextOverflow.ellipsis,
+                                      // fontstyle: FontStyle.normal,
+                                    ),
                                   ),
-                                  ),
-                                                                ],
+                                ],
                               ),
                             ),
                             const Expanded(child: SizedBox()),
@@ -1227,7 +1267,7 @@ class TVHomeState extends State<TVHome> {
               physics: const PageScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               separatorBuilder: (context, index) => const SizedBox(
-                width: 5,
+                width: 10,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return Material(
@@ -1349,23 +1389,35 @@ class TVHomeState extends State<TVHome> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: MyText(
-                  color: white,
-                  text: sectionList?[index].title.toString() ?? "",
-                  textalign: TextAlign.center,
-                  fontsizeNormal: 14,
-                  fontweight: FontWeight.w600,
-                  fontsizeWeb: 16,
-                  multilanguage: false,
-                  maxline: 1,
-                  overflow: TextOverflow.ellipsis,
-                  fontstyle: FontStyle.normal,
-                ),
+              const SizedBox(height: 35),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Container(
+                    height: 20,
+                    width: 3,
+                    color: colorPrimary,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: MyText(
+                      color: white,
+                      text: sectionList?[index].title.toString() ?? "",
+                      textalign: TextAlign.center,
+                      fontsizeNormal: 14,
+                      fontweight: FontWeight.w600,
+                      fontsizeWeb: 16,
+                      multilanguage: false,
+                      maxline: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fontstyle: FontStyle.normal,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 15),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: getRemainingDataHeight(
@@ -1475,11 +1527,11 @@ class TVHomeState extends State<TVHome> {
             const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         padding: const EdgeInsets.only(left: 20, right: 20),
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => const SizedBox(width: 5),
+        separatorBuilder: (context, index) => const SizedBox(width: 15),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             focusColor: white,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(6),
             onTap: () {
               debugPrint("Clicked on index ==> $index");
               openDetailPage(
@@ -1492,21 +1544,84 @@ class TVHomeState extends State<TVHome> {
                 sectionDataList?[index].typeId ?? 0,
               );
             },
-            child: Container(
-              width: Dimens.widthLand,
-              height: Dimens.heightLand,
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: MyNetworkImage(
-                  imageUrl: sectionDataList?[index].landscape.toString() ?? "",
-                  fit: BoxFit.cover,
-                  imgHeight: MediaQuery.of(context).size.height,
-                  imgWidth: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+
+               
+               Stack(
+                children: [
+                   Container(
+                  width: Dimens.widthLand,
+                  height: Dimens.heightLand / 1.5,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: MyNetworkImage(
+                      imageUrl:
+                          sectionDataList?[index].landscape.toString() ?? "",
+                      fit: BoxFit.cover,
+                      imgHeight: MediaQuery.of(context).size.height,
+                      imgWidth: MediaQuery.of(context).size.width,
+                    ),
+                  ),
                 ),
-              ),
+                
+
+                 Positioned(
+                  bottom: 0,
+                  right: 0,
+                   child: Container(
+                    padding: EdgeInsets.only(left: 5 ,right: 5),
+                   color: Colors.transparent,
+                   width: 100,
+                   child: Center(
+                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                       children: [
+                         Text(
+                           "${formatDuration(sectionDataList?[index].videoDuration ?? 0)} min",
+                           style: TextStyle(
+                             color: Colors.white,
+                             fontSize: 15,
+                             height: 1.5,
+                           ),
+                         ),
+                       Icon(Icons.timer ,size: 20,)
+                      
+                       ],
+                     ),
+                   ),
+                 ),
+                 )
+               
+
+
+                ],
+               ) ,
+                
+                SizedBox(
+                  height: 12,
+                ),
+                Container(
+                    height: 50,
+                    width: Dimens.widthLand,
+                    child: Text(
+                      sectionDataList?[index].description.toString() ?? "",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        height: 1.5,
+                      ),
+                    )),
+               
+                SizedBox(
+                  height: 10,
+                )
+             
+             
+              ],
             ),
           );
         },
@@ -1575,7 +1690,7 @@ class TVHomeState extends State<TVHome> {
         physics:
             const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         padding: const EdgeInsets.only(left: 20, right: 20),
-        separatorBuilder: (context, index) => const SizedBox(width: 5),
+        separatorBuilder: (context, index) => const SizedBox(width: 15),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             focusColor: white,
@@ -1592,21 +1707,48 @@ class TVHomeState extends State<TVHome> {
                 sectionDataList?[index].typeId ?? 0,
               );
             },
-            child: Container(
-              width: Dimens.widthSquare,
-              height: Dimens.heightSquare,
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: MyNetworkImage(
-                  imageUrl: sectionDataList?[index].thumbnail.toString() ?? "",
-                  fit: BoxFit.cover,
-                  imgHeight: MediaQuery.of(context).size.height,
-                  imgWidth: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Container(
+                  width: Dimens.widthSquare,
+                  height: Dimens.heightSquare / 1.4,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: MyNetworkImage(
+                      imageUrl:
+                          sectionDataList?[index].thumbnail.toString() ?? "",
+                      fit: BoxFit.cover,
+                      imgHeight: MediaQuery.of(context).size.height,
+                      imgWidth: MediaQuery.of(context).size.width,
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 2),
+                  margin: EdgeInsets.only(bottom: 5),
+                    // height: 100,
+                    width: Dimens.widthSquare,
+                    child: Text(
+                      sectionDataList?[index].description.toString() ?? "",
+                      maxLines: 3,
+                      
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        height: 1.5
+                        
+                        
+                      ),
+                      //overflow: TextOverflow.ellipsis
+                    )),
+              
+              ],
             ),
           );
         },
@@ -1712,6 +1854,16 @@ class TVHomeState extends State<TVHome> {
   }
 
   Widget genresLayout(int? typeId, List<Datum>? sectionDataList) {
+    getAdaptiveTextSize(BuildContext context, dynamic value) {
+      if (kIsWeb || Constant.isTV) {
+        return (value / 650) *
+            min(MediaQuery.of(context).size.height,
+                MediaQuery.of(context).size.width);
+      } else {
+        return (value / 720 * MediaQuery.of(context).size.height);
+      }
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightLangGen,
@@ -1728,78 +1880,153 @@ class TVHomeState extends State<TVHome> {
             alignment: AlignmentDirectional.bottomStart,
             children: [
               InkWell(
-                focusColor: white,
-                borderRadius: BorderRadius.circular(4),
-                onTap: () {
-                  debugPrint("Clicked on index ==> $index");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return TVVideosByID(
-                          sectionDataList?[index].id ?? 0,
-                          typeId ?? 0,
-                          sectionDataList?[index].name ?? "",
-                          "ByCategory",
-                        );
-                      },
-                    ),
-                  );
-                },
-                child: Container(
-                  width: Dimens.widthLangGen,
-                  height: Dimens.heightLangGen,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                  child: Stack(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: MyNetworkImage(
-                          imageUrl:
-                              sectionDataList?[index].image.toString() ?? "",
-                          fit: BoxFit.fill,
-                          imgHeight: MediaQuery.of(context).size.height,
-                          imgWidth: MediaQuery.of(context).size.width,
-                        ),
+                  focusColor: white,
+                  borderRadius: BorderRadius.circular(4),
+                  onTap: () {
+                    debugPrint("Clicked on index ==> $index");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return TVVideosByID(
+                            sectionDataList?[index].id ?? 0,
+                            typeId ?? 0,
+                            sectionDataList?[index].name ?? "",
+                            "ByCategory",
+                          );
+                        },
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(0),
-                        width: MediaQuery.of(context).size.width,
-                        height: Dimens.heightLangGen,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.center,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              transparentColor,
-                              transparentColor,
-                              appBgColor,
-                            ],
+                    );
+                  },
+                  child: Container(
+                    width: Dimens.widthLangGen,
+                    height: Dimens.heightLangGen,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(bottom: 30, left: 22),
+                    padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                    child: Stack(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: MyNetworkImage(
+                            imageUrl:
+                                sectionDataList?[index].image.toString() ?? "",
+                            fit: BoxFit.fill,
+                            imgHeight: MediaQuery.of(context).size.height,
+                            imgWidth: MediaQuery.of(context).size.width,
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          padding: const EdgeInsets.all(0),
+                          width: MediaQuery.of(context).size.width,
+                          height: Dimens.heightLangGen,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.center,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                transparentColor,
+                                transparentColor,
+                                appBgColor,
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  )),
+
+              Positioned(
+                bottom: -8,
+                left: 0,
+                child: Container(
+                  margin: EdgeInsets.only(left: 2, bottom: 10),
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: sectionDataList?[index].name.toString()[0] ??
+                              "", // First letter
+                          style: GoogleFonts.outfit(
+                            fontSize: getAdaptiveTextSize(
+                                context, (kIsWeb || Constant.isTV) ? 40 : 40),
+                            fontStyle: FontStyle.normal,
+                            color: colorGraidentLeft,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        TextSpan(
+                          text: sectionDataList?[index]
+                                  .name
+                                  .toString()
+                                  .substring(1) ??
+                              "", // Rest of the text
+                          style: GoogleFonts.outfit(
+                            fontSize: getAdaptiveTextSize(
+                                context, (kIsWeb || Constant.isTV) ? 15 : 17),
+                            fontStyle: FontStyle.normal,
+                            color: white,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(3),
-                child: MyText(
-                  color: white,
-                  text: sectionDataList?[index].name.toString() ?? "",
-                  textalign: TextAlign.center,
-                  fontsizeNormal: 14,
-                  fontweight: FontWeight.w600,
-                  fontsizeWeb: 15,
-                  multilanguage: false,
-                  maxline: 1,
-                  overflow: TextOverflow.ellipsis,
-                  fontstyle: FontStyle.normal,
-                ),
+
+              //--------
+
+//   Positioned(
+//   bottom: -8,
+//   left: 0,
+//   child: Container(
+//      width: MediaQuery.of(context).size.width,
+//     margin: EdgeInsets.only(left: 2, bottom: 10),
+//     child: ShaderMask(
+//       shaderCallback: (Rect bounds) {
+//         return LinearGradient(
+//           begin: Alignment.centerLeft,
+//           end: Alignment.centerRight,
+//           colors: [colorPrimary, colorGraidentRight], // Replace with your desired gradient colors
+//         ).createShader(bounds);
+//       },
+//       child: RichText(
+//         text: TextSpan(
+//           children: <TextSpan>[
+//             TextSpan(
+//               text: sectionDataList?[index].name.toString()[0] ?? "", // First letter
+//               style: GoogleFonts.outfit(
+//                 fontSize: getAdaptiveTextSize(context, (kIsWeb || Constant.isTV) ? 40 : 40),
+//                 fontStyle: FontStyle.normal,
+//                 color: white,
+//                 fontWeight: FontWeight.w600,
+//               ),
+//             ),
+//             TextSpan(
+//               text: sectionDataList?[index].name.toString().substring(1) ?? "", // Rest of the text
+//               style: GoogleFonts.outfit(
+//                 fontSize: getAdaptiveTextSize(context, (kIsWeb || Constant.isTV) ? 15 : 17),
+//                 fontStyle: FontStyle.normal,
+//                 color: white,
+//                 fontWeight: FontWeight.w400,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   ),
+// ),
+
+              SizedBox(
+                height: 20,
               ),
             ],
           );
@@ -1835,128 +2062,137 @@ class TVHomeState extends State<TVHome> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MyText(
-                        color: white,
-                        text: "confirmsognout",
-                        multilanguage: true,
-                        textalign: TextAlign.center,
-                        fontsizeNormal: 16,
-                        fontsizeWeb: 18,
-                        fontweight: FontWeight.bold,
-                        maxline: 2,
-                        overflow: TextOverflow.ellipsis,
-                        fontstyle: FontStyle.normal,
+                      Center(
+                        child: MyText(
+                          color: white,
+                          text: "confirmsognout",
+                          multilanguage: true,
+                          textalign: TextAlign.center,
+                          fontsizeNormal: 16,
+                          fontsizeWeb: 18,
+                          fontweight: FontWeight.w500,
+                          maxline: 2,
+                          overflow: TextOverflow.ellipsis,
+                          fontstyle: FontStyle.normal,
+                        ),
                       ),
                       const SizedBox(height: 3),
-                      MyText(
-                        color: white,
-                        text: "areyousurewanrtosignout",
-                        multilanguage: true,
-                        textalign: TextAlign.center,
-                        fontsizeNormal: 13,
-                        fontsizeWeb: 14,
-                        fontweight: FontWeight.w500,
-                        maxline: 2,
-                        overflow: TextOverflow.ellipsis,
-                        fontstyle: FontStyle.normal,
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(),
+                          child: MyText(
+                            color: white,
+                            text: "areyousurewanrtosignout",
+                            multilanguage: true,
+                            textalign: TextAlign.center,
+                            fontsizeNormal: 12,
+                            fontsizeWeb: 12,
+                            fontweight: FontWeight.w300,
+                            maxline: 2,
+                            overflow: TextOverflow.ellipsis,
+                            fontstyle: FontStyle.normal,
+                          ),
+                        ),
                       )
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Material(
-                        type: MaterialType.transparency,
-                        child: InkWell(
-                          focusColor: white.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(5),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                              constraints: const BoxConstraints(minWidth: 75),
-                              height: 33,
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: otherColor,
-                                  width: .5,
+                const SizedBox(height: 33),
+                Center(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Material(
+                          type: MaterialType.transparency,
+                          child: InkWell(
+                            focusColor: white.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(5),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                constraints: const BoxConstraints(minWidth: 75),
+                                height: 33,
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: otherColor,
+                                    width: .4,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: MyText(
-                                color: white,
-                                text: "cancel",
-                                multilanguage: true,
-                                textalign: TextAlign.center,
-                                fontsizeNormal: 16,
-                                fontsizeWeb: 17,
-                                maxline: 1,
-                                overflow: TextOverflow.ellipsis,
-                                fontweight: FontWeight.w600,
-                                fontstyle: FontStyle.normal,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 15),
-                      Material(
-                        type: MaterialType.transparency,
-                        child: InkWell(
-                          focusColor: white.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(5),
-                          onTap: () async {
-                            // Firebase Signout
-                            await auth.signOut();
-                            await GoogleSignIn().signOut();
-                            await Utils.setUserId(null);
-                            await sectionDataProvider.clearProvider();
-                            sectionDataProvider.getSectionBanner("0", "1");
-                            sectionDataProvider.getSectionList("0", "1");
-                            await homeProvider.homeNotifyProvider();
-                            if (!mounted) return;
-                            Navigator.pop(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                              constraints: const BoxConstraints(minWidth: 75),
-                              height: 33,
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: primaryLight,
-                                borderRadius: BorderRadius.circular(5),
-                                shape: BoxShape.rectangle,
-                              ),
-                              child: MyText(
-                                color: black,
-                                text: "sign_out",
-                                textalign: TextAlign.center,
-                                fontsizeNormal: 16,
-                                fontsizeWeb: 17,
-                                multilanguage: true,
-                                maxline: 1,
-                                overflow: TextOverflow.ellipsis,
-                                fontweight: FontWeight.w600,
-                                fontstyle: FontStyle.normal,
+                                child: MyText(
+                                  color: white,
+                                  text: "cancel",
+                                  multilanguage: true,
+                                  textalign: TextAlign.center,
+                                  fontsizeNormal: 14,
+                                  fontsizeWeb: 14,
+                                  maxline: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontweight: FontWeight.w400,
+                                  fontstyle: FontStyle.normal,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 0),
+                        Material(
+                          type: MaterialType.transparency,
+                          child: InkWell(
+                            focusColor: white.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(5),
+                            onTap: () async {
+                              // Firebase Signout
+                              await auth.signOut();
+                              await GoogleSignIn().signOut();
+                              await Utils.setUserId(null);
+                              await sectionDataProvider.clearProvider();
+                              sectionDataProvider.getSectionBanner("0", "1");
+                              sectionDataProvider.getSectionList("0", "1");
+                              await homeProvider.homeNotifyProvider();
+                              if (!mounted) return;
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                constraints: const BoxConstraints(minWidth: 75),
+                                height: 33,
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: primaryLight,
+                                  borderRadius: BorderRadius.circular(5),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: MyText(
+                                  color: black,
+                                  text: "sign_out",
+                                  textalign: TextAlign.center,
+                                  fontsizeNormal: 14,
+                                  fontsizeWeb: 14,
+                                  multilanguage: true,
+                                  maxline: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontweight: FontWeight.w400,
+                                  fontstyle: FontStyle.normal,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
