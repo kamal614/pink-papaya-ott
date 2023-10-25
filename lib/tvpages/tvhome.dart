@@ -48,6 +48,9 @@ class TVHome extends StatefulWidget {
 }
 
 class TVHomeState extends State<TVHome> {
+  // bool _hovering = false;
+  //List<bool> isHovered = List.generate(100, (index) => false); // Initialize with false for all items
+  Map<int, bool> isHovered = {};
   late SectionDataProvider sectionDataProvider;
   final FirebaseAuth auth = FirebaseAuth.instance;
   SharedPre sharedPref = SharedPre();
@@ -77,18 +80,25 @@ class TVHomeState extends State<TVHome> {
     });
   }
 
-  String formatDuration(int milliseconds) {
-  if (milliseconds == null || milliseconds <= 0) {
-    return "0:00";
+  //int? hoveredIndex;
+
+  // _hovered(bool hovered) {
+  //   setState(() {
+  //     _hovering = hovered;
+  //   });
+  // }
+
+  void _setHovered(int videoId, bool value) {
+    setState(() {
+      isHovered[videoId] = value;
+    });
   }
-  
-  int seconds = (milliseconds / 1000).truncate();
-  int minutes = seconds ~/ 60;
-  seconds %= 60;
-  
-  String formattedDuration = '$minutes:${seconds.toString().padLeft(2, '0')}';
-  return formattedDuration;
-}
+
+  // void _setHovered(int index, bool value) {
+  //   setState(() {
+  //     isHovered[index] = value;
+  //   });
+  // }
 
   @override
   void initState() {
@@ -1529,105 +1539,89 @@ class TVHomeState extends State<TVHome> {
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => const SizedBox(width: 15),
         itemBuilder: (BuildContext context, int index) {
+          final videoId = sectionDataList?[index].id ?? 0;
+
           return InkWell(
+            
             focusColor: white,
             borderRadius: BorderRadius.circular(6),
             onTap: () {
+             
               debugPrint("Clicked on index ==> $index");
+              // openDetailPage(
+              //   (sectionDataList?[index].videoType ?? 0) == 2
+              //       ? "showdetail"
+              //       : "videodetail",
+              //   sectionDataList?[index].id ?? 0,
+              //   upcomingType ?? 0,
+              //   sectionDataList?[index].videoType ?? 0,
+              //   sectionDataList?[index].typeId ?? 0,
+              // );
+
               openDetailPage(
                 (sectionDataList?[index].videoType ?? 0) == 2
                     ? "showdetail"
                     : "videodetail",
-                sectionDataList?[index].id ?? 0,
+                videoId,
                 upcomingType ?? 0,
                 sectionDataList?[index].videoType ?? 0,
                 sectionDataList?[index].typeId ?? 0,
               );
             },
-            child: Column(
-              children: [
-
-               
-               Stack(
+            child: MouseRegion(
+              onHover: (_) => _setHovered(videoId, true), 
+              onExit: (_) => _setHovered(videoId, false),
+              child: Column(
                 children: [
-                   Container(
-                  width: Dimens.widthLand,
-                  height: Dimens.heightLand / 1.5,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: MyNetworkImage(
-                      imageUrl:
-                          sectionDataList?[index].landscape.toString() ?? "",
-                      fit: BoxFit.cover,
-                      imgHeight: MediaQuery.of(context).size.height,
-                      imgWidth: MediaQuery.of(context).size.width,
+                  Container(
+                    width: Dimens.widthLand,
+                    height: Dimens.heightLand / 1.5,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Transform.scale(
+                        scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                        child: MyNetworkImage(
+                          imageUrl:
+                              sectionDataList?[index].landscape.toString() ?? "",
+                          fit: BoxFit.cover,
+                          imgHeight: MediaQuery.of(context).size.height,
+                          imgWidth: MediaQuery.of(context).size.width,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                
-
-                 Positioned(
-                  bottom: 0,
-                  right: 0,
-                   child: Container(
-                    padding: EdgeInsets.only(left: 5 ,right: 5),
-                   color: Colors.transparent,
-                   width: 100,
-                   child: Center(
-                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                       children: [
-                         Text(
-                           "${formatDuration(sectionDataList?[index].videoDuration ?? 0)} min",
-                           style: TextStyle(
-                             color: Colors.white,
-                             fontSize: 15,
-                             height: 1.5,
-                           ),
-                         ),
-                       Icon(Icons.timer ,size: 20,)
-                      
-                       ],
-                     ),
-                   ),
-                 ),
-                 )
-               
-
-
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Container(
+                      height: 50,
+                      width: Dimens.widthLand,
+                      child: Text(
+                        sectionDataList?[index].description.toString() ?? "",
+                        style: TextStyle(
+                          // color: isHovered[videoId] ? colorPrimary : Colors.white,
+                          color: (isHovered[videoId] ?? false)
+                              ? colorPrimary
+                              : Colors.white,
+                          fontSize: (isHovered[videoId] ?? false) ? 15 : 15,
+                          height: 1.5,
+                        ),
+                      )),
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
-               ) ,
-                
-                SizedBox(
-                  height: 12,
-                ),
-                Container(
-                    height: 50,
-                    width: Dimens.widthLand,
-                    child: Text(
-                      sectionDataList?[index].description.toString() ?? "",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        height: 1.5,
-                      ),
-                    )),
-               
-                SizedBox(
-                  height: 10,
-                )
-             
-             
-              ],
+              ),
             ),
           );
         },
       ),
     );
   }
+
 
   Widget portrait(int? upcomingType, List<Datum>? sectionDataList) {
     return SizedBox(
@@ -1692,8 +1686,9 @@ class TVHomeState extends State<TVHome> {
         padding: const EdgeInsets.only(left: 20, right: 20),
         separatorBuilder: (context, index) => const SizedBox(width: 15),
         itemBuilder: (BuildContext context, int index) {
+          final videoId = sectionDataList?[index].id ?? 0;
           return InkWell(
-            focusColor: white,
+            focusColor: Colors.white,
             borderRadius: BorderRadius.circular(4),
             onTap: () {
               debugPrint("Clicked on index ==> $index");
@@ -1701,60 +1696,149 @@ class TVHomeState extends State<TVHome> {
                 (sectionDataList?[index].videoType ?? 0) == 2
                     ? "showdetail"
                     : "videodetail",
-                sectionDataList?[index].id ?? 0,
+                videoId,
                 upcomingType ?? 0,
                 sectionDataList?[index].videoType ?? 0,
                 sectionDataList?[index].typeId ?? 0,
               );
             },
-            child: Column(
-              children: [
-                Container(
-                  width: Dimens.widthSquare,
-                  height: Dimens.heightSquare / 1.4,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: MyNetworkImage(
-                      imageUrl:
-                          sectionDataList?[index].thumbnail.toString() ?? "",
-                      fit: BoxFit.cover,
-                      imgHeight: MediaQuery.of(context).size.height,
-                      imgWidth: MediaQuery.of(context).size.width,
+            child: MouseRegion(
+              onHover: (_) => _setHovered(videoId, true), // Set hover state
+              onExit: (_) => _setHovered(videoId, false), // Clear hover state
+              child: Column(
+                children: [
+                  Container(
+                    width: Dimens.widthSquare,
+                    height: Dimens.heightSquare / 1.4,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: MyNetworkImage(
+                        imageUrl:
+                            sectionDataList?[index].thumbnail.toString() ?? "",
+                        fit: BoxFit.cover,
+                        imgHeight: MediaQuery.of(context).size.height,
+                        imgWidth: MediaQuery.of(context).size.width,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 2),
-                  margin: EdgeInsets.only(bottom: 5),
-                    // height: 100,
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 2),
+                    margin: EdgeInsets.only(bottom: 5),
                     width: Dimens.widthSquare,
                     child: Text(
                       sectionDataList?[index].description.toString() ?? "",
                       maxLines: 3,
-                      
                       style: TextStyle(
-                        color: Colors.white,
+                        color: (isHovered[videoId] ?? false)
+                            ? colorPrimary
+                            : Colors.white,
                         fontSize: 14,
-                        height: 1.5
-                        
-                        
+                        height: 1.5,
                       ),
-                      //overflow: TextOverflow.ellipsis
-                    )),
-              
-              ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
       ),
     );
   }
+
+//   Widget square(int? upcomingType, List<Datum>? sectionDataList) {
+//     return SizedBox(
+//       width: MediaQuery.of(context).size.width,
+//       height: Dimens.heightSquare,
+//       child: ListView.separated(
+//         itemCount: sectionDataList?.length ?? 0,
+//         shrinkWrap: true,
+//         scrollDirection: Axis.horizontal,
+//         physics:
+//             const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+//         padding: const EdgeInsets.only(left: 20, right: 20),
+//         separatorBuilder: (context, index) => const SizedBox(width: 15),
+//         itemBuilder: (BuildContext context, int index) {
+//           return InkWell(
+//             focusColor: white,
+//             borderRadius: BorderRadius.circular(4),
+//             onTap: () {
+//               debugPrint("Clicked on index ==> $index");
+//               // openDetailPage(
+//               //   (sectionDataList?[index].videoType ?? 0) == 2
+//               //       ? "showdetail"
+//               //       : "videodetail",
+
+//               //   sectionDataList?[index].id ?? 0,
+//               //   upcomingType ?? 0,
+//               //   sectionDataList?[index].videoType ?? 0,
+//               //   sectionDataList?[index].typeId ?? 0,
+
+//               // );
+//               openDetailPage(
+//   (sectionDataList?[index].videoType ?? 0) == 2
+//       ? "showdetail"
+//       : "videodetail",
+//   videoId!,
+//   upcomingType ?? 0,
+//   sectionDataList?[index].videoType ?? 0,
+//   sectionDataList?[index].typeId ?? 0,
+// );
+//             },
+//             child: MouseRegion(
+//                 onHover: (_) => _setHovered(videoId!, true), // Set hover state
+//               onExit: (_) => _setHovered(videoId!, false),
+//               child: Column(
+//                 children: [
+//                   Container(
+//                     width: Dimens.widthSquare,
+//                     height: Dimens.heightSquare / 1.4,
+//                     alignment: Alignment.center,
+//                     padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+//                     child: ClipRRect(
+//                       borderRadius: BorderRadius.circular(4),
+//                       clipBehavior: Clip.antiAliasWithSaveLayer,
+//                       child: MyNetworkImage(
+//                         imageUrl:
+//                             sectionDataList?[index].thumbnail.toString() ?? "",
+//                         fit: BoxFit.cover,
+//                         imgHeight: MediaQuery.of(context).size.height,
+//                         imgWidth: MediaQuery.of(context).size.width,
+//                       ),
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     height: 12,
+//                   ),
+//                   Container(
+//                       padding: EdgeInsets.only(left: 2),
+//                       margin: EdgeInsets.only(bottom: 5),
+//                       // height: 100,
+//                       width: Dimens.widthSquare,
+//                       child: Text(
+//                         sectionDataList?[index].description.toString() ?? "",
+//                         maxLines: 3,
+
+//                         style: TextStyle(
+//                                                  color: (isHovered[videoId] ?? false) ? colorPrimary : Colors.white,
+
+//                        fontSize: 14, height: 1.5),
+//                         //overflow: TextOverflow.ellipsis
+//                       )),
+//                 ],
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
 
   Widget languageLayout(int? typeId, List<Datum>? sectionDataList) {
     return SizedBox(

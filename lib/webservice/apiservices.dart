@@ -134,7 +134,6 @@ class ApiService {
         'mobile': mobile,
       },
     );
- 
     loginModel = LoginRegisterModel.fromJson(response.data);
     return loginModel;
   }
@@ -332,6 +331,7 @@ class ApiService {
  
   // section_list API
   Future<SectionListModel> sectionList(typeId, isHomePage) async {
+    print("Anil khandelwal");
     SectionListModel sectionListModel;
     String sectionList = "section_list";
     Response response = await dio.post(
@@ -346,6 +346,8 @@ class ApiService {
     sectionListModel = SectionListModel.fromJson(response.data);
     return sectionListModel;
   }
+ 
+
  
   // section_detail API
   Future<SectionDetailModel> sectionDetails(
