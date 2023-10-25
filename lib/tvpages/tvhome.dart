@@ -1715,12 +1715,15 @@ class TVHomeState extends State<TVHome> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: MyNetworkImage(
-                        imageUrl:
-                            sectionDataList?[index].thumbnail.toString() ?? "",
-                        fit: BoxFit.cover,
-                        imgHeight: MediaQuery.of(context).size.height,
-                        imgWidth: MediaQuery.of(context).size.width,
+                      child:  Transform.scale(
+                          scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                        child: MyNetworkImage(
+                          imageUrl:
+                              sectionDataList?[index].thumbnail.toString() ?? "",
+                          fit: BoxFit.cover,
+                          imgHeight: MediaQuery.of(context).size.height,
+                          imgWidth: MediaQuery.of(context).size.width,
+                        ),
                       ),
                     ),
                   ),
