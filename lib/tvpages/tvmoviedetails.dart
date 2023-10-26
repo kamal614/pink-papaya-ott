@@ -2091,10 +2091,11 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 100,) ,
         Container(
           constraints: BoxConstraints(
             maxWidth: (kIsWeb || Constant.isTV)
-                ? (MediaQuery.of(context).size.width * 0.5)
+                ? (MediaQuery.of(context).size.width)
                 : MediaQuery.of(context).size.width,
           ),
           height: (kIsWeb || Constant.isTV) ? 35 : Dimens.detailTabs,
@@ -2124,8 +2125,8 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                               child: MyText(
                                 color: videoDetailsProvider.tabClickedOn !=
                                         "related"
-                                    ? otherColor
-                                    : white,
+                                    ? white
+                                    : colorPrimary,
                                 text: "related",
                                 multilanguage: true,
                                 textalign: TextAlign.center,
