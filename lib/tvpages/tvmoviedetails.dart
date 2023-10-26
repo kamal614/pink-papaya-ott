@@ -42,10 +42,14 @@ class TVMovieDetails extends StatefulWidget {
 
 class TVMovieDetailsState extends State<TVMovieDetails> {
   String? audioLanguages;
+   Map<int, bool> isHovered = {};
+   
   List<Cast>? directorList;
   late VideoDetailsProvider videoDetailsProvider;
   late HomeProvider homeProvider;
   Map<String, String> qualityUrlList = <String, String>{};
+  
+
 
   @override
   void initState() {
@@ -57,6 +61,12 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
     debugPrint("initState videoType ==> ${widget.videoType}");
     debugPrint("initState typeId ==> ${widget.typeId}");
     _getData();
+  }
+
+   void _setHovered(int videoId, bool value) {
+    setState(() {
+      isHovered[videoId] = value;
+    });
   }
 
   _getData() async {
@@ -1924,19 +1934,19 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
           child: Padding(
             padding: const EdgeInsets.all(2.0),
             child: Container(
-              height: 55,
+              height: 50,
               constraints: BoxConstraints(
                 maxWidth: (kIsWeb || Constant.isTV)
-                    ? 210
+                    ? 200
                     : MediaQuery.of(context).size.width,
               ),
-              padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+              padding: const EdgeInsets.fromLTRB(30, 2, 20, 2),
               decoration: BoxDecoration(
-                color: primaryDark,
-                borderRadius: BorderRadius.circular(5),
+                color: colorPrimary,
+                borderRadius: BorderRadius.circular(35),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   MyImage(
@@ -2144,7 +2154,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                                 videoDetailsProvider.tabClickedOn == "related",
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 2,
+                              height: 1.5,
                               color: white,
                             ),
                           ),
@@ -2174,8 +2184,8 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                               child: MyText(
                                 color: videoDetailsProvider.tabClickedOn !=
                                         "moredetails"
-                                    ? otherColor
-                                    : white,
+                                    ? white
+                                    : colorPrimary,
                                 text: "moredetails",
                                 textalign: TextAlign.center,
                                 fontsizeNormal: 16,
@@ -2193,7 +2203,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                                 "moredetails",
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 2,
+                              height: 1.5,
                               color: white,
                             ),
                           ),
@@ -2206,16 +2216,16 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
             ],
           ),
         ),
-        Container(
-          height: 0.5,
-          color: otherColor,
-          margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          constraints: BoxConstraints(
-            maxWidth: (kIsWeb || Constant.isTV)
-                ? (MediaQuery.of(context).size.width * 0.5)
-                : MediaQuery.of(context).size.width,
-          ),
-        ),
+        // Container(
+        //   height: 0.5,
+        //   color: otherColor,
+        //   margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        //   constraints: BoxConstraints(
+        //     maxWidth: (kIsWeb || Constant.isTV)
+        //         ? (MediaQuery.of(context).size.width * 0.5)
+        //         : MediaQuery.of(context).size.width,
+        //   ),
+        // ),
         /* Data */
         if (videoDetailsProvider.tabClickedOn == "related")
           Column(
@@ -2237,7 +2247,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                     multilanguage: true,
                     textalign: TextAlign.start,
                     fontsizeNormal: 15,
-                    fontweight: FontWeight.w600,
+                    fontweight: FontWeight.w400,
                     fontsizeWeb: 16,
                     maxline: 1,
                     overflow: TextOverflow.ellipsis,
@@ -2259,14 +2269,14 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  margin: const EdgeInsets.only(top: 25, bottom: 0),
+                  margin: const EdgeInsets.only(top: 60, bottom: 0),
                   child: MyText(
                     color: white,
                     text: "castandcrew",
                     multilanguage: true,
                     textalign: TextAlign.start,
                     fontsizeNormal: 15,
-                    fontweight: FontWeight.w600,
+                    fontweight: FontWeight.w500,
                     fontsizeWeb: 16,
                     maxline: 1,
                     overflow: TextOverflow.ellipsis,
@@ -2312,7 +2322,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                           multilanguage: false,
                           textalign: TextAlign.center,
                           fontsizeNormal: 12,
-                          fontweight: FontWeight.w700,
+                          fontweight: FontWeight.w600,
                           fontsizeWeb: 13,
                           maxline: 1,
                           overflow: TextOverflow.ellipsis,
@@ -2324,7 +2334,9 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                 ),
               if ((videoDetailsProvider.sectionDetailModel.cast?.length ?? 0) >
                   0)
+
                 _buildCAndCLayout(videoDetailsProvider.sectionDetailModel.cast),
+             
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 0.7,
@@ -2358,8 +2370,9 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        separatorBuilder: (context, index) => const SizedBox(width: 5),
+        separatorBuilder: (context, index) => const SizedBox(width: 15),
         itemBuilder: (BuildContext context, int index) {
+           final videoId = relatedDataList?[index].id ?? 0;
           return Material(
             type: MaterialType.transparency,
             child: InkWell(
@@ -2469,21 +2482,55 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                   }
                 }
               },
-              child: Container(
-                width: Dimens.widthLand,
-                height: Dimens.heightLand,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(2.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: MyNetworkImage(
-                    imageUrl:
-                        relatedDataList?[index].landscape.toString() ?? "",
-                    fit: BoxFit.cover,
-                    imgHeight: MediaQuery.of(context).size.height,
-                    imgWidth: MediaQuery.of(context).size.width,
-                  ),
+              child: MouseRegion(
+
+                 onHover: (_) => _setHovered(videoId, true), // Set hover state
+              onExit: (_) => _setHovered(videoId, false), // Clear hover state
+                child: Column(
+                  children: [
+              
+              
+                    Container(
+                      width: Dimens.widthLand,
+                    height: Dimens.heightLand /1.5,
+                      alignment: Alignment.topCenter,
+                      padding: const EdgeInsets.all(2.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child:  Transform.scale(
+                          scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                          child: MyNetworkImage(
+                            imageUrl:
+                                relatedDataList?[index].landscape.toString() ?? "",
+                            fit: BoxFit.cover,
+                            imgHeight: MediaQuery.of(context).size.height,
+                            imgWidth: MediaQuery.of(context).size.width,
+                          ),
+                        ),
+                      ),
+                    ),
+                 
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                        height: 40,
+                        width: Dimens.widthLand,
+                        child: Text(
+                          relatedDataList?[index].description.toString() ?? "",
+                          style: TextStyle(
+                           // color: isHovered[videoId] ? colorPrimary : Colors.white,
+                            color: (isHovered[videoId] ?? false)
+                                ? colorPrimary
+                                : Colors.white,
+                            fontSize: (isHovered[videoId] ?? false) ? 15 : 15,
+                            height: 1.4,
+                          ),
+                        )),
+                 
+                  ],
                 ),
               ),
             ),
@@ -2492,6 +2539,14 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
       ),
     );
   }
+
+
+
+
+
+
+
+
 
   Widget _buildCAndCLayout(List<Cast>? castList) {
     if (castList != null && castList.isNotEmpty) {
@@ -2545,7 +2600,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                                 BorderRadius.circular(Dimens.cardRadius),
                             child: MyUserNetworkImage(
                               imageUrl: castList[position].image.toString(),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitHeight,
                             ),
                           ),
                         ),

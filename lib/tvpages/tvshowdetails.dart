@@ -2221,13 +2221,13 @@ class TVShowDetailsState extends State<TVShowDetails> {
                         ? 210
                         : MediaQuery.of(context).size.width,
                   ),
-                  padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+                  padding: const EdgeInsets.fromLTRB(30, 2, 20, 2),
                   decoration: BoxDecoration(
                     color: primaryDark,
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(35),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       MyImage(
@@ -2279,6 +2279,7 @@ class TVShowDetailsState extends State<TVShowDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               /* Related */
               Expanded(
                 child: Material(
@@ -2377,6 +2378,7 @@ class TVShowDetailsState extends State<TVShowDetails> {
                   ),
                 ),
               ),
+            
             ],
           ),
         ),

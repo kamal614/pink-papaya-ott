@@ -33,6 +33,7 @@ class TVVideosByID extends StatefulWidget {
 
 class TVVideosByIDState extends State<TVVideosByID> {
   HomeState? homeStateObject;
+     Map<int, bool> isHovered = {};
 
   @override
   void initState() {
@@ -41,6 +42,12 @@ class TVVideosByIDState extends State<TVVideosByID> {
     _getData();
   }
 
+
+ void _setHovered(int videoId, bool value) {
+    setState(() {
+      isHovered[videoId] = value;
+    });
+  }
   void _getData() async {
     final videoByIDProvider =
         Provider.of<VideoByIDProvider>(context, listen: false);
@@ -129,6 +136,9 @@ class TVVideosByIDState extends State<TVVideosByID> {
         children: List.generate(
           (videoByIDProvider.videoByIdModel.result?.length ?? 0),
           (position) {
+
+                     final videoId = 
+                        videoByIDProvider.videoByIdModel.result?[position].id ?? 0 ;
             return Material(
               type: MaterialType.transparency,
               child: InkWell(
@@ -150,25 +160,61 @@ class TVVideosByIDState extends State<TVVideosByID> {
                         0,
                   );
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Container(
-                    width: Dimens.widthLand,
-                    height: Dimens.heightLand,
-                    alignment: Alignment.center,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: MyNetworkImage(
-                        imageUrl: videoByIDProvider
-                                .videoByIdModel.result?[position].landscape
-                                .toString() ??
-                            "",
-                        fit: BoxFit.cover,
-                        imgHeight: MediaQuery.of(context).size.height,
-                        imgWidth: MediaQuery.of(context).size.width,
+                child: MouseRegion(
+                  onHover: (_) => _setHovered(videoId, true), // Set hover state
+              onExit: (_) => _setHovered(videoId, false), // Clear hover state
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(left: 2),
+                        child: Container(
+                          width: Dimens.widthLand,
+                          height: Dimens.heightLand /1.5,
+                          alignment: Alignment.center,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Transform.scale(
+                               scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                              child: MyNetworkImage(
+                                imageUrl: videoByIDProvider
+                                        .videoByIdModel.result?[position].landscape
+                                        .toString() ??
+                                    "",
+                                fit: BoxFit.cover,
+                                imgHeight: MediaQuery.of(context).size.height,
+                                imgWidth: MediaQuery.of(context).size.width,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
+                    
+                         SizedBox(
+                      height: 12,
                     ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                        height: 40,
+                        width: Dimens.widthLand,
+                        child: Text(
+                          videoByIDProvider
+                                        .videoByIdModel.result?[position].description
+                                        .toString() ??
+                                    "",
+                         
+                          style: TextStyle(
+                           // color: isHovered[videoId] ? colorPrimary : Colors.white,
+                            color: (isHovered[videoId] ?? false)
+                                ? colorPrimary
+                                : Colors.white,
+                            fontSize: (isHovered[videoId] ?? false) ? 15 : 15,
+                            height: 1.4,
+                          ),
+                        )),
+                 
+                    ],
                   ),
                 ),
               ),
