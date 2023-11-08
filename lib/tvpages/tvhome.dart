@@ -54,10 +54,12 @@ class TVHomeState extends State<TVHome> {
   late SectionDataProvider sectionDataProvider;
   final FirebaseAuth auth = FirebaseAuth.instance;
   SharedPre sharedPref = SharedPre();
+  final ScrollController _scrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
   late HomeProvider homeProvider;
   late SearchProvider searchProvider;
   CarouselController carouselController = CarouselController();
+
   int? videoId, videoType, typeId;
   bool isSearchEnable = false;
   String? currentPage, langCatName, mSearchText;
@@ -242,7 +244,7 @@ class TVHomeState extends State<TVHome> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: Dimens.homeTabHeight,
-      padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
+      padding: const EdgeInsets.fromLTRB(0, 13, 10, 5),
       color: black.withOpacity(0.75),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -870,6 +872,7 @@ class TVHomeState extends State<TVHome> {
         child: Column(
           children: [
             /* Banner */
+            // SizedBox(height: 10,) ,
             Consumer<SectionDataProvider>(
               builder: (context, sectionDataProvider, child) {
                 if (sectionDataProvider.loadingBanner) {
@@ -966,169 +969,174 @@ class TVHomeState extends State<TVHome> {
     );
   }
 
+  // Widget _tvHomeBanner(List<banner.Result>? sectionBannerList) {
+  //   if ((sectionBannerList?.length ?? 0) > 0) {
+  //     return SizedBox(
+  //       width: MediaQuery.of(context).size.width,
+  //       height: Dimens.homeWebBanner,
+  //       child: CarouselSlider.builder(
+  //         itemCount: (sectionBannerList?.length ?? 0),
+  //         carouselController: carouselController,
+  //         options: CarouselOptions(
+  //           initialPage: 0,
+  //           height: Dimens.homeWebBanner,
+  //           enlargeCenterPage: false,
+  //           autoPlay: true,
+  //           autoPlayCurve: Curves.easeInOutQuart,
+  //           enableInfiniteScroll: true,
+  //           autoPlayInterval: Duration(milliseconds: Constant.bannerDuration),
+  //           autoPlayAnimationDuration:
+  //               Duration(milliseconds: Constant.animationDuration),
+  //           viewportFraction: 1,
+  //           onPageChanged: (val, _) async {
+  //             await sectionDataProvider.setCurrentBanner(val);
+  //           },
+  //         ),
+  //         itemBuilder: (BuildContext context, int index, int pageViewIndex) {
+  //           return InkWell(
+  //             focusColor: white,
+  //             borderRadius: BorderRadius.circular(4),
+  //             onTap: () {
+  //               debugPrint("Clicked on index ==> $index");
+  //               openDetailPage(
+  //                 (sectionBannerList?[index].videoType ?? 0) == 2
+  //                     ? "showdetail"
+  //                     : "videodetail",
+  //                 sectionBannerList?[index].id ?? 0,
+  //                 sectionBannerList?[index].upcomingType ?? 0,
+  //                 sectionBannerList?[index].videoType ?? 0,
+  //                 sectionBannerList?[index].typeId ?? 0,
+  //               );
+  //             },
+  //             child: Container(
+  //               padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+  //               child: ClipRRect(
+  //                 borderRadius: BorderRadius.circular(4),
+  //                 clipBehavior: Clip.antiAliasWithSaveLayer,
+  //                 child: Stack(
+  //                   alignment: AlignmentDirectional.centerEnd,
+  //                   children: [
+  //                     SizedBox(
+  //                       width: MediaQuery.of(context).size.width *
+  //                           (Dimens.webBannerImgPr),
+  //                       height: Dimens.homeWebBanner,
+  //                       child: MyNetworkImage(
+  //                         imageUrl: sectionBannerList?[index].landscape ?? "",
+  //                         fit: BoxFit.fill,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     );
+  //   } else {
+  //     return const SizedBox.shrink();
+  //   }
+  // }
+
   Widget _tvHomeBanner(List<banner.Result>? sectionBannerList) {
     if ((sectionBannerList?.length ?? 0) > 0) {
-      return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: Dimens.homeWebBanner,
-        child: CarouselSlider.builder(
-          itemCount: (sectionBannerList?.length ?? 0),
-          carouselController: carouselController,
-          options: CarouselOptions(
-            initialPage: 0,
+      return Column(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
             height: Dimens.homeWebBanner,
-            enlargeCenterPage: false,
-            autoPlay: true,
-            autoPlayCurve: Curves.easeInOutQuart,
-            enableInfiniteScroll: true,
-            autoPlayInterval: Duration(milliseconds: Constant.bannerDuration),
-            autoPlayAnimationDuration:
-                Duration(milliseconds: Constant.animationDuration),
-            viewportFraction: 0.95,
-            onPageChanged: (val, _) async {
-              await sectionDataProvider.setCurrentBanner(val);
-            },
-          ),
-          itemBuilder: (BuildContext context, int index, int pageViewIndex) {
-            return InkWell(
-              focusColor: white,
-              borderRadius: BorderRadius.circular(4),
-              onTap: () {
-                debugPrint("Clicked on index ==> $index");
-                openDetailPage(
-                  (sectionBannerList?[index].videoType ?? 0) == 2
-                      ? "showdetail"
-                      : "videodetail",
-                  sectionBannerList?[index].id ?? 0,
-                  sectionBannerList?[index].upcomingType ?? 0,
-                  sectionBannerList?[index].videoType ?? 0,
-                  sectionBannerList?[index].typeId ?? 0,
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Stack(
-                    alignment: AlignmentDirectional.centerEnd,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width *
-                            (Dimens.webBannerImgPr),
-                        height: Dimens.homeWebBanner,
-                        child: MyNetworkImage(
-                          imageUrl: sectionBannerList?[index].landscape ?? "",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(0),
-                        width: MediaQuery.of(context).size.width,
-                        height: Dimens.homeWebBanner,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              lightBlack,
-                              lightBlack,
-                              lightBlack,
-                              lightBlack,
-                              transparentColor,
-                              transparentColor,
-                              transparentColor,
-                              transparentColor,
-                              transparentColor,
+            child: Stack(
+              children: [
+                CarouselSlider.builder(
+                  itemCount: (sectionBannerList?.length ?? 0),
+                  carouselController: carouselController,
+                  options: CarouselOptions(
+                    initialPage: 0,
+                    height: Dimens.homeWebBanner,
+                    enlargeCenterPage: false,
+                    autoPlay: true,
+                    autoPlayCurve: Curves.easeInOutQuart,
+                    enableInfiniteScroll: true,
+                    autoPlayInterval:
+                        Duration(milliseconds: Constant.bannerDuration),
+                    autoPlayAnimationDuration:
+                        Duration(milliseconds: Constant.animationDuration),
+                    viewportFraction: 1,
+                    onPageChanged: (val, _) async {
+                      await sectionDataProvider.setCurrentBanner(val);
+                    },
+                  ),
+                  itemBuilder:
+                      (BuildContext context, int index, int pageViewIndex) {
+                    return InkWell(
+                      focusColor: white,
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: () {
+                        debugPrint("Clicked on index ==> $index");
+                        openDetailPage(
+                          (sectionBannerList?[index].videoType ?? 0) == 2
+                              ? "showdetail"
+                              : "videodetail",
+                          sectionBannerList?[index].id ?? 0,
+                          sectionBannerList?[index].upcomingType ?? 0,
+                          sectionBannerList?[index].videoType ?? 0,
+                          sectionBannerList?[index].typeId ?? 0,
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Stack(
+                            alignment: AlignmentDirectional.centerEnd,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width *
+                                    (Dimens.webBannerImgPr),
+                                height: Dimens.homeWebBanner,
+                                child: MyNetworkImage(
+                                  imageUrl:
+                                      sectionBannerList?[index].landscape ?? "",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: Dimens.homeWebBanner,
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width *
-                                  (1.0 - Dimens.webBannerImgPr),
-                              constraints: const BoxConstraints(minHeight: 0),
-                              padding:
-                                  const EdgeInsets.fromLTRB(35, 50, 55, 35),
-                              alignment: Alignment.bottomLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 45,
-                                  ),
-                                  MyText(
-                                    color: white,
-                                    text: sectionBannerList?[index].name ?? "",
-                                    textalign: TextAlign.start,
-                                    fontsizeNormal: 14,
-                                    fontsizeWeb: 25,
-                                    fontweight: FontWeight.w700,
-                                    multilanguage: false,
-                                    maxline: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    fontstyle: FontStyle.normal,
-                                  ),
-                                  const SizedBox(height: 13),
-                                  MyText(
-                                    color: primaryLight,
-                                    text: sectionBannerList?[index]
-                                            .categoryName ??
-                                        "",
-                                    textalign: TextAlign.start,
-                                    fontsizeNormal: 14,
-                                    fontweight: FontWeight.w400,
-                                    fontsizeWeb: 14,
-                                    multilanguage: false,
-                                    maxline: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    //fontstyle: FontStyle.normal,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Expanded(
-                                    child: MyText(
-                                      color: whiteLight,
-                                      text: sectionBannerList?[index]
-                                              .description ??
-                                          "",
-                                      textalign: TextAlign.start,
-                                      fontsizeNormal: 13,
-                                      fontweight: FontWeight.w400,
-                                      fontsizeWeb: 13,
-                                      multilanguage: false,
-                                      maxline:
-                                          (MediaQuery.of(context).size.width <
-                                                  1000)
-                                              ? 2
-                                              : 5,
-                                      overflow: TextOverflow.ellipsis,
-                                      // fontstyle: FontStyle.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Expanded(child: SizedBox()),
-                          ],
+                    );
+                  },
+                ),
+
+                // Dot indicators
+                Positioned(
+                  bottom: 10,
+                  left: 0,
+                  right: 0,
+                  child: Consumer<SectionDataProvider>(
+                    builder: (context, sectionDataProvider, child) {
+                      return Center(
+                        child: AnimatedSmoothIndicator(
+                          count: (sectionBannerList?.length ?? 0),
+                          activeIndex: sectionDataProvider.cBannerIndex ?? 0,
+                          effect: const ScrollingDotsEffect(
+                            spacing: 8,
+                            radius: 4,
+                            activeDotColor: colorPrimary,
+                            dotColor: white,
+                            dotHeight: 8,
+                            dotWidth: 8,
+                          ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
-              ),
-            );
-          },
-        ),
+              ],
+            ),
+          ),
+        ],
       );
     } else {
       return const SizedBox.shrink();
@@ -1227,8 +1235,8 @@ class TVHomeState extends State<TVHome> {
                   effect: const ScrollingDotsEffect(
                     spacing: 8,
                     radius: 4,
-                    activeDotColor: dotsActiveColor,
-                    dotColor: dotsDefaultColor,
+                    activeDotColor: colorPrimary,
+                    dotColor: white,
                     dotHeight: 8,
                     dotWidth: 8,
                   ),
@@ -1542,11 +1550,9 @@ class TVHomeState extends State<TVHome> {
           final videoId = sectionDataList?[index].id ?? 0;
 
           return InkWell(
-            
             focusColor: white,
             borderRadius: BorderRadius.circular(6),
             onTap: () {
-             
               debugPrint("Clicked on index ==> $index");
               // openDetailPage(
               //   (sectionDataList?[index].videoType ?? 0) == 2
@@ -1569,7 +1575,7 @@ class TVHomeState extends State<TVHome> {
               );
             },
             child: MouseRegion(
-              onHover: (_) => _setHovered(videoId, true), 
+              onHover: (_) => _setHovered(videoId, true),
               onExit: (_) => _setHovered(videoId, false),
               child: Column(
                 children: [
@@ -1585,7 +1591,8 @@ class TVHomeState extends State<TVHome> {
                         scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
                         child: MyNetworkImage(
                           imageUrl:
-                              sectionDataList?[index].landscape.toString() ?? "",
+                              sectionDataList?[index].landscape.toString() ??
+                                  "",
                           fit: BoxFit.cover,
                           imgHeight: MediaQuery.of(context).size.height,
                           imgWidth: MediaQuery.of(context).size.width,
@@ -1621,7 +1628,6 @@ class TVHomeState extends State<TVHome> {
       ),
     );
   }
-
 
   Widget portrait(int? upcomingType, List<Datum>? sectionDataList) {
     return SizedBox(
@@ -1715,11 +1721,12 @@ class TVHomeState extends State<TVHome> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child:  Transform.scale(
-                          scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                      child: Transform.scale(
+                        scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
                         child: MyNetworkImage(
                           imageUrl:
-                              sectionDataList?[index].thumbnail.toString() ?? "",
+                              sectionDataList?[index].thumbnail.toString() ??
+                                  "",
                           fit: BoxFit.cover,
                           imgHeight: MediaQuery.of(context).size.height,
                           imgWidth: MediaQuery.of(context).size.width,
