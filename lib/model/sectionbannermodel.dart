@@ -46,6 +46,7 @@ class Result {
   int? typeId;
   String? thumbnail;
   String? landscape;
+  String? full_width;
   String? trailerType;
   int? stopTime;
   int? isDownloaded;
@@ -73,6 +74,7 @@ class Result {
     this.typeId,
     this.thumbnail,
     this.landscape,
+    this.full_width,
     this.trailerType,
     this.stopTime,
     this.isDownloaded,
@@ -101,6 +103,7 @@ class Result {
         typeId: json["type_id"],
         thumbnail: json["thumbnail"],
         landscape: json["landscape"],
+        full_width: json["full_width"],
         trailerType: json["trailer_type"],
         stopTime: json["stop_time"],
         isDownloaded: json["is_downloaded"],
@@ -129,6 +132,7 @@ class Result {
         "type_id": typeId,
         "thumbnail": thumbnail,
         "landscape": landscape,
+        "full_width":full_width,
         "trailer_type": trailerType,
         "stop_time": stopTime,
         "is_downloaded": isDownloaded,
