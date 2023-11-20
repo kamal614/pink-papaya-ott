@@ -10,6 +10,7 @@ class Constant {
    static String appName = "Pink Papaya";
   static String appPackageName = "com.ott.pinkpapaya";
   static String appleAppId = "6449380090";
+   static double curentAppVersion = 0;
 
   /* OneSignal App ID */
   static const String oneSignalAppId = "";
