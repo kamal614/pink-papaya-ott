@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:dtlive/pages/moviedetails.dart';
@@ -3001,6 +3002,10 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
           (videoDetailsProvider.sectionDetailModel.result?.trailerType ?? "");
       vUrl = (videoDetailsProvider.sectionDetailModel.result?.trailerUrl ?? "");
     } else {
+      log("VideoQualityKamal1 ${videoDetailsProvider.sectionDetailModel.result?.video320 ?? ""}");
+      log("VideoQualityKamal2 ${videoDetailsProvider.sectionDetailModel.result?.video480 ?? ""}");
+      log("VideoQualityKamal3 ${videoDetailsProvider.sectionDetailModel.result?.video720 ?? ""}");
+      log("VideoQualityKamal4 ${videoDetailsProvider.sectionDetailModel.result?.video1080 ?? ""}");
       /* Set-up Quality URLs */
       Utils.setQualityURLs(
         video320:
