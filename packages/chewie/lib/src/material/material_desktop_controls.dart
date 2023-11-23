@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html' as html;
 
 import 'package:chewie/src/animated_play_pause.dart';
 import 'package:chewie/src/center_play_button.dart';
@@ -484,9 +485,11 @@ class _MaterialDesktopControlsState extends State<MaterialDesktopControls>
 
   void _onExpandCollapse() {
     setState(() {
-      notifier.hideStuff = true;
+      Navigator.pop(context);
+      html.document.exitFullscreen();
+      // notifier.hideStuff = true;
 
-      chewieController.toggleFullScreen();
+      // chewieController.toggleFullScreen();
       _showAfterExpandCollapseTimer =
           Timer(const Duration(milliseconds: 300), () {
         setState(() {

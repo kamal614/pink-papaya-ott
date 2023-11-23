@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:html' as html;
 
 import 'package:chewie/chewie.dart';
 import 'package:dtlive/provider/playerprovider.dart';
@@ -45,6 +46,13 @@ class _PlayerVideoState extends State<PlayerVideo> {
 
   @override
   void initState() {
+    if (html.document.fullscreenElement == null) {
+      html.document.documentElement?.requestFullscreen();
+    }
+
+    //  else {
+    //   html.document.exitFullscreen();
+    // }
     debugPrint("videoUrl ========> ${widget.videoUrl}");
     debugPrint("vUploadType ========> ${widget.vUploadType}");
     playerProvider = Provider.of<PlayerProvider>(context, listen: false);
@@ -142,7 +150,7 @@ class _PlayerVideoState extends State<PlayerVideo> {
       autoPlay: true,
       autoInitialize: true,
       looping: false,
-      fullScreenByDefault: true,
+      fullScreenByDefault: false,
       allowFullScreen: true,
       hideControlsTimer: const Duration(seconds: 1),
       showControls: true,
@@ -176,12 +184,14 @@ class _PlayerVideoState extends State<PlayerVideo> {
         DeviceOrientation.landscapeRight,
       ],
       deviceOrientationsAfterFullScreen: [
-        (kIsWeb || Constant.isTV)
-            ? DeviceOrientation.landscapeLeft
-            : DeviceOrientation.portraitUp,
-        (kIsWeb || Constant.isTV)
-            ? DeviceOrientation.landscapeRight
-            : DeviceOrientation.portraitDown,
+        // (kIsWeb || Constant.isTV)
+        //     ? DeviceOrientation.landscapeLeft
+        //     : DeviceOrientation.portraitUp,
+        // (kIsWeb || Constant.isTV)
+        //     ? DeviceOrientation.landscapeRight
+        //     : DeviceOrientation.portraitDown,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
       ],
       cupertinoProgressColors: ChewieProgressColors(
         playedColor: colorPrimary,
