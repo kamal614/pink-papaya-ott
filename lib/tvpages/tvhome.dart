@@ -1775,7 +1775,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+              color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
@@ -1866,7 +1866,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+                color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
@@ -1991,7 +1991,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+               color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
@@ -2217,7 +2217,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+                color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
@@ -2441,7 +2441,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+            color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
