@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:dtlive/pages/loginsocial.dart';
@@ -12,7 +11,6 @@ import 'package:dtlive/provider/searchprovider.dart';
 import 'package:dtlive/shimmer/shimmerutils.dart';
 import 'package:dtlive/utils/sharedpre.dart';
 import 'package:dtlive/utils/strings.dart';
-
 import 'package:dtlive/model/sectionlistmodel.dart';
 import 'package:dtlive/model/sectiontypemodel.dart' as type;
 import 'package:dtlive/model/sectionlistmodel.dart' as list;
@@ -29,7 +27,7 @@ import 'package:dtlive/widget/myimage.dart';
 import 'package:dtlive/widget/mytext.dart';
 import 'package:dtlive/utils/utils.dart';
 import 'package:dtlive/widget/mynetworkimg.dart';
-import 'package:dtlive/widget/mytextgraident.dart';
+// import 'package:dtlive/widget/mytextgraident.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +52,7 @@ class TVHomeState extends State<TVHome> {
   late SectionDataProvider sectionDataProvider;
   final FirebaseAuth auth = FirebaseAuth.instance;
   SharedPre sharedPref = SharedPre();
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
   late HomeProvider homeProvider;
   late SearchProvider searchProvider;
@@ -244,7 +242,7 @@ class TVHomeState extends State<TVHome> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: Dimens.homeTabHeight,
-      padding: const EdgeInsets.fromLTRB(0, 13, 10, 5),
+      padding: const EdgeInsets.fromLTRB(45, 13, 10, 5),
       color: black.withOpacity(0.75),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -347,8 +345,8 @@ class TVHomeState extends State<TVHome> {
               },
               child: Container(
                 padding: const EdgeInsets.only(
-                    left: 15, right: 5, top: 3, bottom: 3),
-                child: MyImage(width: 75, height: 75, imagePath: "appicon.png"),
+                    left: 25, right: 20, top: 3, bottom: 20),
+                child: MyImage(width: 75, height: 80, imagePath: "appicon.png"),
               ),
             ),
           ),
@@ -780,21 +778,14 @@ class TVHomeState extends State<TVHome> {
                                       "")
                                   : "",
                           fontsizeNormal: 11,
-                          fontweight: FontWeight.w400,
-                          fontsizeWeb: 13,
+                          fontweight: FontWeight.w600,
+                          fontsizeWeb: 14,
                           maxline: 1,
                           overflow: TextOverflow.ellipsis,
                           textalign: TextAlign.center,
                           fontstyle: FontStyle.normal,
                         ),
                       ),
-                      homeProvider.selectedIndex == index
-                          ? Container(
-                              width: 50,
-                              height: 2,
-                              color: colorPrimary,
-                            )
-                          : SizedBox(),
                     ],
                   ),
                 ),
@@ -1037,7 +1028,6 @@ class TVHomeState extends State<TVHome> {
   //     return const SizedBox.shrink();
   //   }
   // }
-
   Widget _tvHomeBanner(List<banner.Result>? sectionBannerList) {
     if ((sectionBannerList?.length ?? 0) > 0) {
       return Column(
@@ -1072,7 +1062,8 @@ class TVHomeState extends State<TVHome> {
                       focusColor: white,
                       borderRadius: BorderRadius.circular(4),
                       onTap: () {
-                        print("ANIL KHANDELWAL IMAGE FULL WIDTH --${sectionBannerList?[index].full_width}");
+                        print(
+                            "ANIL KHANDELWAL IMAGE FULL WIDTH --${sectionBannerList?[index].full_width}");
                         debugPrint("Clicked on index ==> $index");
                         openDetailPage(
                           (sectionBannerList?[index].videoType ?? 0) == 2
@@ -1098,7 +1089,8 @@ class TVHomeState extends State<TVHome> {
                                 height: Dimens.homeWebBanner,
                                 child: MyNetworkImage(
                                   imageUrl:
-                                      sectionBannerList?[index].full_width?? "",
+                                      sectionBannerList?[index].full_width ??
+                                          "",
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -1108,6 +1100,36 @@ class TVHomeState extends State<TVHome> {
                       ),
                     );
                   },
+                ),
+
+                // Left arrow button
+                Positioned(
+                  left: 16,
+                  top: Dimens.homeWebBanner / 2 - 20,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      carouselController.previousPage();
+                    },
+                  ),
+                ),
+
+                // Right arrow button
+                Positioned(
+                  right: 16,
+                  top: Dimens.homeWebBanner / 2 - 20,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      carouselController.nextPage();
+                    },
+                  ),
                 ),
 
                 // Dot indicators
@@ -1137,12 +1159,121 @@ class TVHomeState extends State<TVHome> {
               ],
             ),
           ),
+          SizedBox(
+            height: 18,
+          )
         ],
       );
     } else {
       return const SizedBox.shrink();
     }
   }
+
+  // Widget _tvHomeBanner(List<banner.Result>? sectionBannerList) {
+  //   if ((sectionBannerList?.length ?? 0) > 0) {
+  //     return Column(
+  //       children: [
+  //         SizedBox(
+  //           width: MediaQuery.of(context).size.width,
+  //           height: Dimens.homeWebBanner,
+  //           child: Stack(
+  //             children: [
+  //               CarouselSlider.builder(
+  //                 itemCount: (sectionBannerList?.length ?? 0),
+  //                 carouselController: carouselController,
+  //                 options: CarouselOptions(
+  //                   initialPage: 0,
+  //                   height: Dimens.homeWebBanner,
+  //                   enlargeCenterPage: false,
+  //                   autoPlay: true,
+  //                   autoPlayCurve: Curves.easeInOutQuart,
+  //                   enableInfiniteScroll: true,
+  //                   autoPlayInterval:
+  //                       Duration(milliseconds: Constant.bannerDuration),
+  //                   autoPlayAnimationDuration:
+  //                       Duration(milliseconds: Constant.animationDuration),
+  //                   viewportFraction: 1,
+  //                   onPageChanged: (val, _) async {
+  //                     await sectionDataProvider.setCurrentBanner(val);
+  //                   },
+  //                 ),
+  //                 itemBuilder:
+  //                     (BuildContext context, int index, int pageViewIndex) {
+  //                   return InkWell(
+  //                     focusColor: white,
+  //                     borderRadius: BorderRadius.circular(4),
+  //                     onTap: () {
+  //                       print("ANIL KHANDELWAL IMAGE FULL WIDTH --${sectionBannerList?[index].full_width}");
+  //                       debugPrint("Clicked on index ==> $index");
+  //                       openDetailPage(
+  //                         (sectionBannerList?[index].videoType ?? 0) == 2
+  //                             ? "showdetail"
+  //                             : "videodetail",
+  //                         sectionBannerList?[index].id ?? 0,
+  //                         sectionBannerList?[index].upcomingType ?? 0,
+  //                         sectionBannerList?[index].videoType ?? 0,
+  //                         sectionBannerList?[index].typeId ?? 0,
+  //                       );
+  //                     },
+  //                     child: Container(
+  //                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+  //                       child: ClipRRect(
+  //                         borderRadius: BorderRadius.circular(4),
+  //                         clipBehavior: Clip.antiAliasWithSaveLayer,
+  //                         child: Stack(
+  //                           alignment: AlignmentDirectional.centerEnd,
+  //                           children: [
+  //                             SizedBox(
+  //                               width: MediaQuery.of(context).size.width *
+  //                                   (Dimens.webBannerImgPr),
+  //                               height: Dimens.homeWebBanner,
+  //                               child: MyNetworkImage(
+  //                                 imageUrl:
+  //                                     sectionBannerList?[index].full_width?? "",
+  //                                 fit: BoxFit.fill,
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   );
+  //                 },
+  //               ),
+
+  //               // Dot indicators
+  //               Positioned(
+  //                 bottom: 10,
+  //                 left: 0,
+  //                 right: 0,
+  //                 child: Consumer<SectionDataProvider>(
+  //                   builder: (context, sectionDataProvider, child) {
+  //                     return Center(
+  //                       child: AnimatedSmoothIndicator(
+  //                         count: (sectionBannerList?.length ?? 0),
+  //                         activeIndex: sectionDataProvider.cBannerIndex ?? 0,
+  //                         effect: const ScrollingDotsEffect(
+  //                           spacing: 8,
+  //                           radius: 4,
+  //                           activeDotColor: colorPrimary,
+  //                           dotColor: white,
+  //                           dotHeight: 8,
+  //                           dotWidth: 8,
+  //                         ),
+  //                       ),
+  //                     );
+  //                   },
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     );
+  //   } else {
+  //     return const SizedBox.shrink();
+  //   }
+  // }
 
   Widget _mobileHomeBanner(List<banner.Result>? sectionBannerList) {
     if ((sectionBannerList?.length ?? 0) > 0) {
@@ -1408,17 +1539,17 @@ class TVHomeState extends State<TVHome> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 35),
+              //  const SizedBox(height: 18),
               Row(
                 children: [
                   SizedBox(
-                    width: 25,
+                    width: 60,
                   ),
-                  Container(
-                    height: 20,
-                    width: 3,
-                    color: colorPrimary,
-                  ),
+                  // Container(
+                  //   height: 20,
+                  //   width: 3,
+                  //   color: colorPrimary,
+                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                     child: MyText(
@@ -1536,229 +1667,338 @@ class TVHomeState extends State<TVHome> {
   }
 
   Widget landscape(int? upcomingType, List<Datum>? sectionDataList) {
+    ScrollController _scrollController = ScrollController();
+    void scrollBy(int elements) {
+      _scrollController.animateTo(
+        _scrollController.position.pixels +
+            (elements * (Dimens.widthLand + 15)),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightLand,
-      child: ListView.separated(
-        itemCount: sectionDataList?.length ?? 0,
-        shrinkWrap: true,
-        physics:
-            const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => const SizedBox(width: 15),
-        itemBuilder: (BuildContext context, int index) {
-          final videoId = sectionDataList?[index].id ?? 0;
-
-          return InkWell(
-            focusColor: white,
-            borderRadius: BorderRadius.circular(6),
-            onTap: () {
-              debugPrint("Clicked on index ==> $index");
-              // openDetailPage(
-              //   (sectionDataList?[index].videoType ?? 0) == 2
-              //       ? "showdetail"
-              //       : "videodetail",
-              //   sectionDataList?[index].id ?? 0,
-              //   upcomingType ?? 0,
-              //   sectionDataList?[index].videoType ?? 0,
-              //   sectionDataList?[index].typeId ?? 0,
-              // );
-
-              openDetailPage(
-                (sectionDataList?[index].videoType ?? 0) == 2
-                    ? "showdetail"
-                    : "videodetail",
-                videoId,
-                upcomingType ?? 0,
-                sectionDataList?[index].videoType ?? 0,
-                sectionDataList?[index].typeId ?? 0,
-              );
-            },
-            child: MouseRegion(
-              onHover: (_) => _setHovered(videoId, true),
-              onExit: (_) => _setHovered(videoId, false),
-              child: Column(
-                children: [
-                  Container(
-                    width: Dimens.widthLand,
-                    height: Dimens.heightLand / 1.5,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: Transform.scale(
-                        scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
-                        child: MyNetworkImage(
-                          imageUrl:
-                              sectionDataList?[index].landscape.toString() ??
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: _scrollController,
+            itemCount: sectionDataList?.length ?? 0,
+            shrinkWrap: true,
+            physics: const PageScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            padding: const EdgeInsets.only(left: 70, right: 15),
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (context, index) => const SizedBox(width: 15),
+            itemBuilder: (BuildContext context, int index) {
+              final videoId = sectionDataList?[index].id ?? 0;
+              return InkWell(
+                focusColor: white,
+                borderRadius: BorderRadius.circular(6),
+                onTap: () {
+                  debugPrint("Clicked on index ==> $index");
+                  openDetailPage(
+                    (sectionDataList?[index].videoType ?? 0) == 2
+                        ? "showdetail"
+                        : "videodetail",
+                    videoId,
+                    upcomingType ?? 0,
+                    sectionDataList?[index].videoType ?? 0,
+                    sectionDataList?[index].typeId ?? 0,
+                  );
+                },
+                child: MouseRegion(
+                  onHover: (_) => _setHovered(videoId, true),
+                  onExit: (_) => _setHovered(videoId, false),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: Dimens.widthLand,
+                        height: Dimens.heightLand / 1.4,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Transform.scale(
+                            scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                            child: MyNetworkImage(
+                              imageUrl: sectionDataList?[index]
+                                      .landscape
+                                      .toString() ??
                                   "",
-                          fit: BoxFit.cover,
-                          imgHeight: MediaQuery.of(context).size.height,
-                          imgWidth: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                              imgHeight: MediaQuery.of(context).size.height,
+                              imgWidth: MediaQuery.of(context).size.width,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      SizedBox(
+                          height: 50,
+                          width: Dimens.widthLand,
+                          child: Text(
+                            sectionDataList?[index].name.toString() ?? "",
+                            style: TextStyle(
+                              color: (isHovered[videoId] ?? false)
+                                  ? colorPrimary
+                                  : Colors.white,
+                              fontSize: (isHovered[videoId] ?? false) ? 15 : 15,
+                              height: 1.5,
+                            ),
+                          )),
+                    ],
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Container(
-                      height: 50,
-                      width: Dimens.widthLand,
-                      child: Text(
-                        sectionDataList?[index].description.toString() ?? "",
-                        style: TextStyle(
-                          // color: isHovered[videoId] ? colorPrimary : Colors.white,
-                          color: (isHovered[videoId] ?? false)
-                              ? colorPrimary
-                              : Colors.white,
-                          fontSize: (isHovered[videoId] ?? false) ? 15 : 15,
-                          height: 1.5,
-                        ),
-                      )),
-                  SizedBox(
-                    height: 10,
-                  )
-                ],
+                ),
+              );
+            },
+          ),
+          Positioned(
+            right: 16,
+            top: 70,
+            child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  scrollBy(5);
+                }),
+          ),
+          Positioned(
+            left: 16,
+            top: 70,
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
               ),
+              onPressed: () {
+                scrollBy(-5);
+              },
             ),
-          );
-        },
+          )
+        ],
       ),
     );
   }
 
   Widget portrait(int? upcomingType, List<Datum>? sectionDataList) {
+    ScrollController _scrollController = ScrollController();
+    void scrollBy(int elements) {
+      _scrollController.animateTo(
+        _scrollController.position.pixels +
+            (elements * (Dimens.widthLand + 15)),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightPort,
-      child: ListView.separated(
-        itemCount: sectionDataList?.length ?? 0,
-        shrinkWrap: true,
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        scrollDirection: Axis.horizontal,
-        physics:
-            const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        separatorBuilder: (context, index) => const SizedBox(width: 5),
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            focusColor: white,
-            borderRadius: BorderRadius.circular(4),
-            onTap: () {
-              debugPrint("Clicked on index ==> $index");
-              openDetailPage(
-                (sectionDataList?[index].videoType ?? 0) == 2
-                    ? "showdetail"
-                    : "videodetail",
-                sectionDataList?[index].id ?? 0,
-                upcomingType ?? 0,
-                sectionDataList?[index].videoType ?? 0,
-                sectionDataList?[index].typeId ?? 0,
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: _scrollController,
+            itemCount: sectionDataList?.length ?? 0,
+            shrinkWrap: true,
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            scrollDirection: Axis.horizontal,
+            physics: const PageScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            separatorBuilder: (context, index) => const SizedBox(width: 5),
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                focusColor: white,
+                borderRadius: BorderRadius.circular(4),
+                onTap: () {
+                  debugPrint("Clicked on index ==> $index");
+                  openDetailPage(
+                    (sectionDataList?[index].videoType ?? 0) == 2
+                        ? "showdetail"
+                        : "videodetail",
+                    sectionDataList?[index].id ?? 0,
+                    upcomingType ?? 0,
+                    sectionDataList?[index].videoType ?? 0,
+                    sectionDataList?[index].typeId ?? 0,
+                  );
+                },
+                child: Container(
+                  width: Dimens.widthPort,
+                  height: Dimens.heightPort,
+                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                  alignment: Alignment.center,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: MyNetworkImage(
+                      imageUrl:
+                          sectionDataList?[index].thumbnail.toString() ?? "",
+                      fit: BoxFit.cover,
+                      imgHeight: MediaQuery.of(context).size.height,
+                      imgWidth: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                ),
               );
             },
-            child: Container(
-              width: Dimens.widthPort,
-              height: Dimens.heightPort,
-              padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-              alignment: Alignment.center,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: MyNetworkImage(
-                  imageUrl: sectionDataList?[index].thumbnail.toString() ?? "",
-                  fit: BoxFit.cover,
-                  imgHeight: MediaQuery.of(context).size.height,
-                  imgWidth: MediaQuery.of(context).size.width,
+          ),
+          Positioned(
+            right: 16,
+            top: 70,
+            child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
                 ),
+                onPressed: () {
+                  scrollBy(5);
+                }),
+          ),
+          Positioned(
+            left: 16,
+            top: 70,
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
               ),
+              onPressed: () {
+                scrollBy(-5);
+              },
             ),
-          );
-        },
+          )
+        ],
       ),
     );
   }
 
   Widget square(int? upcomingType, List<Datum>? sectionDataList) {
+    ScrollController _scrollController = ScrollController();
+    void scrollBy(int elements) {
+      _scrollController.animateTo(
+        _scrollController.position.pixels +
+            (elements * (Dimens.widthLand + 15)),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightSquare,
-      child: ListView.separated(
-        itemCount: sectionDataList?.length ?? 0,
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        physics:
-            const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        separatorBuilder: (context, index) => const SizedBox(width: 15),
-        itemBuilder: (BuildContext context, int index) {
-          final videoId = sectionDataList?[index].id ?? 0;
-          return InkWell(
-            focusColor: Colors.white,
-            borderRadius: BorderRadius.circular(4),
-            onTap: () {
-              debugPrint("Clicked on index ==> $index");
-              openDetailPage(
-                (sectionDataList?[index].videoType ?? 0) == 2
-                    ? "showdetail"
-                    : "videodetail",
-                videoId,
-                upcomingType ?? 0,
-                sectionDataList?[index].videoType ?? 0,
-                sectionDataList?[index].typeId ?? 0,
-              );
-            },
-            child: MouseRegion(
-              onHover: (_) => _setHovered(videoId, true), // Set hover state
-              onExit: (_) => _setHovered(videoId, false), // Clear hover state
-              child: Column(
-                children: [
-                  Container(
-                    width: Dimens.widthSquare,
-                    height: Dimens.heightSquare / 1.4,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: Transform.scale(
-                        scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
-                        child: MyNetworkImage(
-                          imageUrl:
-                              sectionDataList?[index].thumbnail.toString() ??
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: _scrollController,
+            itemCount: sectionDataList?.length ?? 0,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: const PageScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            padding: const EdgeInsets.only(left: 70, right: 20),
+            separatorBuilder: (context, index) => const SizedBox(width: 15),
+            itemBuilder: (BuildContext context, int index) {
+              final videoId = sectionDataList?[index].id ?? 0;
+              return InkWell(
+                focusColor: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+                onTap: () {
+                  debugPrint("Clicked on index ==> $index");
+                  openDetailPage(
+                    (sectionDataList?[index].videoType ?? 0) == 2
+                        ? "showdetail"
+                        : "videodetail",
+                    videoId,
+                    upcomingType ?? 0,
+                    sectionDataList?[index].videoType ?? 0,
+                    sectionDataList?[index].typeId ?? 0,
+                  );
+                },
+                child: MouseRegion(
+                  onHover: (_) => _setHovered(videoId, true), // Set hover state
+                  onExit: (_) =>
+                      _setHovered(videoId, false), // Clear hover state
+                  child: Column(
+                    children: [
+                      Container(
+                        width: Dimens.widthSquare,
+                        height: Dimens.heightSquare / 1.4,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Transform.scale(
+                            scale: (isHovered[videoId] ?? false) ? 1.1 : 1.0,
+                            child: MyNetworkImage(
+                              imageUrl: sectionDataList?[index]
+                                      .thumbnail
+                                      .toString() ??
                                   "",
-                          fit: BoxFit.cover,
-                          imgHeight: MediaQuery.of(context).size.height,
-                          imgWidth: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                              imgHeight: MediaQuery.of(context).size.height,
+                              imgWidth: MediaQuery.of(context).size.width,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 2),
-                    margin: EdgeInsets.only(bottom: 5),
-                    width: Dimens.widthSquare,
-                    child: Text(
-                      sectionDataList?[index].description.toString() ?? "",
-                      maxLines: 3,
-                      style: TextStyle(
-                        color: (isHovered[videoId] ?? false)
-                            ? colorPrimary
-                            : Colors.white,
-                        fontSize: 14,
-                        height: 1.5,
+                      SizedBox(
+                        height: 12,
                       ),
-                    ),
+                      Container(
+                        padding: EdgeInsets.only(left: 2),
+                        margin: EdgeInsets.only(bottom: 5),
+                        width: Dimens.widthSquare,
+                        child: Text(
+                          sectionDataList?[index].description.toString() ?? "",
+                          maxLines: 3,
+                          style: TextStyle(
+                            color: (isHovered[videoId] ?? false)
+                                ? colorPrimary
+                                : Colors.white,
+                            fontSize: 14,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
+              );
+            },
+          ),
+          Positioned(
+            right: 16,
+            top: 70,
+            child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  scrollBy(5);
+                }),
+          ),
+          Positioned(
+            left: 16,
+            top: 70,
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
               ),
+              onPressed: () {
+                scrollBy(-5);
+              },
             ),
-          );
-        },
+          )
+        ],
       ),
     );
   }
@@ -1852,98 +2092,139 @@ class TVHomeState extends State<TVHome> {
 //   }
 
   Widget languageLayout(int? typeId, List<Datum>? sectionDataList) {
+    ScrollController _scrollController = ScrollController();
+    void scrollBy(int elements) {
+      _scrollController.animateTo(
+        _scrollController.position.pixels +
+            (elements * (Dimens.widthLand + 15)),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightLangGen,
-      child: ListView.separated(
-        itemCount: sectionDataList?.length ?? 0,
-        shrinkWrap: true,
-        physics:
-            const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => const SizedBox(width: 5),
-        itemBuilder: (BuildContext context, int index) {
-          return Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              InkWell(
-                focusColor: white,
-                borderRadius: BorderRadius.circular(4),
-                onTap: () {
-                  debugPrint("Clicked on index ==> $index");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return TVVideosByID(
-                          sectionDataList?[index].id ?? 0,
-                          typeId ?? 0,
-                          sectionDataList?[index].name ?? "",
-                          "ByLanguage",
-                        );
-                      },
-                    ),
-                  );
-                },
-                child: Container(
-                  width: Dimens.widthLangGen,
-                  height: Dimens.heightLangGen,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                  child: Stack(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: _scrollController,
+            itemCount: sectionDataList?.length ?? 0,
+            shrinkWrap: true,
+            physics: const PageScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (context, index) => const SizedBox(width: 5),
+            itemBuilder: (BuildContext context, int index) {
+              return Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: [
+                  InkWell(
+                    focusColor: white,
+                    borderRadius: BorderRadius.circular(4),
+                    onTap: () {
+                      debugPrint("Clicked on index ==> $index");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return TVVideosByID(
+                              sectionDataList?[index].id ?? 0,
+                              typeId ?? 0,
+                              sectionDataList?[index].name ?? "",
+                              "ByLanguage",
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: Dimens.widthLangGen,
+                      height: Dimens.heightLangGen,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                      child: Stack(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: MyNetworkImage(
-                          imageUrl:
-                              sectionDataList?[index].image.toString() ?? "",
-                          fit: BoxFit.fill,
-                          imgHeight: MediaQuery.of(context).size.height,
-                          imgWidth: MediaQuery.of(context).size.width,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(0),
-                        width: MediaQuery.of(context).size.width,
-                        height: Dimens.heightLangGen,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.center,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              transparentColor,
-                              transparentColor,
-                              appBgColor,
-                            ],
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: MyNetworkImage(
+                              imageUrl:
+                                  sectionDataList?[index].image.toString() ??
+                                      "",
+                              fit: BoxFit.fill,
+                              imgHeight: MediaQuery.of(context).size.height,
+                              imgWidth: MediaQuery.of(context).size.width,
+                            ),
                           ),
-                        ),
+                          Container(
+                            padding: const EdgeInsets.all(0),
+                            width: MediaQuery.of(context).size.width,
+                            height: Dimens.heightLangGen,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.center,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  transparentColor,
+                                  transparentColor,
+                                  appBgColor,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: MyText(
+                      color: white,
+                      text: sectionDataList?[index].name.toString() ?? "",
+                      textalign: TextAlign.center,
+                      fontsizeNormal: 14,
+                      fontweight: FontWeight.w600,
+                      fontsizeWeb: 15,
+                      multilanguage: false,
+                      maxline: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fontstyle: FontStyle.normal,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+          Positioned(
+            right: 16,
+            top: 70,
+            child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
                 ),
+                onPressed: () {
+                  scrollBy(5);
+                }),
+          ),
+          Positioned(
+            left: 16,
+            top: 70,
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
               ),
-              Padding(
-                padding: const EdgeInsets.all(3),
-                child: MyText(
-                  color: white,
-                  text: sectionDataList?[index].name.toString() ?? "",
-                  textalign: TextAlign.center,
-                  fontsizeNormal: 14,
-                  fontweight: FontWeight.w600,
-                  fontsizeWeb: 15,
-                  multilanguage: false,
-                  maxline: 1,
-                  overflow: TextOverflow.ellipsis,
-                  fontstyle: FontStyle.normal,
-                ),
-              ),
-            ],
-          );
-        },
+              onPressed: () {
+                scrollBy(-5);
+              },
+            ),
+          )
+        ],
       ),
     );
   }
@@ -1959,124 +2240,139 @@ class TVHomeState extends State<TVHome> {
       }
     }
 
+    ScrollController _scrollController = ScrollController();
+    void scrollBy(int elements) {
+      _scrollController.animateTo(
+        _scrollController.position.pixels +
+            (elements * (Dimens.widthLand + 15)),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightLangGen,
-      child: ListView.separated(
-        itemCount: sectionDataList?.length ?? 0,
-        shrinkWrap: true,
-        physics:
-            const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => const SizedBox(width: 5),
-        itemBuilder: (BuildContext context, int index) {
-          return Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              InkWell(
-                  focusColor: white,
-                  borderRadius: BorderRadius.circular(4),
-                  onTap: () {
-                    debugPrint("Clicked on index ==> $index");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return TVVideosByID(
-                            sectionDataList?[index].id ?? 0,
-                            typeId ?? 0,
-                            sectionDataList?[index].name ?? "",
-                            "ByCategory",
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: Dimens.widthLangGen,
-                    height: Dimens.heightLangGen,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(bottom: 30, left: 22),
-                    padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                    child: Stack(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: _scrollController,
+            itemCount: sectionDataList?.length ?? 0,
+            shrinkWrap: true,
+            physics: const PageScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            padding: const EdgeInsets.only(left: 70, right: 20),
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (context, index) => const SizedBox(width: 5),
+            itemBuilder: (BuildContext context, int index) {
+              return Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: [
+                  InkWell(
+                      focusColor: white,
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: () {
+                        debugPrint("Clicked on index ==> $index");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return TVVideosByID(
+                                sectionDataList?[index].id ?? 0,
+                                typeId ?? 0,
+                                sectionDataList?[index].name ?? "",
+                                "ByCategory",
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: Dimens.widthLangGen,
+                        height: Dimens.heightLangGen,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(bottom: 30, left: 22),
+                        padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                        child: Stack(
                           clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: MyNetworkImage(
-                            imageUrl:
-                                sectionDataList?[index].image.toString() ?? "",
-                            fit: BoxFit.fill,
-                            imgHeight: MediaQuery.of(context).size.height,
-                            imgWidth: MediaQuery.of(context).size.width,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(0),
-                          width: MediaQuery.of(context).size.width,
-                          height: Dimens.heightLangGen,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.center,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                transparentColor,
-                                transparentColor,
-                                appBgColor,
-                              ],
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: MyNetworkImage(
+                                imageUrl:
+                                    sectionDataList?[index].image.toString() ??
+                                        "",
+                                fit: BoxFit.fill,
+                                imgHeight: MediaQuery.of(context).size.height,
+                                imgWidth: MediaQuery.of(context).size.width,
+                              ),
                             ),
-                          ),
+                            Container(
+                              padding: const EdgeInsets.all(0),
+                              width: MediaQuery.of(context).size.width,
+                              height: Dimens.heightLangGen,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.center,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    transparentColor,
+                                    transparentColor,
+                                    appBgColor,
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  )),
+                      )),
 
-              Positioned(
-                bottom: -8,
-                left: 0,
-                child: Container(
-                  margin: EdgeInsets.only(left: 2, bottom: 10),
-                  child: RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: sectionDataList?[index].name.toString()[0] ??
-                              "", // First letter
-                          style: GoogleFonts.outfit(
-                            fontSize: getAdaptiveTextSize(
-                                context, (kIsWeb || Constant.isTV) ? 40 : 40),
-                            fontStyle: FontStyle.normal,
-                            color: colorGraidentLeft,
-                            fontWeight: FontWeight.w600,
-                          ),
+                  Positioned(
+                    bottom: -8,
+                    left: 0,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 2, bottom: 10),
+                      child: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  sectionDataList?[index].name.toString()[0] ??
+                                      "", // First letter
+                              style: GoogleFonts.outfit(
+                                fontSize: getAdaptiveTextSize(context,
+                                    (kIsWeb || Constant.isTV) ? 40 : 40),
+                                fontStyle: FontStyle.normal,
+                                color: colorGraidentLeft,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            TextSpan(
+                              text: sectionDataList?[index]
+                                      .name
+                                      .toString()
+                                      .substring(1) ??
+                                  "", // Rest of the text
+                              style: GoogleFonts.outfit(
+                                fontSize: getAdaptiveTextSize(context,
+                                    (kIsWeb || Constant.isTV) ? 15 : 17),
+                                fontStyle: FontStyle.normal,
+                                color: white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
                         ),
-                        TextSpan(
-                          text: sectionDataList?[index]
-                                  .name
-                                  .toString()
-                                  .substring(1) ??
-                              "", // Rest of the text
-                          style: GoogleFonts.outfit(
-                            fontSize: getAdaptiveTextSize(
-                                context, (kIsWeb || Constant.isTV) ? 15 : 17),
-                            fontStyle: FontStyle.normal,
-                            color: white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
 
-              //--------
+                  //--------
 
 //   Positioned(
 //   bottom: -8,
@@ -2120,12 +2416,39 @@ class TVHomeState extends State<TVHome> {
 //   ),
 // ),
 
-              SizedBox(
-                height: 20,
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              );
+            },
+          ),
+          Positioned(
+            right: 16,
+            top: 90,
+            child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  scrollBy(5);
+                }),
+          ),
+          Positioned(
+            left: 16,
+            top: 90,
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
               ),
-            ],
-          );
-        },
+              onPressed: () {
+                scrollBy(-5);
+              },
+            ),
+          )
+        ],
       ),
     );
   }
