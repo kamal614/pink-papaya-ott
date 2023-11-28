@@ -1072,7 +1072,8 @@ class TVHomeState extends State<TVHome> {
                       focusColor: white,
                       borderRadius: BorderRadius.circular(4),
                       onTap: () {
-                        print("ANIL KHANDELWAL IMAGE FULL WIDTH --${sectionBannerList?[index].full_width}");
+                        print(
+                            "ANIL KHANDELWAL IMAGE FULL WIDTH --${sectionBannerList?[index].full_width}");
                         debugPrint("Clicked on index ==> $index");
                         openDetailPage(
                           (sectionBannerList?[index].videoType ?? 0) == 2
@@ -1098,7 +1099,8 @@ class TVHomeState extends State<TVHome> {
                                 height: Dimens.homeWebBanner,
                                 child: MyNetworkImage(
                                   imageUrl:
-                                      sectionBannerList?[index].full_width?? "",
+                                      sectionBannerList?[index].full_width ??
+                                          "",
                                   fit: BoxFit.fill,
                                 ),
                               ),

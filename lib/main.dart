@@ -27,6 +27,7 @@ import 'package:dtlive/provider/subscriptionprovider.dart';
 import 'package:dtlive/provider/videobyidprovider.dart';
 import 'package:dtlive/provider/videodetailsprovider.dart';
 import 'package:dtlive/provider/watchlistprovider.dart';
+import 'package:dtlive/test_tv_home.dart';
 import 'package:dtlive/tvpages/tvhome.dart';
 import 'package:dtlive/utils/color.dart';
 import 'package:dtlive/utils/constant.dart';
@@ -185,7 +186,7 @@ class _MyAppState extends State<MyApp> {
               ],
             );
           },
-          home: (kIsWeb) ? const TVHome(pageName: "") : const Splash(),
+          home: (kIsWeb) ? const TestTVHome() : const Splash(),
           scrollBehavior: const MaterialScrollBehavior().copyWith(
             dragDevices: {
               PointerDeviceKind.mouse,
