@@ -1389,9 +1389,9 @@ class TVHomeState extends State<TVHome> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 25),
+          // const SizedBox(height: 25),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: const EdgeInsets.fromLTRB(70, 0, 20, 0),
             child: MyText(
               color: white,
               text: "continuewatching",
@@ -1412,7 +1412,7 @@ class TVHomeState extends State<TVHome> {
             child: ListView.separated(
               itemCount: (continueWatchingList?.length ?? 0),
               shrinkWrap: true,
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 70, right: 20),
               scrollDirection: Axis.horizontal,
               physics: const PageScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
@@ -1520,6 +1520,7 @@ class TVHomeState extends State<TVHome> {
               },
             ),
           ),
+          const SizedBox(height: 20,)
         ],
       );
     } else {
