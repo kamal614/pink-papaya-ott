@@ -983,6 +983,23 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                                                     ),
                                                   ),
                                                 ),
+
+                                              /* sharebutton */
+                                              const SizedBox(width: 10),
+                                              InkWell(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                focusColor: white,
+                                                onTap: () {
+                                                  // Navigator.pop(context);
+                                                  // buildShareWithDialog();
+                                                },
+                                                child: _buildFeatureBtn(
+                                                  icon: "ic_share.png",
+                                                  title: "share",
+                                                  multilanguage: true,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
