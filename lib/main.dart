@@ -45,6 +45,10 @@ import 'package:responsive_framework/responsive_framework.dart';
 Future<void> main() async {
   var baseUrl = Uri.base;
   print("baseUrl $baseUrl");
+  // print("Vedio ID 1--${Uri.parse(baseUrl.toString()).pathSegments[1] ?? '0'}");
+  // print("Vedio ID 2--${Uri.parse(baseUrl.toString()).pathSegments[2] ?? '0'}");
+  // print("Vedio ID 3--${Uri.parse(baseUrl.toString()).pathSegments[3] ?? '0'}");
+  // print("Vedio ID 4--${Uri.parse(baseUrl.toString()).pathSegments[4] ?? '0'}");
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     await FlutterDownloader.initialize();
@@ -189,10 +193,7 @@ class _MyAppState extends State<MyApp> {
             );
           },
           home: TestTVHome(
-              videoId: videoId,
-              upcomingType: upcomingType,
-              videoType: videoType,
-              typeId: typeId),
+              videoId: 253, upcomingType: 0, videoType: 1, typeId: 18),
           scrollBehavior: const MaterialScrollBehavior().copyWith(
             dragDevices: {
               PointerDeviceKind.mouse,

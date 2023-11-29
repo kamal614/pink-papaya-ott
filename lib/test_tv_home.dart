@@ -34,6 +34,13 @@ class _TestTVHomeState extends State<TestTVHome> {
       widget.videoType,
       widget.typeId,
     );
+    // openDetailPage(
+    //   "videodetail",
+    //   253,
+    //   0,
+    //   1,
+    //   18,
+    // );
   }
 
   openDetailPage(String pageName, int videoId, int upcomingType, int videoType,
