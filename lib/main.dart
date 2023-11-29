@@ -43,6 +43,8 @@ import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 Future<void> main() async {
+  var baseUrl = Uri.base;
+  print("baseUrl $baseUrl");
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     await FlutterDownloader.initialize();
@@ -186,7 +188,7 @@ class _MyAppState extends State<MyApp> {
               ],
             );
           },
-          home: (kIsWeb) ? const TestTVHome() : const Splash(),
+          home: const TestTVHome(),
           scrollBehavior: const MaterialScrollBehavior().copyWith(
             dragDevices: {
               PointerDeviceKind.mouse,
