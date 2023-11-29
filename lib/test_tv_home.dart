@@ -3,7 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TestTVHome extends StatefulWidget {
-  const TestTVHome({super.key});
+  int videoId;
+  int upcomingType;
+  int videoType;
+  int typeId;
+  TestTVHome(
+      {super.key,
+      required this.videoId,
+      required this.upcomingType,
+      required this.videoType,
+      required this.typeId});
 
   @override
   State<TestTVHome> createState() => _TestTVHomeState();
@@ -19,11 +28,11 @@ class _TestTVHomeState extends State<TestTVHome> {
 
   firstFn() {
     openDetailPage(
-      "videodetail",
-      253,
-      0,
-      1,
-      18,
+      widget.videoType == 2 ? "showdetail" : "videodetail",
+      widget.videoId,
+      widget.upcomingType,
+      widget.videoType,
+      widget.typeId,
     );
   }
 

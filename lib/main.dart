@@ -188,7 +188,11 @@ class _MyAppState extends State<MyApp> {
               ],
             );
           },
-          home: const TestTVHome(),
+          home: TestTVHome(
+              videoId: videoId,
+              upcomingType: upcomingType,
+              videoType: videoType,
+              typeId: typeId),
           scrollBehavior: const MaterialScrollBehavior().copyWith(
             dragDevices: {
               PointerDeviceKind.mouse,
