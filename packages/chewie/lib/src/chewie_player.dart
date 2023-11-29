@@ -543,7 +543,7 @@ class ChewieController extends ChangeNotifier {
     return chewieControllerProvider.controller;
   }
 
-  bool _isFullScreen = true;
+  bool _isFullScreen = false;
 
   bool get isFullScreen => _isFullScreen;
 
