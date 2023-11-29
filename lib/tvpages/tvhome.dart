@@ -1384,6 +1384,16 @@ class TVHomeState extends State<TVHome> {
   }
 
   Widget continueWatchingLayout(List<ContinueWatching>? continueWatchingList) {
+      ScrollController _scrollController = ScrollController();
+    void scrollBy(int elements) {
+      _scrollController.animateTo(
+        _scrollController.position.pixels +
+            (elements * (Dimens.widthLand + 15)),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+
     if ((continueWatchingList?.length ?? 0) > 0) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1409,115 +1419,145 @@ class TVHomeState extends State<TVHome> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: Dimens.heightContiLand,
-            child: ListView.separated(
-              itemCount: (continueWatchingList?.length ?? 0),
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(left: 70, right: 20),
-              scrollDirection: Axis.horizontal,
-              physics: const PageScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              separatorBuilder: (context, index) => const SizedBox(
-                width: 10,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    focusColor: white,
-                    borderRadius: BorderRadius.circular(4),
-                    onTap: () async {
-                      openPlayer("ContinueWatch", index, continueWatchingList);
-                    },
-                    child: Stack(
-                      alignment: AlignmentDirectional.bottomStart,
-                      children: [
-                        Container(
-                          width: Dimens.widthContiLand,
-                          height: Dimens.heightContiLand,
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: MyNetworkImage(
-                              imageUrl:
-                                  continueWatchingList?[index].landscape ?? "",
-                              fit: BoxFit.cover,
-                              imgHeight: MediaQuery.of(context).size.height,
-                              imgWidth: MediaQuery.of(context).size.width,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, bottom: 8),
-                              child: MyImage(
-                                width: 30,
-                                height: 30,
-                                imagePath: "play.png",
-                              ),
-                            ),
+            child: Stack(
+              children: [
+                ListView.separated(
+                controller: _scrollController,
+                  itemCount: (continueWatchingList?.length ?? 0),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(left: 70, right: 20),
+                  scrollDirection: Axis.horizontal,
+                  physics: const PageScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    width: 10,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        focusColor: white,
+                        borderRadius: BorderRadius.circular(4),
+                        onTap: () async {
+                          openPlayer("ContinueWatch", index, continueWatchingList);
+                        },
+                        child: Stack(
+                          alignment: AlignmentDirectional.bottomStart,
+                          children: [
                             Container(
                               width: Dimens.widthContiLand,
-                              constraints: const BoxConstraints(minWidth: 0),
-                              padding: const EdgeInsets.all(3),
-                              child: LinearPercentIndicator(
-                                padding: const EdgeInsets.all(0),
-                                barRadius: const Radius.circular(2),
-                                lineHeight: 4,
-                                percent: Utils.getPercentage(
-                                    continueWatchingList?[index]
-                                            .videoDuration ??
-                                        0,
-                                    continueWatchingList?[index].stopTime ?? 0),
-                                backgroundColor: secProgressColor,
-                                progressColor: colorPrimary,
+                              height: Dimens.heightContiLand,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(Constant.isTV ? 2 : 0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: MyNetworkImage(
+                                  imageUrl:
+                                      continueWatchingList?[index].landscape ?? "",
+                                  fit: BoxFit.cover,
+                                  imgHeight: MediaQuery.of(context).size.height,
+                                  imgWidth: MediaQuery.of(context).size.width,
+                                ),
                               ),
                             ),
-                            (continueWatchingList?[index].releaseTag != null &&
-                                    (continueWatchingList?[index].releaseTag ??
-                                            "")
-                                        .isNotEmpty)
-                                ? Container(
-                                    decoration: const BoxDecoration(
-                                      color: black,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(4),
-                                        bottomRight: Radius.circular(4),
-                                      ),
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    alignment: Alignment.center,
-                                    width: Dimens.widthContiLand,
-                                    height: 15,
-                                    child: MyText(
-                                      color: white,
-                                      multilanguage: false,
-                                      text: continueWatchingList?[index]
-                                              .releaseTag ??
-                                          "",
-                                      textalign: TextAlign.center,
-                                      fontsizeNormal: 6,
-                                      fontweight: FontWeight.w700,
-                                      fontsizeWeb: 10,
-                                      maxline: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      fontstyle: FontStyle.normal,
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 10, bottom: 8),
+                                  child: MyImage(
+                                    width: 30,
+                                    height: 30,
+                                    imagePath: "play.png",
+                                  ),
+                                ),
+                                Container(
+                                  width: Dimens.widthContiLand,
+                                  constraints: const BoxConstraints(minWidth: 0),
+                                  padding: const EdgeInsets.all(3),
+                                  child: LinearPercentIndicator(
+                                    padding: const EdgeInsets.all(0),
+                                    barRadius: const Radius.circular(2),
+                                    lineHeight: 4,
+                                    percent: Utils.getPercentage(
+                                        continueWatchingList?[index]
+                                                .videoDuration ??
+                                            0,
+                                        continueWatchingList?[index].stopTime ?? 0),
+                                    backgroundColor: secProgressColor,
+                                    progressColor: colorPrimary,
+                                  ),
+                                ),
+                                (continueWatchingList?[index].releaseTag != null &&
+                                        (continueWatchingList?[index].releaseTag ??
+                                                "")
+                                            .isNotEmpty)
+                                    ? Container(
+                                        decoration: const BoxDecoration(
+                                          color: black,
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(4),
+                                            bottomRight: Radius.circular(4),
+                                          ),
+                                          shape: BoxShape.rectangle,
+                                        ),
+                                        alignment: Alignment.center,
+                                        width: Dimens.widthContiLand,
+                                        height: 15,
+                                        child: MyText(
+                                          color: white,
+                                          multilanguage: false,
+                                          text: continueWatchingList?[index]
+                                                  .releaseTag ??
+                                              "",
+                                          textalign: TextAlign.center,
+                                          fontsizeNormal: 6,
+                                          fontweight: FontWeight.w700,
+                                          fontsizeWeb: 10,
+                                          maxline: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          fontstyle: FontStyle.normal,
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                      ),
+                    );
+                  },
+                ),
+                Positioned(
+            right: 16,
+            top: 30,
+            child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  scrollBy(5);
+                }),
+          ),
+          Positioned(
+            left: 16,
+            top: 30,
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+              color: appBgColor,
+              ),
+              onPressed: () {
+                scrollBy(-5);
               },
+            ),
+          )
+              ],
             ),
           ),
           const SizedBox(height: 20,)

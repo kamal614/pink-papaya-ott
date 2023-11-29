@@ -2378,8 +2378,8 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                       0) >
                   0)
                 Container(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  margin: const EdgeInsets.only(top: 25, bottom: 0),
+                  padding: const EdgeInsets.fromLTRB(70, 0, 20, 0),
+                  margin: const EdgeInsets.only(top: 15, bottom: 0),
                   child: MyText(
                     color: white,
                     text: "customer_also_watch",
@@ -2407,8 +2407,8 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                   0)
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  margin: const EdgeInsets.only(top: 60, bottom: 0),
+                  padding: const EdgeInsets.fromLTRB(70, 0, 20, 0),
+                  // margin: const EdgeInsets.only(top: 10, bottom: 0),
                   child: MyText(
                     color: white,
                     text: "castandcrew",
@@ -2425,7 +2425,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
               if ((videoDetailsProvider.sectionDetailModel.cast?.length ?? 0) >
                   0)
                 Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 70, right: 20),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -2488,9 +2488,12 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
         else
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: MoreDetails(
-                moreDetailList:
-                    videoDetailsProvider.sectionDetailModel.moreDetails),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              child: MoreDetails(
+                  moreDetailList:
+                      videoDetailsProvider.sectionDetailModel.moreDetails),
+            ),
           )
       ],
     );
@@ -2500,7 +2503,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: Dimens.heightLand,
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding: const EdgeInsets.fromLTRB(70, 0, 20, 0),
       margin: const EdgeInsets.only(top: 12),
       child: ListView.separated(
         itemCount: relatedDataList?.length ?? 0,
@@ -2677,7 +2680,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
     if (castList != null && castList.isNotEmpty) {
       return Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding: const EdgeInsets.fromLTRB(70, 0, 20, 0),
         margin: const EdgeInsets.only(top: 12),
         child: ResponsiveGridList(
           minItemWidth: (kIsWeb || Constant.isTV)
@@ -2785,7 +2788,7 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
             minHeight: (kIsWeb || Constant.isTV)
                 ? Dimens.heightCastWeb
                 : Dimens.heightCast),
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding: const EdgeInsets.fromLTRB(70, 0, 20, 0),
         margin: const EdgeInsets.only(top: 20),
         child: Row(
           mainAxisSize: MainAxisSize.max,
