@@ -12,7 +12,19 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({Key? key}) : super(key: key);
+  final bool? isRedirected;
+  final int? videoId;
+  final int? upcomingType;
+  final int? videoType;
+  final int? typeId;
+  const Splash(
+      {Key? key,
+      this.isRedirected,
+      this.videoId,
+      this.upcomingType,
+      this.videoType,
+      this.typeId})
+      : super(key: key);
 
   @override
   State<Splash> createState() => SplashState();
@@ -69,7 +81,14 @@ class SplashState extends State<Splash> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const TVHome(pageName: "");
+            return TVHome(
+              pageName: "",
+              wantNavigation: widget.isRedirected,
+              videoId: widget.videoId,
+              upcomingType: widget.upcomingType,
+              videoType: widget.videoType,
+              typeId: widget.typeId,
+            );
           },
         ),
       );

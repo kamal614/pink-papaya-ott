@@ -5,58 +5,58 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "amuzi",
+            "name": "amuzi-1",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "amuzi (profile mode)",
+            "name": "amuzi-1 (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "amuzi (release mode)",
+            "name": "amuzi-1 (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
         {
             "name": "chewie",
-            "cwd": "packages\\chewie",
+            "cwd": "packages/chewie",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "chewie (profile mode)",
-            "cwd": "packages\\chewie",
+            "cwd": "packages/chewie",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "chewie (release mode)",
-            "cwd": "packages\\chewie",
+            "cwd": "packages/chewie",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
         {
             "name": "vimeo",
-            "cwd": "packages\\vimeo",
+            "cwd": "packages/vimeo",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "vimeo (profile mode)",
-            "cwd": "packages\\vimeo",
+            "cwd": "packages/vimeo",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "vimeo (release mode)",
-            "cwd": "packages\\vimeo",
+            "cwd": "packages/vimeo",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

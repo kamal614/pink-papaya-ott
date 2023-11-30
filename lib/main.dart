@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -27,7 +28,6 @@ import 'package:dtlive/provider/subscriptionprovider.dart';
 import 'package:dtlive/provider/videobyidprovider.dart';
 import 'package:dtlive/provider/videodetailsprovider.dart';
 import 'package:dtlive/provider/watchlistprovider.dart';
-import 'package:dtlive/tvpages/tvhome.dart';
 import 'package:dtlive/utils/color.dart';
 import 'package:dtlive/utils/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,7 +41,15 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+var baseUrl = Uri.base;
+
 Future<void> main() async {
+  log("baseUrl $baseUrl");
+  log("Vedio ID 1--${Uri.parse(baseUrl.toString()).pathSegments[1]}");
+  log("Vedio ID 2--${Uri.parse(baseUrl.toString()).pathSegments[2]}");
+  log("Vedio ID 3--${Uri.parse(baseUrl.toString()).pathSegments[3]}");
+  log("Vedio ID 4--${Uri.parse(baseUrl.toString()).pathSegments[4]}");
+
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     await FlutterDownloader.initialize();
@@ -185,7 +193,29 @@ class _MyAppState extends State<MyApp> {
               ],
             );
           },
-          home: (kIsWeb) ? const TVHome(pageName: "") : const Splash(),
+          home: !(baseUrl.toString() == "https://amuzi-web.web.app/" ||
+                  baseUrl.toString() == "https://amuzi-web.web.app" ||
+                  baseUrl.toString() == "https://amuzi-web.web.app/#/" ||
+                  baseUrl.toString() == "http://amuzi-web.web.app/")
+              ? Splash(
+                  // isRedirected:
+                  //     !(baseUrl.toString() == "https://amuzi-web.web.app/" ||
+                  //         baseUrl.toString() == "https://amuzi-web.web.app" ||
+                  //         baseUrl.toString() == "https://amuzi-web.web.app/#/" ||
+                  //         baseUrl.toString() == "http://amuzi-web.web.app/"),
+                  isRedirected: true,
+                  videoId:
+                      int.parse(Uri.parse(baseUrl.toString()).pathSegments[1]),
+                  upcomingType:
+                      int.parse(Uri.parse(baseUrl.toString()).pathSegments[2]),
+                  videoType:
+                      int.parse(Uri.parse(baseUrl.toString()).pathSegments[3]),
+                  typeId:
+                      int.parse(Uri.parse(baseUrl.toString()).pathSegments[4]),
+                )
+              : const Splash(
+                  isRedirected: false,
+                ),
           scrollBehavior: const MaterialScrollBehavior().copyWith(
             dragDevices: {
               PointerDeviceKind.mouse,

@@ -4,6 +4,8 @@ import 'package:dtlive/model/subtitlemodel.dart';
 class Constant {
   // static const String baseurl = '';
   static const String baseurl = 'https://amuzi.ottpeople.in/public/api/';
+  static const String dynamicBaseUrl = 'https://amuzi-web.web.app/';
+  // static const String dynamicBaseUrl = 'https://amuzi.in/';
 
   static String appName = "Amuzi";
   static String appPackageName = "com.ott.amuzi";

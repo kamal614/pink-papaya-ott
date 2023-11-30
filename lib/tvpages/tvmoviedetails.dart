@@ -26,6 +26,7 @@ import 'package:dtlive/utils/utils.dart';
 import 'package:dtlive/widget/mynetworkimg.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -983,6 +984,23 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                                                     ),
                                                   ),
                                                 ),
+
+                                              /* sharebutton */
+                                              const SizedBox(width: 10),
+                                              InkWell(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                focusColor: white,
+                                                onTap: () {
+                                                  // Navigator.pop(context);
+                                                  buildShareWithDialog();
+                                                },
+                                                child: _buildFeatureBtn(
+                                                  icon: "ic_share.png",
+                                                  title: "share",
+                                                  multilanguage: true,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -3147,5 +3165,103 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
       );
       return false;
     }
+  }
+
+  buildShareWithDialog() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: lightBlack,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(23),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  MyText(
+                    text:
+                        videoDetailsProvider.sectionDetailModel.result?.name ??
+                            "",
+                    multilanguage: false,
+                    fontsizeNormal: 18,
+                    fontsizeWeb: 18,
+                    color: white,
+                    fontstyle: FontStyle.normal,
+                    fontweight: FontWeight.w700,
+                    maxline: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textalign: TextAlign.start,
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      (videoDetailsProvider.sectionDetailModel.result
+                                      ?.ageRestriction ??
+                                  "")
+                              .isNotEmpty
+                          ? Container(
+                              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              margin: const EdgeInsets.only(right: 8),
+                              decoration: Utils.setBGWithBorder(
+                                  transparentColor, otherColor, 3, 0.7),
+                              child: MyText(
+                                text: videoDetailsProvider.sectionDetailModel
+                                        .result?.ageRestriction ??
+                                    "",
+                                multilanguage: false,
+                                fontsizeNormal: 10,
+                                fontsizeWeb: 12,
+                                color: otherColor,
+                                fontstyle: FontStyle.normal,
+                                fontweight: FontWeight.w500,
+                                maxline: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textalign: TextAlign.start,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      MyImage(
+                        width: 18,
+                        height: 18,
+                        imagePath: "ic_comment.png",
+                        fit: BoxFit.fill,
+                        color: lightGray,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(5),
+                    focusColor: white,
+                    onTap: () async {
+                      // Navigator.pop(context);
+                      print(
+                          "${Constant.dynamicBaseUrl}videodetails/${widget.videoId}/${widget.upcomingType}/${widget.videoType}/${widget.typeId} \n");
+                      await Clipboard.setData(ClipboardData(
+                        text:
+                            "${Constant.dynamicBaseUrl}videodetails/${widget.videoId}/${widget.upcomingType}/${widget.videoType}/${widget.typeId} \n",
+                      ));
+                    },
+                    child: _buildFeatureBtn(
+                        icon: "ic_link.png",
+                        title: "copy_link",
+                        multilanguage: true),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

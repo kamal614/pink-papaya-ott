@@ -26,8 +26,7 @@ import 'package:dtlive/webwidget/searchweb.dart';
 import 'package:dtlive/widget/myimage.dart';
 import 'package:dtlive/widget/mytext.dart';
 import 'package:dtlive/utils/utils.dart';
-import 'package:dtlive/widget/mynetworkimg.dart';
-// import 'package:dtlive/widget/mytextgraident.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,21 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TVHome extends StatefulWidget {
   final String? pageName;
-  const TVHome({Key? key, required this.pageName}) : super(key: key);
+  final bool? wantNavigation;
+  final int? videoId;
+  final int? upcomingType;
+  final int? videoType;
+  final int? typeId;
+
+  const TVHome(
+      {Key? key,
+      required this.pageName,
+      this.wantNavigation,
+      this.videoId,
+      this.upcomingType,
+      this.videoType,
+      this.typeId})
+      : super(key: key);
 
   @override
   State<TVHome> createState() => TVHomeState();
@@ -111,6 +124,23 @@ class TVHomeState extends State<TVHome> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
     });
+
+    if (widget.wantNavigation ?? false) {
+      Utils.openDetails(
+        context: context,
+        videoId: widget.videoId!,
+        upcomingType: widget.upcomingType!,
+        videoType: widget.videoType!,
+        typeId: widget.typeId!,
+      );
+      // Utils.openDetails(
+      //   context: context,
+      //   videoId: 253,
+      //   upcomingType: 0,
+      //   videoType: 1,
+      //   typeId: 18,
+      // );
+    }
   }
 
   _getData() async {
