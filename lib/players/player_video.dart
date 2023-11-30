@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'dart:html' as html;
-
+// import 'dart:html' as html;
 import 'package:chewie/chewie.dart';
 import 'package:dtlive/provider/playerprovider.dart';
 import 'package:dtlive/utils/color.dart';
@@ -46,9 +45,10 @@ class _PlayerVideoState extends State<PlayerVideo> {
 
   @override
   void initState() {
-    if (html.document.fullscreenElement == null) {
-      html.document.documentElement?.requestFullscreen();
-    }
+    // if (html.document.fullscreenElement == null) {
+    //   html.document.documentElement?.requestFullscreen();
+    // }
+    
 
     //  else {
     //   html.document.exitFullscreen();

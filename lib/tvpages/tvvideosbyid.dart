@@ -122,7 +122,7 @@ class TVVideosByIDState extends State<TVVideosByID> {
     final videoByIDProvider =
         Provider.of<VideoByIDProvider>(context, listen: false);
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+      padding: const EdgeInsets.fromLTRB(70, 8, 20, 20),
       child: ResponsiveGridList(
         minItemWidth: Dimens.widthLand,
         verticalGridSpacing: 8,
@@ -169,8 +169,10 @@ class TVVideosByIDState extends State<TVVideosByID> {
                         margin: EdgeInsets.only(top: 10),
                         padding: const EdgeInsets.only(left: 2),
                         child: Container(
-                          width: Dimens.widthLand,
-                          height: Dimens.heightLand /1.5,
+                          width: 340,
+                          // Dimens.widthLand,
+                          height:280/1.5,
+                          //  Dimens.heightLand /1.5,
                           alignment: Alignment.center,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(6),
@@ -195,12 +197,12 @@ class TVVideosByIDState extends State<TVVideosByID> {
                       height: 12,
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20),
+                      // margin: EdgeInsets.only(bottom: 10),
                         height: 40,
                         width: Dimens.widthLand,
                         child: Text(
                           videoByIDProvider
-                                        .videoByIdModel.result?[position].description
+                                        .videoByIdModel.result?[position].name
                                         .toString() ??
                                     "",
                          
