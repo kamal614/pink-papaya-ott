@@ -27,6 +27,7 @@ import 'package:dtlive/widget/mynetworkimg.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -3243,13 +3244,13 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                     borderRadius: BorderRadius.circular(5),
                     focusColor: white,
                     onTap: () async {
-                      // Navigator.pop(context);
-                      print(
-                          "${Constant.dynamicBaseUrl}videodetails/${widget.videoId}/${widget.upcomingType}/${widget.videoType}/${widget.typeId} \n");
+                      Navigator.pop(context);
+
                       await Clipboard.setData(ClipboardData(
                         text:
                             "${Constant.dynamicBaseUrl}videodetails/${widget.videoId}/${widget.upcomingType}/${widget.videoType}/${widget.typeId} \n",
-                      ));
+                      )).then((value) => Fluttertoast.showToast(
+                          msg: "Link copied to clipboard."));
                     },
                     child: _buildFeatureBtn(
                         icon: "ic_link.png",
