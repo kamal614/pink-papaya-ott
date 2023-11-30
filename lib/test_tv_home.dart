@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TestTVHome extends StatefulWidget {
-  int videoId;
-  int upcomingType;
-  int videoType;
-  int typeId;
-  TestTVHome(
+  final int videoId;
+  final int upcomingType;
+  final int videoType;
+  final int typeId;
+  const TestTVHome(
       {super.key,
       required this.videoId,
       required this.upcomingType,

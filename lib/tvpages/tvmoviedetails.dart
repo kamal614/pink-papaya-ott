@@ -3240,8 +3240,9 @@ class TVMovieDetailsState extends State<TVMovieDetails> {
                     borderRadius: BorderRadius.circular(5),
                     focusColor: white,
                     onTap: () async {
-                      Navigator.pop(context);
-
+                      // Navigator.pop(context);
+                      print(
+                          "${Constant.dynamicBaseUrl}videodetails/${widget.videoId}/${widget.upcomingType}/${widget.videoType}/${widget.typeId} \n");
                       await Clipboard.setData(ClipboardData(
                         text:
                             "${Constant.dynamicBaseUrl}videodetails/${widget.videoId}/${widget.upcomingType}/${widget.videoType}/${widget.typeId} \n",
