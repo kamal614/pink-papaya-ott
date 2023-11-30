@@ -36,6 +36,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../widget/mynetworkimg.dart';
+
 class TVHome extends StatefulWidget {
   final String? pageName;
   final bool? wantNavigation;
@@ -1414,7 +1416,7 @@ class TVHomeState extends State<TVHome> {
   }
 
   Widget continueWatchingLayout(List<ContinueWatching>? continueWatchingList) {
-      ScrollController _scrollController = ScrollController();
+    ScrollController _scrollController = ScrollController();
     void scrollBy(int elements) {
       _scrollController.animateTo(
         _scrollController.position.pixels +
@@ -1452,7 +1454,7 @@ class TVHomeState extends State<TVHome> {
             child: Stack(
               children: [
                 ListView.separated(
-                controller: _scrollController,
+                  controller: _scrollController,
                   itemCount: (continueWatchingList?.length ?? 0),
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(left: 70, right: 20),
@@ -1469,7 +1471,8 @@ class TVHomeState extends State<TVHome> {
                         focusColor: white,
                         borderRadius: BorderRadius.circular(4),
                         onTap: () async {
-                          openPlayer("ContinueWatch", index, continueWatchingList);
+                          openPlayer(
+                              "ContinueWatch", index, continueWatchingList);
                         },
                         child: Stack(
                           alignment: AlignmentDirectional.bottomStart,
@@ -1484,7 +1487,8 @@ class TVHomeState extends State<TVHome> {
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 child: MyNetworkImage(
                                   imageUrl:
-                                      continueWatchingList?[index].landscape ?? "",
+                                      continueWatchingList?[index].landscape ??
+                                          "",
                                   fit: BoxFit.cover,
                                   imgHeight: MediaQuery.of(context).size.height,
                                   imgWidth: MediaQuery.of(context).size.width,
@@ -1497,8 +1501,8 @@ class TVHomeState extends State<TVHome> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 10, bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 10, bottom: 8),
                                   child: MyImage(
                                     width: 30,
                                     height: 30,
@@ -1507,7 +1511,8 @@ class TVHomeState extends State<TVHome> {
                                 ),
                                 Container(
                                   width: Dimens.widthContiLand,
-                                  constraints: const BoxConstraints(minWidth: 0),
+                                  constraints:
+                                      const BoxConstraints(minWidth: 0),
                                   padding: const EdgeInsets.all(3),
                                   child: LinearPercentIndicator(
                                     padding: const EdgeInsets.all(0),
@@ -1517,13 +1522,16 @@ class TVHomeState extends State<TVHome> {
                                         continueWatchingList?[index]
                                                 .videoDuration ??
                                             0,
-                                        continueWatchingList?[index].stopTime ?? 0),
+                                        continueWatchingList?[index].stopTime ??
+                                            0),
                                     backgroundColor: secProgressColor,
                                     progressColor: colorPrimary,
                                   ),
                                 ),
-                                (continueWatchingList?[index].releaseTag != null &&
-                                        (continueWatchingList?[index].releaseTag ??
+                                (continueWatchingList?[index].releaseTag !=
+                                            null &&
+                                        (continueWatchingList?[index]
+                                                    .releaseTag ??
                                                 "")
                                             .isNotEmpty)
                                     ? Container(
@@ -1563,34 +1571,36 @@ class TVHomeState extends State<TVHome> {
                   },
                 ),
                 Positioned(
-            right: 16,
-            top: 30,
-            child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
+                  right: 16,
+                  top: 30,
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        scrollBy(5);
+                      }),
                 ),
-                onPressed: () {
-                  scrollBy(5);
-                }),
-          ),
-          Positioned(
-            left: 16,
-            top: 30,
-            child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios,
-              color: appBgColor,
-              ),
-              onPressed: () {
-                scrollBy(-5);
-              },
-            ),
-          )
+                Positioned(
+                  left: 16,
+                  top: 30,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: appBgColor,
+                    ),
+                    onPressed: () {
+                      scrollBy(-5);
+                    },
+                  ),
+                )
               ],
             ),
           ),
-          const SizedBox(height: 20,)
+          const SizedBox(
+            height: 20,
+          )
         ],
       );
     } else {
@@ -1846,7 +1856,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-              color: appBgColor,
+                color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
@@ -2062,7 +2072,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-               color: appBgColor,
+                color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);
@@ -2512,7 +2522,7 @@ class TVHomeState extends State<TVHome> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-            color: appBgColor,
+                color: appBgColor,
               ),
               onPressed: () {
                 scrollBy(-5);

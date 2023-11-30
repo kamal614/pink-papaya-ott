@@ -193,16 +193,16 @@ class _MyAppState extends State<MyApp> {
               ],
             );
           },
-          home: !(baseUrl.toString() == "https://amuzi-web.web.app/" ||
-                  baseUrl.toString() == "https://amuzi-web.web.app" ||
-                  baseUrl.toString() == "https://amuzi-web.web.app/#/" ||
-                  baseUrl.toString() == "http://amuzi-web.web.app/")
+          // home: !(baseUrl.toString() == "https://amuzi-web.web.app/" ||
+          //         baseUrl.toString() == "https://amuzi-web.web.app" ||
+          //         baseUrl.toString() == "https://amuzi-web.web.app/#/" ||
+          //         baseUrl.toString() == "http://amuzi-web.web.app/")
+
+          home: !(baseUrl.toString() == "https://amuzi.in/" ||
+                  baseUrl.toString() == "https://amuzi.in" ||
+                  baseUrl.toString() == "https://amuzi.in/#/" ||
+                  baseUrl.toString() == "http://amuzi.in/")
               ? Splash(
-                  // isRedirected:
-                  //     !(baseUrl.toString() == "https://amuzi-web.web.app/" ||
-                  //         baseUrl.toString() == "https://amuzi-web.web.app" ||
-                  //         baseUrl.toString() == "https://amuzi-web.web.app/#/" ||
-                  //         baseUrl.toString() == "http://amuzi-web.web.app/"),
                   isRedirected: true,
                   videoId:
                       int.parse(Uri.parse(baseUrl.toString()).pathSegments[1]),
