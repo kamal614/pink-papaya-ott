@@ -10870,14 +10870,10 @@ N5:function N5(){},
 air(){var s=0,r=A.o(t.H),q,p,o
 var $async$air=A.k(function(a,b){if(a===1)return A.l(b,r)
 while(true)switch(s){case 0:A.xB("baseUrl "+A.d($.k0()),"")
-q=A.cu(J.a2($.k0()),0,null).gj0()[1]
-A.xB("Vedio ID 1--"+A.d(q==null?"0":q),"")
-q=A.cu(J.a2($.k0()),0,null).gj0()[2]
-A.xB("Vedio ID 2--"+A.d(q==null?"0":q),"")
-q=A.cu(J.a2($.k0()),0,null).gj0()[3]
-A.xB("Vedio ID 3--"+A.d(q==null?"0":q),"")
-q=A.cu(J.a2($.k0()),0,null).gj0()[4]
-A.xB("Vedio ID 4--"+A.d(q==null?"0":q),"")
+A.xB("Vedio ID 1--"+A.d(A.cu(J.a2($.k0()),0,null).gj0()[1]),"")
+A.xB("Vedio ID 2--"+A.d(A.cu(J.a2($.k0()),0,null).gj0()[2]),"")
+A.xB("Vedio ID 3--"+A.d(A.cu(J.a2($.k0()),0,null).gj0()[3]),"")
+A.xB("Vedio ID 4--"+A.d(A.cu(J.a2($.k0()),0,null).gj0()[4]),"")
 if($.aF==null)A.bh1()
 $.aF.toString
 s=2
@@ -66466,10 +66462,10 @@ $0(){var s=0,r=A.o(t.H),q=this,p,o
 var $async$$0=A.k(function(a,b){if(a===1)return A.l(b,r)
 while(true)switch(s){case 0:p=q.a
 o=p.a
-A.cb("https://amuzi-web.web.app/videodetails/"+o.c+"/"+o.d+"/"+o.e+"/"+o.f+" \n")
+A.cb("https://amuzi.in/videodetails/"+o.c+"/"+o.d+"/"+o.e+"/"+o.f+" \n")
 p=p.a
 s=2
-return A.i(A.EV(new A.ug("https://amuzi-web.web.app/videodetails/"+p.c+"/"+p.d+"/"+p.e+"/"+p.f+" \n")),$async$$0)
+return A.i(A.EV(new A.ug("https://amuzi.in/videodetails/"+p.c+"/"+p.d+"/"+p.e+"/"+p.f+" \n")),$async$$0)
 case 2:return A.m(null,r)}})
 return A.n($async$$0,r)},
 $S:2}
