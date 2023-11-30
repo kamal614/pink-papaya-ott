@@ -483,20 +483,41 @@ class _MaterialDesktopControlsState extends State<MaterialDesktopControls>
     }
   }
 
-  void _onExpandCollapse() {
-    setState(() {
-      Navigator.pop(context);
-      html.document.exitFullscreen();
-      // notifier.hideStuff = true;
+  // void _onExpandCollapse() {
+  //   setState(() {
+  //     Navigator.pop(context);
+  //     html.document.exitFullscreen();
+  //     // notifier.hideStuff = true;
 
-      // chewieController.toggleFullScreen();
-      _showAfterExpandCollapseTimer =
-          Timer(const Duration(milliseconds: 300), () {
-        setState(() {
-          _cancelAndRestartTimer();
-        });
-      });
-    });
+  //     // chewieController.toggleFullScreen();
+  //     _showAfterExpandCollapseTimer =
+  //         Timer(const Duration(milliseconds: 300), () {
+  //       setState(() {
+  //         _cancelAndRestartTimer();
+  //       });
+  //     });
+  //   });
+  // }
+  void _onExpandCollapse() {
+    chewieController.isFullScreen == false
+        ? setState(() {
+            // Navigator.pop(context);
+            // html.document.exitFullscreen();
+            notifier.hideStuff = true;
+
+            if (html.document.fullscreenElement == null) {
+              html.document.documentElement?.requestFullscreen();
+            }
+
+            _showAfterExpandCollapseTimer =
+                Timer(const Duration(milliseconds: 300), () {
+              setState(() {
+                _cancelAndRestartTimer();
+              });
+            });
+          })
+        : Navigator.pop(context);
+    html.document.exitFullscreen();
   }
 
   void _playPause() {
